@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜会員証</title>
+  <style>
+    :root {
+      --bg: #f3f8fa;
+      --panel: #ffffff;
+      --line: #d9e6eb;
+      --ink: #173443;
+      --muted: #6a7e89;
+      --primary: #087f8c;
+      --primary-dark: #05636d;
+      --success: #16825d;
+      --warning: #a86700;
+      --danger: #bd3948;
+      --shadow: 0 14px 34px rgba(21, 55, 70, 0.09);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, #e8f6f7 0, var(--bg) 320px);
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .header {
+      padding:
+        calc(20px + env(safe-area-inset-top))
+        18px 24px;
+      background:
+        linear-gradient(135deg, #05636d 0%, #087f8c 58%, #0ca5a8 100%);
+      color: #fff;
+    }
+
+    .header-inner {
+      width: min(720px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.18);
+      font-size: 25px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(21px, 5vw, 29px);
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+    }
+
+    .version {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .container {
+      width: min(720px, calc(100% - 24px));
+      margin: 18px auto 50px;
+    }
+
+    .panel {
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .loading {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid #dcecee;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.85s linear infinite;
+      margin-bottom: 13px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .access-panel {
+      display: none;
+    }
+
+    .access-panel.visible {
+      display: block;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid #c8d8df;
+      border-radius: 12px;
+      padding: 11px 13px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(8,127,140,0.12);
+    }
+
+    .button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 900;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .button-secondary {
+      color: var(--primary-dark);
+      background: #e7f5f6;
+    }
+
+    .message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 13px;
+      border-radius: 12px;
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .message.error {
+      color: #982d3b;
+      background: #fff0f2;
+      border: 1px solid #edc4ca;
+    }
+
+    .member-content {
+      display: none;
+    }
+
+    .member-content.visible {
+      display: block;
+    }
+
+    .member-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 210px;
+      border: 0;
+      padding: 24px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 92% 12%, rgba(255,255,255,0.22) 0 70px, transparent 72px),
+        radial-gradient(circle at 7% 96%, rgba(255,255,255,0.12) 0 110px, transparent 112px),
+        linear-gradient(135deg, #05636d 0%, #087f8c 55%, #0ca5a8 100%);
+    }
+
+    .card-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .member-name {
+      margin-top: 10px;
+      font-size: clamp(25px, 7vw, 38px);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .member-number {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .member-meta {
+      margin-top: 8px;
+      color: rgba(255,255,255,0.78);
+      font-size: 12px;
+    }
+
+    .card-footer {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .card-badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .refresh-button {
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 11px;
+      color: var(--primary-dark);
+      background: #e8f5f6;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .order-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .order-card {
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .order-card.ready {
+      border: 2px solid #70c8a9;
+      box-shadow: 0 10px 24px rgba(22,130,93,0.12);
+    }
+
+    .order-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+      background: #f9fcfd;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pickup-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .pickup-number {
+      margin-top: 4px;
+      font-size: clamp(20px, 6vw, 28px);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      word-break: break-all;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 29px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+      background: #edf2f5;
+      color: #435865;
+    }
+
+    .status-accepted { background: #e8f4ff; color: #23608c; }
+    .status-inspecting { background: #fff4d9; color: #8a5a00; }
+    .status-cleaning { background: #e8f7f8; color: #08707b; }
+    .status-finishing { background: #efeaff; color: #5e45a8; }
+    .status-ready { background: #e7f8ef; color: #13744d; }
+    .status-stored { background: #f2edff; color: #6441a5; }
+    .status-delivered { background: #edf1f3; color: #43515a; }
+    .status-rewash { background: #fff0e6; color: #a84d0b; }
+    .status-cancelled { background: #fff0f2; color: #a52e3c; }
+
+    .ready-callout {
+      display: none;
+      padding: 13px 16px;
+      color: #116844;
+      background: #eaf9f2;
+      border-bottom: 1px solid #c7e8d9;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+
+    .order-card.ready .ready-callout {
+      display: block;
+    }
+
+    .progress {
+      padding: 16px 14px 4px;
+      overflow-x: auto;
+    }
+
+    .progress-track {
+      min-width: 530px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+    }
+
+    .progress-step {
+      position: relative;
+      text-align: center;
+      color: #97a6ae;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .progress-step::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: -50%;
+      width: 100%;
+      height: 3px;
+      background: #dbe5e9;
+    }
+
+    .progress-step:first-child::before {
+      display: none;
+    }
+
+    .progress-dot {
+      position: relative;
+      z-index: 1;
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 7px;
+      border-radius: 50%;
+      background: #dbe5e9;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .progress-step.done,
+    .progress-step.current {
+      color: var(--primary-dark);
+    }
+
+    .progress-step.done::before,
+    .progress-step.current::before {
+      background: var(--primary);
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.current .progress-dot {
+      background: var(--primary);
+    }
+
+    .progress-step.current .progress-dot {
+      box-shadow: 0 0 0 5px rgba(8,127,140,0.13);
+    }
+
+    .order-body {
+      padding: 16px;
+    }
+
+    .order-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .summary-box {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px;
+      background: #fbfdfe;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .summary-value {
+      margin-top: 5px;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .items {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border-top: 1px dashed #d7e2e7;
+      padding-top: 10px;
+    }
+
+    .item-name {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .item-note {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .item-price {
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .empty {
+      padding: 24px 14px;
+      border: 1px dashed #c9d9df;
+      border-radius: 14px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.8;
+      background: #fbfdfe;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid #edf2f4;
+      padding: 11px 0;
+    }
+
+    .history-row:last-child {
+      border-bottom: 0;
+    }
+
+    .history-number {
+      font-weight: 900;
+    }
+
+    .history-meta {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .shop-info {
+      line-height: 1.75;
+      font-size: 13px;
+    }
+
+    .shop-name {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .shop-meta {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .footer-actions .button {
+      flex: 1;
+    }
+
+    @media (max-width: 520px) {
+      .version {
+        display: none;
+      }
+
+      .member-card {
+        min-height: 220px;
+      }
+
+      .order-summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-box:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .footer-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">👔</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">会員証・お預かり状況</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-8</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="loadingPanel" class="panel loading">
+      <div>
+        <div class="spinner"></div>
+        <div>会員証を読み込んでいます…</div>
+      </div>
+    </section>
+
+    <section id="accessPanel" class="panel access-panel">
+      <h2 style="margin-top:0">会員証リンクを開く</h2>
+      <p style="color:var(--muted);line-height:1.7;font-size:13px">
+        店舗から案内された会員証リンク、または会員証トークンを入力してください。
+      </p>
+      <label for="memberTokenInput">会員証トークン</label>
+      <input
+        id="memberTokenInput"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="会員証トークンを入力"
+      >
+      <button
+        id="openMemberButton"
+        class="button button-primary"
+        type="button"
+        style="width:100%;margin-top:10px"
+      >
+        会員証を開く
+      </button>
+      <div id="accessMessage" class="message"></div>
+    </section>
+
+    <div id="memberContent" class="member-content">
+      <section class="panel member-card">
+        <div class="card-label">DIGITAL MEMBERS CARD</div>
+        <div id="memberName" class="member-name"></div>
+        <div id="memberNumber" class="member-number"></div>
+        <div id="memberPhone" class="member-meta"></div>
+        <div class="card-footer">
+          <span id="cardShopName"></span>
+          <span class="card-badge">LINE会員証</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>現在のお預かり</h2>
+          <button id="refreshButton" class="refresh-button" type="button">
+            最新情報へ更新
+          </button>
+        </div>
+        <div id="activeOrders" class="order-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>最近の受取履歴</h2>
+        </div>
+        <div id="recentOrders" class="history-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="shop-info">
+          <div id="shopName" class="shop-name"></div>
+          <div id="shopMeta" class="shop-meta"></div>
+        </div>
+        <div class="footer-actions">
+          <button id="reloadButton" class="button button-secondary" type="button">
+            情報を再読み込み
+          </button>
+          <button id="clearMemberButton" class="button button-secondary" type="button">
+            この端末の会員証を解除
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const PAGE_VERSION =
+      "CLEANING-8-MEMBER-CARD-ORDER-STATUS-20260712";
+    const STORAGE_KEY =
+      "dpro_cleaning_member_token";
+
+    const STATUS_LABELS = {
+      accepted: "受付済み",
+      inspecting: "検品中",
+      cleaning: "クリーニング中",
+      finishing: "仕上げ中",
+      ready: "仕上がり済み",
+      stored: "保管中",
+      delivered: "受け渡し済み",
+      rewash: "再洗い・確認中",
+      cancelled: "キャンセル"
+    };
+
+    const PAYMENT_LABELS = {
+      unpaid: "未払い",
+      paid: "お支払い済み",
+      pay_on_pickup: "受取時にお支払い",
+      refunded: "返金済み"
+    };
+
+    const elements = {
+      loadingPanel: document.getElementById("loadingPanel"),
+      accessPanel: document.getElementById("accessPanel"),
+      memberTokenInput: document.getElementById("memberTokenInput"),
+      openMemberButton: document.getElementById("openMemberButton"),
+      accessMessage: document.getElementById("accessMessage"),
+      memberContent: document.getElementById("memberContent"),
+      memberName: document.getElementById("memberName"),
+      memberNumber: document.getElementById("memberNumber"),
+      memberPhone: document.getElementById("memberPhone"),
+      cardShopName: document.getElementById("cardShopName"),
+      activeOrders: document.getElementById("activeOrders"),
+      recentOrders: document.getElementById("recentOrders"),
+      shopName: document.getElementById("shopName"),
+      shopMeta: document.getElementById("shopMeta"),
+      refreshButton: document.getElementById("refreshButton"),
+      reloadButton: document.getElementById("reloadButton"),
+      clearMemberButton: document.getElementById("clearMemberButton")
+    };
+
+    let currentToken = "";
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatDateJa(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) {
+        return value || "-";
+      }
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function showAccessMessage(message) {
+      elements.accessMessage.textContent = message;
+      elements.accessMessage.className =
+        "message visible error";
+    }
+
+    function clearAccessMessage() {
+      elements.accessMessage.textContent = "";
+      elements.accessMessage.className = "message";
+    }
+
+    function getInitialToken() {
+      const url = new URL(window.location.href);
+      const urlToken = url.searchParams.get("token");
+
+      if (urlToken) {
+        sessionStorage.setItem(STORAGE_KEY, urlToken);
+        url.searchParams.delete("token");
+        window.history.replaceState(
+          {},
+          document.title,
+          `${url.pathname}${url.search}${url.hash}`
+        );
+        return urlToken;
+      }
+
+      return sessionStorage.getItem(STORAGE_KEY) || "";
+    }
+
+    async function apiFetch(token) {
+      const url = new URL(`${API_BASE}/api/member/summary`);
+      url.searchParams.set("token", token);
+
+      const response = await fetch(url.toString(), {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      const contentType =
+        response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `会員証を読み込めませんでした（HTTP ${response.status}）`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || "会員証を読み込めませんでした。"
+        );
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function loadMember(token) {
+      if (!token) {
+        showAccessPanel();
+        return;
+      }
+
+      currentToken = token;
+      clearAccessMessage();
+      elements.loadingPanel.style.display = "grid";
+      elements.accessPanel.classList.remove("visible");
+      elements.memberContent.classList.remove("visible");
+
+      try {
+        const data = await apiFetch(token);
+        sessionStorage.setItem(STORAGE_KEY, token);
+        renderMember(data);
+        elements.memberContent.classList.add("visible");
+      } catch (error) {
+        console.error(error);
+        sessionStorage.removeItem(STORAGE_KEY);
+        currentToken = "";
+        showAccessPanel(
+          error.data?.message || error.message
+        );
+      } finally {
+        elements.loadingPanel.style.display = "none";
+      }
+    }
+
+    function showAccessPanel(message = "") {
+      elements.loadingPanel.style.display = "none";
+      elements.memberContent.classList.remove("visible");
+      elements.accessPanel.classList.add("visible");
+
+      if (message) {
+        showAccessMessage(message);
+      }
+    }
+
+    function renderMember(data) {
+      const member = data.member || {};
+      const shop = data.shop || {};
+      const orders = Array.isArray(data.orders)
+        ? data.orders
+        : [];
+
+      elements.memberName.textContent =
+        `${member.full_name || "お客様"} 様`;
+      elements.memberNumber.textContent =
+        member.customer_number || "-";
+      elements.memberPhone.textContent =
+        `登録電話番号：${member.phone_masked || "-"}`;
+      elements.cardShopName.textContent =
+        shop.shop_name_short || shop.shop_name || "";
+      elements.shopName.textContent =
+        shop.shop_name || "クリーニング店";
+      elements.shopMeta.innerHTML = [
+        shop.phone
+          ? `電話：${escapeHtml(shop.phone)}`
+          : "",
+        shop.address
+          ? `住所：${escapeHtml(shop.address)}`
+          : "",
+        shop.receipt_note
+          ? escapeHtml(shop.receipt_note)
+          : ""
+      ].filter(Boolean).join("<br>");
+
+      const active = orders.filter(
+        (order) =>
+          !["delivered", "cancelled"].includes(order.status)
+      );
+      const recent = orders.filter(
+        (order) =>
+          ["delivered", "cancelled"].includes(order.status)
+      );
+
+      renderActiveOrders(active);
+      renderRecentOrders(recent);
+    }
+
+    function renderActiveOrders(orders) {
+      elements.activeOrders.innerHTML = "";
+
+      if (!orders.length) {
+        elements.activeOrders.innerHTML = `
+          <div class="empty">
+            現在お預かりしている品物はありません。<br>
+            ご利用ありがとうございます。
+          </div>
+        `;
+        return;
+      }
+
+      for (const order of orders) {
+        const card = document.createElement("article");
+        const ready =
+          ["ready", "stored"].includes(order.status);
+
+        card.className =
+          `order-card${ready ? " ready" : ""}`;
+
+        card.innerHTML = `
+          <div class="order-head">
+            <div>
+              <div class="pickup-label">
+                受取番号・受付番号
+              </div>
+              <div class="pickup-number">
+                ${escapeHtml(order.pickup_number)}
+              </div>
+            </div>
+            <span class="status-badge status-${escapeHtml(order.status)}">
+              ${escapeHtml(STATUS_LABELS[order.status] || order.status)}
+            </span>
+          </div>
+
+          <div class="ready-callout">
+            仕上がりました。営業時間内にこの画面を提示してお受け取りください。
+          </div>
+
+          ${buildProgressHtml(order.status)}
+
+          <div class="order-body">
+            <div class="order-summary">
+              <div class="summary-box">
+                <div class="summary-label">仕上がり予定</div>
+                <div class="summary-value">
+                  ${escapeHtml(formatDateJa(order.promised_date))}
+                </div>
+              </div>
+              <div class="summary-box">
+                <div class="summary-label">お支払い</div>
+                <div class="summary-value">
+                  ${escapeHtml(PAYMENT_LABELS[order.payment_status] || order.payment_status)}
+                </div>
+              </div>
+              <div class="summary-box">
+                <div class="summary-label">合計金額</div>
+                <div class="summary-value">
+                  ${formatYen(order.total_amount)}
+                </div>
+              </div>
+            </div>
+
+            <div class="items">
+              ${buildItemsHtml(order.items || [])}
+            </div>
+          </div>
+        `;
+
+        elements.activeOrders.appendChild(card);
+      }
+    }
+
+    function buildProgressHtml(status) {
+      const steps = [
+        { key: "accepted", label: "受付" },
+        { key: "inspecting", label: "検品" },
+        { key: "cleaning", label: "洗浄" },
+        { key: "finishing", label: "仕上げ" },
+        { key: "ready", label: "受取可能" },
+        { key: "delivered", label: "受渡済み" }
+      ];
+
+      const rank = {
+        accepted: 0,
+        inspecting: 1,
+        cleaning: 2,
+        finishing: 3,
+        ready: 4,
+        stored: 4,
+        delivered: 5
+      };
+
+      if (status === "rewash") {
+        return `
+          <div class="ready-callout" style="display:block;background:#fff3e9;color:#9a4a12;border-color:#f1d4bf">
+            仕上がりを再確認しています。店舗からのご案内をお待ちください。
+          </div>
+        `;
+      }
+
+      if (status === "cancelled") {
+        return "";
+      }
+
+      const currentRank = rank[status] ?? 0;
+
+      return `
+        <div class="progress">
+          <div class="progress-track">
+            ${steps.map((step, index) => {
+              const cssClass =
+                index < currentRank
+                  ? "done"
+                  : index === currentRank
+                    ? "current"
+                    : "";
+
+              return `
+                <div class="progress-step ${cssClass}">
+                  <div class="progress-dot">
+                    ${index < currentRank ? "✓" : index + 1}
+                  </div>
+                  <div>${step.label}</div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildItemsHtml(items) {
+      if (!items.length) {
+        return "";
+      }
+
+      return items.map((item) => {
+        const optionText = Array.isArray(item.options) &&
+          item.options.length
+          ? `加工：${item.options
+              .map((option) => option.option_name)
+              .join("、")}`
+          : "加工：なし";
+
+        return `
+          <div class="item-row">
+            <div>
+              <div class="item-name">
+                ${escapeHtml(item.item_name)} × ${Number(item.quantity || 0)}
+              </div>
+              <div class="item-note">
+                ${escapeHtml(optionText)}
+                ${
+                  item.customer_visible_note
+                    ? `<br>注意：${escapeHtml(item.customer_visible_note)}`
+                    : ""
+                }
+              </div>
+            </div>
+            <div class="item-price">
+              ${formatYen(Number(item.line_amount || 0))}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderRecentOrders(orders) {
+      elements.recentOrders.innerHTML = "";
+
+      if (!orders.length) {
+        elements.recentOrders.innerHTML = `
+          <div class="empty">
+            最近の受取履歴はありません。
+          </div>
+        `;
+        return;
+      }
+
+      for (const order of orders.slice(0, 8)) {
+        const row = document.createElement("div");
+        row.className = "history-row";
+        row.innerHTML = `
+          <div>
+            <div class="history-number">
+              ${escapeHtml(order.order_number)}
+            </div>
+            <div class="history-meta">
+              ${escapeHtml(formatDateJa(
+                order.delivered_at || order.received_at
+              ))}
+              ｜${Number(order.item_count || 0)}点
+            </div>
+          </div>
+          <div style="text-align:right">
+            <span class="status-badge status-${escapeHtml(order.status)}">
+              ${escapeHtml(STATUS_LABELS[order.status] || order.status)}
+            </span>
+            <div class="history-meta">
+              ${formatYen(order.total_amount)}
+            </div>
+          </div>
+        `;
+        elements.recentOrders.appendChild(row);
+      }
+    }
+
+    elements.openMemberButton.addEventListener(
+      "click",
+      () => {
+        const token =
+          elements.memberTokenInput.value.trim();
+
+        if (!token) {
+          showAccessMessage(
+            "会員証トークンを入力してください。"
+          );
+          return;
+        }
+
+        loadMember(token);
+      }
+    );
+
+    elements.memberTokenInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Enter") {
+          elements.openMemberButton.click();
+        }
+      }
+    );
+
+    elements.refreshButton.addEventListener(
+      "click",
+      () => loadMember(currentToken)
+    );
+
+    elements.reloadButton.addEventListener(
+      "click",
+      () => loadMember(currentToken)
+    );
+
+    elements.clearMemberButton.addEventListener(
+      "click",
+      () => {
+        sessionStorage.removeItem(STORAGE_KEY);
+        currentToken = "";
+        elements.memberTokenInput.value = "";
+        showAccessPanel(
+          "この端末に保存していた会員証情報を解除しました。"
+        );
+      }
+    );
+
+    loadMember(getInitialToken());
+  </script>
+</body>
+</html>
