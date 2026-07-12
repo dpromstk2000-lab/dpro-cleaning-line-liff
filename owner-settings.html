@@ -1,0 +1,1240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜店舗設定</title>
+  <style>
+    :root {
+      --bg: #eef5f7;
+      --panel: #fff;
+      --line: #d7e4e9;
+      --ink: #173543;
+      --muted: #6a7f89;
+      --primary: #07828e;
+      --primary-dark: #05616a;
+      --success: #18815e;
+      --warning: #a76a00;
+      --danger: #bd3b49;
+      --shadow: 0 12px 30px rgba(24,56,70,.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .58; cursor: not-allowed; }
+
+    .header {
+      padding: 22px 18px;
+      color: #fff;
+      background: linear-gradient(135deg,#05636d,#07828e 58%,#0ca7a9);
+    }
+
+    .header-inner {
+      width: min(1250px,100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,.17);
+      font-size: 24px;
+    }
+
+    h1 { margin: 0; font-size: clamp(22px,3vw,32px); }
+    .subtitle { margin-top: 4px; color: rgba(255,255,255,.8); font-size: 12px; }
+    .version {
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      font-size: 10px;
+    }
+
+    .container {
+      width: min(1250px,calc(100% - 24px));
+      margin: 18px auto 50px;
+    }
+
+    .panel {
+      margin-bottom: 16px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .connection-grid {
+      display: grid;
+      grid-template-columns: minmax(170px,.7fr) auto minmax(220px,.9fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #c7d8df;
+      border-radius: 11px;
+      padding: 9px 12px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    input, select { min-height: 44px; }
+    textarea { min-height: 92px; resize: vertical; }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(7,130,142,.12);
+    }
+
+    .button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 11px;
+      padding: 9px 14px;
+      font-weight: 900;
+    }
+
+    .button-primary { color: #fff; background: var(--primary); }
+    .button-secondary { color: var(--primary-dark); background: #e6f5f6; }
+    .button-success { color: var(--success); background: #ebf9f3; border: 1px solid #bce0d1; }
+    .button-danger { color: var(--danger); background: #fff0f2; border: 1px solid #edc5ca; }
+    .clear-button { min-width: 66px; color: var(--danger); background: #fff; border: 1px solid #d5e0e5; }
+
+    .status-line {
+      margin-top: 10px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .status-line.success { color: #126847; border-color: #bfe2d3; background: #ebf9f3; }
+    .status-line.error { color: #982e3b; border-color: #edc5ca; background: #fff0f2; }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 { margin: 0; font-size: 19px; }
+    .section-note { color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+
+    .check-card {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f9fbfc;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .check-card input {
+      width: 19px;
+      height: 19px;
+      min-height: auto;
+      margin: 0;
+    }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr 120px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hours-row { display: contents; }
+
+    .day-label {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-weight: 900;
+    }
+
+    .closed-label {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f9fbfc;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .closed-label input {
+      width: 18px;
+      height: 18px;
+      min-height: auto;
+      margin: 0;
+    }
+
+    .save-bar {
+      position: sticky;
+      z-index: 10;
+      bottom: 10px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #b9dadd;
+      border-radius: 15px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 14px 35px rgba(20,55,70,.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .service-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tab-button {
+      min-height: 39px;
+      border: 1px solid #c4dade;
+      border-radius: 10px;
+      padding: 7px 12px;
+      color: var(--primary-dark);
+      background: #f4fbfb;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .tab-button.active {
+      color: #fff;
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+
+    .service-list { display: grid; gap: 10px; }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: minmax(130px,1.1fr) minmax(100px,.8fr) 120px 110px 100px auto;
+      gap: 8px;
+      align-items: end;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fbfdfe;
+    }
+
+    .service-row.inactive { opacity: .65; background: #f1f4f5; }
+
+    .service-code {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .service-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .small-button {
+      min-height: 38px;
+      border-radius: 9px;
+      padding: 7px 9px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .new-service {
+      padding: 14px;
+      border: 2px dashed #bcdadd;
+      border-radius: 14px;
+      background: #f5fbfb;
+    }
+
+    .history-list { display: grid; gap: 8px; }
+
+    .history-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfdfe;
+    }
+
+    .history-badge {
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: #e7f5f6;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .history-title { font-size: 12px; font-weight: 900; }
+    .history-meta { margin-top: 3px; color: var(--muted); font-size: 10px; }
+
+    .empty {
+      padding: 22px 12px;
+      border: 1px dashed #c9d8de;
+      border-radius: 13px;
+      color: var(--muted);
+      text-align: center;
+      background: #fbfdfe;
+      font-size: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 24px;
+      width: min(520px,calc(100% - 28px));
+      transform: translate(-50%,30px);
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 13px;
+      padding: 13px 16px;
+      color: #fff;
+      background: #173543;
+      box-shadow: 0 12px 34px rgba(0,0,0,.2);
+      transition: .22s ease;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .toast.visible { transform: translate(-50%,0); opacity: 1; }
+    .toast.error { background: #a93240; }
+
+    @media (max-width: 950px) {
+      .grid-4 { grid-template-columns: repeat(2,1fr); }
+      .service-row { grid-template-columns: repeat(3,1fr); }
+      .service-actions { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 700px) {
+      .version { display: none; }
+      .connection-grid, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .connection-grid .clear-field { position: absolute; right: 28px; margin-top: 22px; }
+      .hours-grid { grid-template-columns: 70px 1fr 1fr; }
+      .closed-label { grid-column: 2 / 4; }
+      .service-row { grid-template-columns: 1fr 1fr; }
+      .service-actions { grid-column: 1 / -1; }
+      .save-bar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">⚙️</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">店舗設定・料金メニュー・通知設定</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-11</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="connection-grid">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input id="adminKey" type="password" value="1234" autocomplete="off">
+        </div>
+        <div class="clear-field">
+          <button id="clearAdminKeyButton" class="button clear-button" type="button">消去</button>
+        </div>
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input id="shopCode" value="cleaning_demo" autocomplete="off">
+        </div>
+        <button id="connectButton" class="button button-primary" type="button">設定を開く</button>
+      </div>
+      <div id="connectionStatus" class="status-line">
+        管理コードを入力して設定を開いてください。
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>店舗基本情報</h2>
+        <div class="section-note">会員証・通知文面・受付画面へ反映</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label for="shopName">店舗名 *</label>
+          <input id="shopName">
+        </div>
+        <div>
+          <label for="shopNameShort">通知用の短い店舗名</label>
+          <input id="shopNameShort">
+        </div>
+        <div>
+          <label for="phone">電話番号</label>
+          <input id="phone">
+        </div>
+        <div>
+          <label for="postalCode">郵便番号</label>
+          <input id="postalCode">
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <label for="address">住所</label>
+        <input id="address">
+      </div>
+      <div style="margin-top:12px">
+        <label for="receiptNote">受取時の案内</label>
+        <textarea id="receiptNote"></textarea>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>営業時間・定休日</h2>
+        <div class="section-note">休業日は「休み」をON</div>
+      </div>
+      <div id="hoursGrid" class="hours-grid"></div>
+      <div style="margin-top:14px">
+        <label for="temporaryClosedDates">臨時休業日</label>
+        <textarea
+          id="temporaryClosedDates"
+          placeholder="2026-08-13&#10;2026-08-14&#10;1行に1日"
+        ></textarea>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>仕上がり・保管ルール</h2>
+      </div>
+      <div class="grid-3">
+        <div>
+          <label for="standardFinishDays">標準仕上がり日数</label>
+          <input id="standardFinishDays" type="number" min="0" max="60">
+        </div>
+        <div>
+          <label for="storageGraceDays">保管猶予日数</label>
+          <input id="storageGraceDays" type="number" min="0" max="365">
+        </div>
+        <div>
+          <label for="longStorageDays">長期保管判定日数</label>
+          <input id="longStorageDays" type="number" min="1" max="730">
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:12px">
+        <label class="check-card">
+          <input id="rushEnabled" type="checkbox">
+          お急ぎ仕上げを使用
+        </label>
+        <label class="check-card">
+          <input id="sameDayEnabled" type="checkbox">
+          当日仕上げを使用
+        </label>
+        <label class="check-card">
+          <input id="pickupDeliveryEnabled" type="checkbox">
+          集配サービスを使用
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>通知・会員証設定</h2>
+      </div>
+      <div class="grid-3">
+        <label class="check-card">
+          <input id="notifyAccepted" type="checkbox">
+          受付完了通知を使用
+        </label>
+        <label class="check-card">
+          <input id="notifyReady" type="checkbox">
+          仕上がり通知を使用
+        </label>
+        <div>
+          <label for="followupDays">受取再案内日数</label>
+          <input id="followupDays" placeholder="7,14,30">
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:12px">
+        <label class="check-card">
+          <input id="featurePhoto" type="checkbox">
+          品物写真機能
+        </label>
+        <label class="check-card">
+          <input id="featurePickupDelivery" type="checkbox">
+          集配機能表示
+        </label>
+        <label class="check-card">
+          <input id="featureCustomerQr" type="checkbox">
+          LINE会員証
+        </label>
+      </div>
+    </section>
+
+    <div class="save-bar">
+      <button id="reloadSettingsButton" class="button button-secondary" type="button">
+        保存せず再読み込み
+      </button>
+      <button id="saveShopButton" class="button button-primary" type="button">
+        店舗設定を保存
+      </button>
+    </div>
+
+    <section class="panel" style="margin-top:16px">
+      <div class="section-title">
+        <div>
+          <h2>料金メニュー</h2>
+          <div class="section-note">受付画面の品目・加工選択へ反映</div>
+        </div>
+      </div>
+
+      <div class="service-toolbar">
+        <button class="tab-button active" data-tab="item" type="button">品目料金</button>
+        <button class="tab-button" data-tab="option" type="button">加工料金</button>
+        <button class="tab-button" data-tab="inactive" type="button">停止中</button>
+      </div>
+
+      <div id="serviceList" class="service-list"></div>
+
+      <div class="new-service" style="margin-top:14px">
+        <h3 id="newServiceTitle" style="margin:0 0 12px;font-size:15px">
+          新しい品目を追加
+        </h3>
+        <div class="grid-4">
+          <div>
+            <label for="newServiceName">名称 *</label>
+            <input id="newServiceName">
+          </div>
+          <div>
+            <label for="newCategory">カテゴリ</label>
+            <input id="newCategory" placeholder="衣類・寝具・加工">
+          </div>
+          <div>
+            <label for="newPrice">料金</label>
+            <input id="newPrice" type="number" min="0" value="0">
+          </div>
+          <div>
+            <label for="newFinishDays">追加日数</label>
+            <input id="newFinishDays" type="number" min="0" max="60" value="0">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:10px">
+          <div>
+            <label for="newDisplayOrder">表示順</label>
+            <input id="newDisplayOrder" type="number" min="0" max="9999" value="100">
+          </div>
+          <div>
+            <label for="newDescription">説明</label>
+            <input id="newDescription">
+          </div>
+        </div>
+        <button id="addServiceButton" class="button button-success" type="button" style="margin-top:11px">
+          料金メニューを追加
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>設定変更履歴</h2>
+        <div class="section-note">最新50件</div>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const PAGE_VERSION =
+      "CLEANING-11-OWNER-SETTINGS-SERVICE-MENU-20260712";
+
+    const DAYS = [
+      ["mon", "月曜日"],
+      ["tue", "火曜日"],
+      ["wed", "水曜日"],
+      ["thu", "木曜日"],
+      ["fri", "金曜日"],
+      ["sat", "土曜日"],
+      ["sun", "日曜日"]
+    ];
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      clearAdminKeyButton: document.getElementById("clearAdminKeyButton"),
+      shopCode: document.getElementById("shopCode"),
+      connectButton: document.getElementById("connectButton"),
+      connectionStatus: document.getElementById("connectionStatus"),
+      shopName: document.getElementById("shopName"),
+      shopNameShort: document.getElementById("shopNameShort"),
+      phone: document.getElementById("phone"),
+      postalCode: document.getElementById("postalCode"),
+      address: document.getElementById("address"),
+      receiptNote: document.getElementById("receiptNote"),
+      hoursGrid: document.getElementById("hoursGrid"),
+      temporaryClosedDates: document.getElementById("temporaryClosedDates"),
+      standardFinishDays: document.getElementById("standardFinishDays"),
+      storageGraceDays: document.getElementById("storageGraceDays"),
+      longStorageDays: document.getElementById("longStorageDays"),
+      rushEnabled: document.getElementById("rushEnabled"),
+      sameDayEnabled: document.getElementById("sameDayEnabled"),
+      pickupDeliveryEnabled: document.getElementById("pickupDeliveryEnabled"),
+      notifyAccepted: document.getElementById("notifyAccepted"),
+      notifyReady: document.getElementById("notifyReady"),
+      followupDays: document.getElementById("followupDays"),
+      featurePhoto: document.getElementById("featurePhoto"),
+      featurePickupDelivery: document.getElementById("featurePickupDelivery"),
+      featureCustomerQr: document.getElementById("featureCustomerQr"),
+      reloadSettingsButton: document.getElementById("reloadSettingsButton"),
+      saveShopButton: document.getElementById("saveShopButton"),
+      serviceList: document.getElementById("serviceList"),
+      newServiceTitle: document.getElementById("newServiceTitle"),
+      newServiceName: document.getElementById("newServiceName"),
+      newCategory: document.getElementById("newCategory"),
+      newPrice: document.getElementById("newPrice"),
+      newFinishDays: document.getElementById("newFinishDays"),
+      newDisplayOrder: document.getElementById("newDisplayOrder"),
+      newDescription: document.getElementById("newDescription"),
+      addServiceButton: document.getElementById("addServiceButton"),
+      historyList: document.getElementById("historyList"),
+      toast: document.getElementById("toast")
+    };
+
+    const state = {
+      settings: null,
+      currentTab: "item",
+      loading: false
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatDateTimeJa(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "-";
+      return new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function buildAdminUrl(path) {
+      const url = new URL(`${API_BASE}${path}`);
+      url.searchParams.set("admin_key", elements.adminKey.value.trim());
+      url.searchParams.set(
+        "shop_code",
+        elements.shopCode.value.trim() || "cleaning_demo"
+      );
+      return url.toString();
+    }
+
+    async function apiFetch(url, options = {}) {
+      const response = await fetch(url, options);
+      const contentType = response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(`APIからJSON以外の応答が返りました（HTTP ${response.status}）`);
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(data.message || "API処理に失敗しました。");
+        error.data = data;
+        error.status = response.status;
+        throw error;
+      }
+
+      return data;
+    }
+
+    function renderHoursInputs() {
+      elements.hoursGrid.innerHTML = "";
+
+      for (const [key, label] of DAYS) {
+        const labelElement = document.createElement("div");
+        labelElement.className = "day-label";
+        labelElement.textContent = label;
+
+        const start = document.createElement("input");
+        start.type = "time";
+        start.id = `hours-${key}-start`;
+        start.value = "09:00";
+
+        const end = document.createElement("input");
+        end.type = "time";
+        end.id = `hours-${key}-end`;
+        end.value = "19:00";
+
+        const closedLabel = document.createElement("label");
+        closedLabel.className = "closed-label";
+        closedLabel.innerHTML = `
+          <input id="hours-${key}-closed" type="checkbox">
+          休み
+        `;
+
+        const closed = closedLabel.querySelector("input");
+        closed.addEventListener("change", () => {
+          start.disabled = closed.checked;
+          end.disabled = closed.checked;
+        });
+
+        elements.hoursGrid.append(labelElement, start, end, closedLabel);
+      }
+    }
+
+    async function loadSettings() {
+      if (state.loading) return;
+
+      if (!elements.adminKey.value.trim()) {
+        setConnectionStatus("管理コードを入力してください。", "error");
+        return;
+      }
+
+      state.loading = true;
+      setBusy(true);
+      setConnectionStatus("店舗設定を読み込んでいます。");
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/settings")
+        );
+
+        state.settings = data.settings;
+        renderShop(data.settings.shop || {});
+        renderServices();
+        renderHistory(data.settings.history || []);
+
+        setConnectionStatus(
+          `${data.settings.shop?.shop_name || "店舗"}の設定を読み込みました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        setConnectionStatus(error.data?.message || error.message, "error");
+      } finally {
+        state.loading = false;
+        setBusy(false);
+      }
+    }
+
+    function renderShop(shop) {
+      elements.shopName.value = shop.shop_name || "";
+      elements.shopNameShort.value = shop.shop_name_short || "";
+      elements.phone.value = shop.phone || "";
+      elements.postalCode.value = shop.postal_code || "";
+      elements.address.value = shop.address || "";
+      elements.receiptNote.value = shop.receipt_note || "";
+      elements.standardFinishDays.value = shop.standard_finish_days ?? 3;
+      elements.storageGraceDays.value = shop.storage_grace_days ?? 7;
+      elements.longStorageDays.value = shop.long_storage_days ?? 30;
+      elements.rushEnabled.checked = Boolean(shop.rush_enabled);
+      elements.sameDayEnabled.checked = Boolean(shop.same_day_enabled);
+      elements.pickupDeliveryEnabled.checked =
+        Boolean(shop.pickup_delivery_enabled);
+
+      const notifications = shop.notification_settings || {};
+      elements.notifyAccepted.checked = Boolean(notifications.accepted);
+      elements.notifyReady.checked = Boolean(notifications.ready);
+      elements.followupDays.value =
+        Array.isArray(notifications.uncollected_followup_days)
+          ? notifications.uncollected_followup_days.join(",")
+          : "";
+
+      const features = shop.feature_flags || {};
+      elements.featurePhoto.checked = Boolean(features.photo);
+      elements.featurePickupDelivery.checked =
+        Boolean(features.pickup_delivery);
+      elements.featureCustomerQr.checked = Boolean(features.customer_qr);
+
+      const hours = shop.business_hours || {};
+      const regularHolidays = new Set(
+        Array.isArray(shop.regular_holidays)
+          ? shop.regular_holidays
+          : []
+      );
+
+      for (const [key] of DAYS) {
+        const value = hours[key] || "closed";
+        const start = document.getElementById(`hours-${key}-start`);
+        const end = document.getElementById(`hours-${key}-end`);
+        const closed = document.getElementById(`hours-${key}-closed`);
+
+        const isClosed =
+          value === "closed" || regularHolidays.has(key);
+
+        closed.checked = isClosed;
+        start.disabled = isClosed;
+        end.disabled = isClosed;
+
+        if (!isClosed && value.includes("-")) {
+          const [startValue, endValue] = value.split("-");
+          start.value = startValue;
+          end.value = endValue;
+        }
+      }
+
+      elements.temporaryClosedDates.value =
+        Array.isArray(shop.temporary_closed_dates)
+          ? shop.temporary_closed_dates.join("\n")
+          : "";
+    }
+
+    function collectShopPayload() {
+      const businessHours = {};
+      const regularHolidays = [];
+
+      for (const [key] of DAYS) {
+        const start = document.getElementById(`hours-${key}-start`);
+        const end = document.getElementById(`hours-${key}-end`);
+        const closed = document.getElementById(`hours-${key}-closed`);
+
+        if (closed.checked) {
+          businessHours[key] = "closed";
+          regularHolidays.push(key);
+        } else {
+          if (!start.value || !end.value) {
+            throw new Error("営業日の開始時刻と終了時刻を入力してください。");
+          }
+          businessHours[key] = `${start.value}-${end.value}`;
+        }
+      }
+
+      const temporaryClosedDates =
+        elements.temporaryClosedDates.value
+          .split(/[\n,、\s]+/)
+          .map((value) => value.trim())
+          .filter(Boolean);
+
+      const followupDays =
+        elements.followupDays.value
+          .split(/[,、\s]+/)
+          .map((value) => value.trim())
+          .filter(Boolean)
+          .map(Number);
+
+      return {
+        shop_name: elements.shopName.value.trim(),
+        shop_name_short: elements.shopNameShort.value.trim(),
+        phone: elements.phone.value.trim(),
+        postal_code: elements.postalCode.value.trim(),
+        address: elements.address.value.trim(),
+        receipt_note: elements.receiptNote.value.trim(),
+        business_hours: businessHours,
+        regular_holidays: regularHolidays,
+        temporary_closed_dates: temporaryClosedDates,
+        standard_finish_days: Number(elements.standardFinishDays.value),
+        storage_grace_days: Number(elements.storageGraceDays.value),
+        long_storage_days: Number(elements.longStorageDays.value),
+        rush_enabled: elements.rushEnabled.checked,
+        same_day_enabled: elements.sameDayEnabled.checked,
+        pickup_delivery_enabled:
+          elements.pickupDeliveryEnabled.checked,
+        notification_settings: {
+          accepted: elements.notifyAccepted.checked,
+          ready: elements.notifyReady.checked,
+          uncollected_followup_days: followupDays
+        },
+        feature_flags: {
+          photo: elements.featurePhoto.checked,
+          pickup_delivery: elements.featurePickupDelivery.checked,
+          customer_qr: elements.featureCustomerQr.checked
+        },
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+      };
+    }
+
+    async function saveShopSettings() {
+      try {
+        const payload = collectShopPayload();
+
+        setBusy(true);
+
+        await apiFetch(
+          buildAdminUrl("/api/admin/settings/shop"),
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        showToast("店舗設定を保存しました。");
+        await loadSettings();
+      } catch (error) {
+        console.error(error);
+        showToast(error.data?.message || error.message, true);
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function renderServices() {
+      const services = Array.isArray(state.settings?.services)
+        ? state.settings.services
+        : [];
+
+      let rows;
+
+      if (state.currentTab === "inactive") {
+        rows = services.filter((service) => !service.is_active);
+      } else {
+        rows = services.filter(
+          (service) =>
+            service.service_type === state.currentTab &&
+            service.is_active
+        );
+      }
+
+      elements.serviceList.innerHTML = "";
+
+      if (!rows.length) {
+        elements.serviceList.innerHTML =
+          '<div class="empty">該当する料金メニューはありません。</div>';
+      } else {
+        for (const service of rows) {
+          elements.serviceList.appendChild(buildServiceRow(service));
+        }
+      }
+
+      const createType =
+        state.currentTab === "option" ? "option" : "item";
+      elements.newServiceTitle.textContent =
+        createType === "item"
+          ? "新しい品目を追加"
+          : "新しい加工を追加";
+      elements.addServiceButton.textContent =
+        createType === "item"
+          ? "品目料金を追加"
+          : "加工料金を追加";
+    }
+
+    function buildServiceRow(service) {
+      const row = document.createElement("div");
+      row.className =
+        `service-row${service.is_active ? "" : " inactive"}`;
+
+      row.innerHTML = `
+        <div>
+          <label>名称</label>
+          <input data-field="service_name" value="${escapeHtml(service.service_name)}">
+          <div class="service-code">${escapeHtml(service.service_code)}</div>
+        </div>
+        <div>
+          <label>カテゴリ</label>
+          <input data-field="category" value="${escapeHtml(service.category || "")}">
+        </div>
+        <div>
+          <label>料金</label>
+          <input data-field="default_price" type="number" min="0" value="${Number(service.default_price || 0)}">
+        </div>
+        <div>
+          <label>追加日数</label>
+          <input data-field="default_finish_days" type="number" min="0" max="60" value="${Number(service.default_finish_days || 0)}">
+        </div>
+        <div>
+          <label>表示順</label>
+          <input data-field="display_order" type="number" min="0" max="9999" value="${Number(service.display_order || 0)}">
+        </div>
+        <div class="service-actions">
+          <button class="button button-secondary small-button save-service" type="button">保存</button>
+          <button class="button ${service.is_active ? "button-danger" : "button-success"} small-button toggle-service" type="button">
+            ${service.is_active ? "停止" : "再開"}
+          </button>
+        </div>
+      `;
+
+      row.querySelector(".save-service")
+        .addEventListener("click", () =>
+          saveService(service, row, service.is_active)
+        );
+
+      row.querySelector(".toggle-service")
+        .addEventListener("click", () =>
+          saveService(service, row, !service.is_active)
+        );
+
+      return row;
+    }
+
+    async function saveService(service, row, isActive) {
+      const get = (field) =>
+        row.querySelector(`[data-field="${field}"]`).value;
+
+      const payload = {
+        service_type: service.service_type,
+        service_code: service.service_code,
+        service_name: get("service_name").trim(),
+        category: get("category").trim(),
+        description: service.description || "",
+        default_price: Number(get("default_price")),
+        default_finish_days: Number(get("default_finish_days")),
+        display_order: Number(get("display_order")),
+        is_active: isActive,
+        metadata: service.metadata || {},
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+      };
+
+      try {
+        setBusy(true);
+
+        await apiFetch(
+          buildAdminUrl(`/api/admin/services/${service.id}`),
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        showToast(
+          isActive
+            ? `${payload.service_name}を保存しました。`
+            : `${payload.service_name}を停止しました。`
+        );
+
+        await loadSettings();
+      } catch (error) {
+        console.error(error);
+        showToast(error.data?.message || error.message, true);
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function addService() {
+      const serviceType =
+        state.currentTab === "option" ? "option" : "item";
+
+      const payload = {
+        service_type: serviceType,
+        service_name: elements.newServiceName.value.trim(),
+        category: elements.newCategory.value.trim(),
+        description: elements.newDescription.value.trim(),
+        default_price: Number(elements.newPrice.value),
+        default_finish_days: Number(elements.newFinishDays.value),
+        display_order: Number(elements.newDisplayOrder.value),
+        is_active: true,
+        metadata: {},
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+      };
+
+      try {
+        setBusy(true);
+
+        await apiFetch(
+          buildAdminUrl("/api/admin/services"),
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        showToast(`${payload.service_name}を追加しました。`);
+
+        elements.newServiceName.value = "";
+        elements.newCategory.value = "";
+        elements.newDescription.value = "";
+        elements.newPrice.value = "0";
+        elements.newFinishDays.value = "0";
+
+        state.currentTab = serviceType;
+        updateTabs();
+        await loadSettings();
+      } catch (error) {
+        console.error(error);
+        showToast(error.data?.message || error.message, true);
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function renderHistory(history) {
+      elements.historyList.innerHTML = "";
+
+      if (!history.length) {
+        elements.historyList.innerHTML =
+          '<div class="empty">設定変更履歴はまだありません。</div>';
+        return;
+      }
+
+      for (const entry of history) {
+        const after = entry.after_data || {};
+        const targetName =
+          entry.target_type === "shop"
+            ? after.shop_name || "店舗設定"
+            : after.service_name || "料金メニュー";
+
+        const actionLabel = {
+          create: "追加",
+          update: "更新",
+          activate: "再開",
+          deactivate: "停止"
+        }[entry.action] || entry.action;
+
+        const row = document.createElement("div");
+        row.className = "history-row";
+        row.innerHTML = `
+          <span class="history-badge">${escapeHtml(actionLabel)}</span>
+          <div>
+            <div class="history-title">${escapeHtml(targetName)}</div>
+            <div class="history-meta">
+              ${escapeHtml(entry.changed_by_label || "-")}
+            </div>
+          </div>
+          <div class="history-meta">${escapeHtml(formatDateTimeJa(entry.created_at))}</div>
+        `;
+        elements.historyList.appendChild(row);
+      }
+    }
+
+    function updateTabs() {
+      document.querySelectorAll(".tab-button")
+        .forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.tab === state.currentTab
+          );
+        });
+      renderServices();
+    }
+
+    function setBusy(disabled) {
+      elements.connectButton.disabled = disabled;
+      elements.saveShopButton.disabled = disabled;
+      elements.reloadSettingsButton.disabled = disabled;
+      elements.addServiceButton.disabled = disabled;
+
+      document.querySelectorAll(
+        ".save-service,.toggle-service,.tab-button"
+      ).forEach((button) => {
+        button.disabled = disabled;
+      });
+    }
+
+    function setConnectionStatus(message, type = "") {
+      elements.connectionStatus.textContent = message;
+      elements.connectionStatus.className =
+        `status-line ${type}`.trim();
+    }
+
+    let toastTimer = null;
+
+    function showToast(message, isError = false) {
+      elements.toast.textContent = message;
+      elements.toast.className =
+        `toast visible${isError ? " error" : ""}`;
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        elements.toast.className = "toast";
+      }, 3600);
+    }
+
+    elements.clearAdminKeyButton.addEventListener("click", () => {
+      elements.adminKey.value = "";
+      elements.adminKey.focus();
+      setConnectionStatus(
+        "管理コードを消去しました。再入力してください。"
+      );
+    });
+
+    elements.connectButton.addEventListener("click", loadSettings);
+    elements.reloadSettingsButton.addEventListener("click", loadSettings);
+    elements.saveShopButton.addEventListener("click", saveShopSettings);
+    elements.addServiceButton.addEventListener("click", addService);
+
+    document.querySelectorAll(".tab-button")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          state.currentTab = button.dataset.tab;
+          updateTabs();
+        });
+      });
+
+    renderHoursInputs();
+    loadSettings();
+  </script>
+</body>
+</html>
