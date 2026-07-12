@@ -549,12 +549,269 @@
       font-size: 12px;
     }
 
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .mode-tab {
+      min-height: 48px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .mode-tab.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .mode-pane {
+      display: none;
+    }
+
+    .mode-pane.active {
+      display: block;
+    }
+
+    .management-search {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(170px, 240px) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .order-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 16px;
+    }
+
+    .order-card {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 1fr) auto auto;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 15px;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .order-card:hover {
+      border-color: var(--primary);
+      background: #f4fbfb;
+    }
+
+    .order-number {
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .order-customer {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: #edf2f5;
+      color: #435865;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-accepted { background: #e8f4ff; color: #23608c; }
+    .status-inspecting { background: #fff4d9; color: #8a5a00; }
+    .status-cleaning { background: #e8f7f8; color: #08707b; }
+    .status-finishing { background: #efeaff; color: #5e45a8; }
+    .status-ready { background: #e7f8ef; color: #13744d; }
+    .status-stored { background: #f2edff; color: #6441a5; }
+    .status-delivered { background: #edf1f3; color: #43515a; }
+    .status-rewash { background: #fff0e6; color: #a84d0b; }
+    .status-cancelled { background: #fff0f2; color: #a52e3c; }
+
+    .detail-panel {
+      display: none;
+    }
+
+    .detail-panel.visible {
+      display: block;
+    }
+
+    .detail-hero {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(130px, 0.7fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .detail-box {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #f9fbfc;
+      padding: 14px;
+    }
+
+    .detail-value {
+      margin-top: 5px;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .detail-subtitle {
+      margin: 23px 0 11px;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .management-actions {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 11px;
+      align-items: end;
+    }
+
+    .status-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .status-action {
+      min-height: 43px;
+      border: 1px solid #bed7dc;
+      border-radius: 11px;
+      background: #eef9fa;
+      color: var(--primary-dark);
+      padding: 9px 15px;
+      font-weight: 900;
+    }
+
+    .status-action.danger {
+      border-color: #ecc7cc;
+      background: #fff1f3;
+      color: var(--danger);
+    }
+
+    .status-action.complete {
+      border-color: #b7dfd0;
+      background: #ebfaf4;
+      color: var(--success);
+    }
+
+    .locked-note {
+      margin-top: 12px;
+      border: 1px solid #d6dfe4;
+      border-radius: 12px;
+      background: #f2f5f7;
+      color: #53636d;
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .item-summary-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .item-summary-row {
+      display: grid;
+      grid-template-columns: auto minmax(160px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .item-code {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .item-name {
+      font-weight: 900;
+    }
+
+    .item-note {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-entry {
+      position: relative;
+      border-left: 4px solid #b8dfe2;
+      border-radius: 0 12px 12px 0;
+      background: #f8fbfc;
+      padding: 12px 14px;
+    }
+
+    .timeline-title {
+      font-weight: 900;
+    }
+
+    .timeline-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .empty-state {
+      border: 1px dashed #c9d7de;
+      border-radius: 13px;
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      background: #fbfdfe;
+    }
+
     @media (max-width: 900px) {
       .system-strip,
       .grid-4,
       .grid-3,
       .option-grid,
-      .summary-box {
+      .summary-box,
+      .detail-hero {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .management-search,
+      .order-card {
         grid-template-columns: 1fr 1fr;
       }
 
@@ -582,7 +839,13 @@
       .grid-4,
       .option-grid,
       .summary-box,
-      .search-row {
+      .search-row,
+      .mode-tabs,
+      .management-search,
+      .order-card,
+      .detail-hero,
+      .management-actions,
+      .item-summary-row {
         grid-template-columns: 1fr;
       }
 
@@ -600,10 +863,10 @@
         <div class="brand-mark">👔</div>
         <div>
           <h1>DPRO クリーニング LINE</h1>
-          <div class="subtitle">店頭受付・複数品登録</div>
+          <div class="subtitle">店頭受付・注文状況管理</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-5-R1</div>
+      <div class="version">STEP CLEANING-6</div>
     </div>
   </header>
 
@@ -634,6 +897,24 @@
 
     <div id="apiStatus" class="status">接続確認前です</div>
 
+    <nav class="mode-tabs" aria-label="操作を選択">
+      <button
+        id="receptionModeButton"
+        class="mode-tab active"
+        type="button"
+      >
+        新しい受付
+      </button>
+      <button
+        id="managementModeButton"
+        class="mode-tab"
+        type="button"
+      >
+        注文状況を更新
+      </button>
+    </nav>
+
+    <div id="receptionMode" class="mode-pane active">
     <section class="panel">
       <div class="panel-title">
         <h2><span class="step-number">1</span>お客様を選択</h2>
@@ -776,6 +1057,134 @@
         次の受付を開始
       </button>
     </section>
+
+    </div>
+
+    <div id="managementMode" class="mode-pane">
+      <section class="panel">
+        <div class="panel-title">
+          <h2><span class="step-number">1</span>注文を検索</h2>
+          <button
+            id="refreshOrdersButton"
+            class="button button-secondary"
+            type="button"
+          >
+            最新情報へ更新
+          </button>
+        </div>
+
+        <div class="management-search">
+          <div>
+            <label for="orderSearch">受付番号・氏名・会員番号・電話番号</label>
+            <input
+              id="orderSearch"
+              placeholder="例：CL-20260712-0001"
+              autocomplete="off"
+            >
+          </div>
+          <div>
+            <label for="orderStatusFilter">状態で絞り込み</label>
+            <select id="orderStatusFilter">
+              <option value="">すべての状態</option>
+              <option value="accepted">受付済み</option>
+              <option value="inspecting">検品中</option>
+              <option value="cleaning">クリーニング中</option>
+              <option value="finishing">仕上げ中</option>
+              <option value="ready">仕上がり済み</option>
+              <option value="stored">保管中</option>
+              <option value="rewash">再洗い・確認中</option>
+              <option value="delivered">受け渡し済み</option>
+              <option value="cancelled">キャンセル</option>
+            </select>
+          </div>
+          <button
+            id="orderSearchButton"
+            class="button button-primary"
+            type="button"
+          >
+            注文を検索
+          </button>
+        </div>
+
+        <div id="orderListMessage" class="message"></div>
+        <div id="orderList" class="order-list"></div>
+      </section>
+
+      <section id="orderDetailPanel" class="panel detail-panel">
+        <div class="panel-title">
+          <div>
+            <div class="small">注文詳細</div>
+            <h2 id="detailOrderNumber" style="margin-top:4px"></h2>
+          </div>
+          <span id="detailStatusBadge" class="status-badge"></span>
+        </div>
+
+        <div class="detail-hero">
+          <div class="detail-box">
+            <div class="summary-label">お客様</div>
+            <div id="detailCustomer" class="detail-value"></div>
+            <div id="detailCustomerMeta" class="small" style="margin-top:5px"></div>
+          </div>
+          <div class="detail-box">
+            <div class="summary-label">品物点数</div>
+            <div id="detailItemCount" class="detail-value"></div>
+          </div>
+          <div class="detail-box">
+            <div class="summary-label">合計金額</div>
+            <div id="detailTotalAmount" class="detail-value"></div>
+          </div>
+          <div class="detail-box">
+            <div class="summary-label">お支払い</div>
+            <div id="detailPaymentStatus" class="detail-value"></div>
+          </div>
+        </div>
+
+        <div class="detail-subtitle">仕上がり予定日の変更</div>
+        <div class="management-actions">
+          <div class="grid grid-2">
+            <div>
+              <label for="managementPromisedDate">仕上がり予定日</label>
+              <input id="managementPromisedDate" type="date">
+            </div>
+            <div>
+              <label for="scheduleChangeReason">変更理由 *</label>
+              <input
+                id="scheduleChangeReason"
+                placeholder="例：お客様との確認により変更"
+              >
+            </div>
+          </div>
+          <button
+            id="saveScheduleButton"
+            class="button button-secondary"
+            type="button"
+          >
+            予定日を更新
+          </button>
+        </div>
+
+        <div class="detail-subtitle">工程ステータス</div>
+        <div>
+          <label for="statusChangeReason">
+            変更理由（再洗い・キャンセル時は必須）
+          </label>
+          <input
+            id="statusChangeReason"
+            placeholder="例：シミが残っているため再洗い"
+          >
+        </div>
+        <div id="statusActions" class="status-actions"></div>
+        <div id="statusLockedNote" class="locked-note" style="display:none"></div>
+
+        <div id="managementMessage" class="message"></div>
+
+        <div class="detail-subtitle">お預かり品</div>
+        <div id="detailItems" class="item-summary-list"></div>
+
+        <div class="detail-subtitle">変更履歴</div>
+        <div id="detailTimeline" class="timeline"></div>
+      </section>
+    </div>
   </main>
 
   <script>
@@ -783,14 +1192,18 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-5-R1-ADMIN-KEY-CLEAR-20260712";
+    const PAGE_VERSION = "CLEANING-6-STATUS-SCHEDULE-MANAGEMENT-20260712";
 
     const state = {
       selectedCustomer: null,
       itemServices: [],
       optionServices: [],
       itemSerial: 0,
-      submitting: false
+      submitting: false,
+      activeMode: "reception",
+      managementOrders: [],
+      selectedOrderDetail: null,
+      managementLoading: false
     };
 
     const elements = {
@@ -828,7 +1241,37 @@
       receipt: document.getElementById("receipt"),
       receiptNumber: document.getElementById("receiptNumber"),
       receiptDetail: document.getElementById("receiptDetail"),
-      newReceptionButton: document.getElementById("newReceptionButton")
+      newReceptionButton: document.getElementById("newReceptionButton"),
+      receptionModeButton: document.getElementById("receptionModeButton"),
+      managementModeButton: document.getElementById("managementModeButton"),
+      receptionMode: document.getElementById("receptionMode"),
+      managementMode: document.getElementById("managementMode"),
+      orderSearch: document.getElementById("orderSearch"),
+      orderStatusFilter: document.getElementById("orderStatusFilter"),
+      orderSearchButton: document.getElementById("orderSearchButton"),
+      refreshOrdersButton: document.getElementById("refreshOrdersButton"),
+      orderListMessage: document.getElementById("orderListMessage"),
+      orderList: document.getElementById("orderList"),
+      orderDetailPanel: document.getElementById("orderDetailPanel"),
+      detailOrderNumber: document.getElementById("detailOrderNumber"),
+      detailStatusBadge: document.getElementById("detailStatusBadge"),
+      detailCustomer: document.getElementById("detailCustomer"),
+      detailCustomerMeta: document.getElementById("detailCustomerMeta"),
+      detailItemCount: document.getElementById("detailItemCount"),
+      detailTotalAmount: document.getElementById("detailTotalAmount"),
+      detailPaymentStatus: document.getElementById("detailPaymentStatus"),
+      managementPromisedDate:
+        document.getElementById("managementPromisedDate"),
+      scheduleChangeReason:
+        document.getElementById("scheduleChangeReason"),
+      saveScheduleButton: document.getElementById("saveScheduleButton"),
+      statusChangeReason:
+        document.getElementById("statusChangeReason"),
+      statusActions: document.getElementById("statusActions"),
+      statusLockedNote: document.getElementById("statusLockedNote"),
+      managementMessage: document.getElementById("managementMessage"),
+      detailItems: document.getElementById("detailItems"),
+      detailTimeline: document.getElementById("detailTimeline")
     };
 
     function getAdminKey() {
@@ -1634,6 +2077,576 @@
       }
     }
 
+    const STATUS_LABELS = {
+      accepted: "受付済み",
+      inspecting: "検品中",
+      cleaning: "クリーニング中",
+      finishing: "仕上げ中",
+      ready: "仕上がり済み",
+      stored: "保管中",
+      delivered: "受け渡し済み",
+      rewash: "再洗い・確認中",
+      cancelled: "キャンセル"
+    };
+
+    const PAYMENT_LABELS = {
+      unpaid: "未払い",
+      paid: "支払い済み",
+      pay_on_pickup: "受取時支払い",
+      refunded: "返金済み"
+    };
+
+    function switchMode(mode) {
+      state.activeMode = mode;
+      const receptionActive = mode === "reception";
+
+      elements.receptionMode.classList.toggle(
+        "active",
+        receptionActive
+      );
+      elements.managementMode.classList.toggle(
+        "active",
+        !receptionActive
+      );
+      elements.receptionModeButton.classList.toggle(
+        "active",
+        receptionActive
+      );
+      elements.managementModeButton.classList.toggle(
+        "active",
+        !receptionActive
+      );
+
+      if (!receptionActive) {
+        loadManagementOrders();
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function statusLabel(status) {
+      return STATUS_LABELS[status] || status || "-";
+    }
+
+    function statusClass(status) {
+      return `status-badge status-${status || "accepted"}`;
+    }
+
+    function formatDateJa(value) {
+      if (!value) {
+        return "-";
+      }
+
+      const match = String(value).match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) {
+        return String(value);
+      }
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function formatDateTimeJa(value) {
+      if (!value) {
+        return "-";
+      }
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    async function loadManagementOrders() {
+      if (state.managementLoading) {
+        return;
+      }
+
+      clearMessage(elements.orderListMessage);
+      state.managementLoading = true;
+      elements.orderSearchButton.disabled = true;
+      elements.refreshOrdersButton.disabled = true;
+      elements.orderSearchButton.textContent = "検索中…";
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/orders", {
+            q: elements.orderSearch.value.trim(),
+            status: elements.orderStatusFilter.value,
+            limit: 100
+          })
+        );
+
+        state.managementOrders = data.orders || [];
+        renderManagementOrders(state.managementOrders);
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.orderListMessage,
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        state.managementLoading = false;
+        elements.orderSearchButton.disabled = false;
+        elements.refreshOrdersButton.disabled = false;
+        elements.orderSearchButton.textContent = "注文を検索";
+      }
+    }
+
+    function renderManagementOrders(orders) {
+      elements.orderList.innerHTML = "";
+
+      if (!orders.length) {
+        elements.orderList.innerHTML =
+          '<div class="empty-state">該当する注文がありません。</div>';
+        return;
+      }
+
+      for (const order of orders) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "order-card";
+        button.innerHTML = `
+          <div>
+            <div class="order-number">${escapeHtml(order.order_number)}</div>
+            <div class="order-customer">
+              ${escapeHtml(order.full_name)}　
+              ${escapeHtml(order.customer_number)}
+            </div>
+          </div>
+          <div>
+            <div class="small">仕上がり予定</div>
+            <strong>${escapeHtml(formatDateJa(order.promised_date))}</strong>
+          </div>
+          <span class="${statusClass(order.status)}">
+            ${escapeHtml(statusLabel(order.status))}
+          </span>
+          <strong>${formatYen(order.total_amount)}</strong>
+        `;
+        button.addEventListener("click", () =>
+          loadOrderDetail(order.order_id)
+        );
+        elements.orderList.appendChild(button);
+      }
+    }
+
+    async function loadOrderDetail(orderId) {
+      clearMessage(elements.managementMessage);
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(`/api/admin/orders/${orderId}`)
+        );
+
+        state.selectedOrderDetail = data;
+        renderOrderDetail(data);
+        elements.orderDetailPanel.classList.add("visible");
+        elements.orderDetailPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.orderListMessage,
+          error.data?.message || error.message,
+          "error"
+        );
+      }
+    }
+
+    function renderOrderDetail(data) {
+      const order = data.order || {};
+      const customer = data.customer || {};
+      const items = data.items || [];
+
+      elements.detailOrderNumber.textContent =
+        order.order_number || "-";
+      elements.detailStatusBadge.className =
+        statusClass(order.status);
+      elements.detailStatusBadge.textContent =
+        statusLabel(order.status);
+      elements.detailCustomer.textContent =
+        customer.full_name || "-";
+      elements.detailCustomerMeta.textContent =
+        `会員番号：${customer.customer_number || "-"}　電話：${customer.phone_raw || customer.phone_normalized || "-"}`;
+      elements.detailItemCount.textContent =
+        `${Number(order.item_count || 0)}点`;
+      elements.detailTotalAmount.textContent =
+        formatYen(order.total_amount);
+      elements.detailPaymentStatus.textContent =
+        PAYMENT_LABELS[order.payment_status] ||
+        order.payment_status ||
+        "-";
+      elements.managementPromisedDate.value =
+        order.promised_date || "";
+      elements.managementPromisedDate.min =
+        formatDateInput(new Date());
+      elements.scheduleChangeReason.value = "";
+      elements.statusChangeReason.value = "";
+
+      renderDetailItems(items);
+      renderStatusActions(
+        order,
+        data.allowed_next_statuses || []
+      );
+      renderDetailTimeline(
+        data.history || [],
+        data.schedule_history || []
+      );
+    }
+
+    function renderDetailItems(items) {
+      elements.detailItems.innerHTML = "";
+
+      if (!items.length) {
+        elements.detailItems.innerHTML =
+          '<div class="empty-state">品物明細がありません。</div>';
+        return;
+      }
+
+      for (const item of items) {
+        const options = item.cleaning_item_options || [];
+        const optionText = options.length
+          ? `加工：${options
+              .map((option) => option.option_name)
+              .join("、")}`
+          : "加工：なし";
+
+        const row = document.createElement("div");
+        row.className = "item-summary-row";
+        row.innerHTML = `
+          <div class="item-code">${escapeHtml(item.item_code)}</div>
+          <div>
+            <div class="item-name">
+              ${escapeHtml(item.item_name)} × ${Number(item.quantity || 0)}
+            </div>
+            <div class="item-note">
+              ${escapeHtml(optionText)}
+              ${
+                item.customer_visible_note
+                  ? `<br>注意：${escapeHtml(item.customer_visible_note)}`
+                  : ""
+              }
+            </div>
+          </div>
+          <span class="${statusClass(item.status)}">
+            ${escapeHtml(statusLabel(item.status))}
+          </span>
+          <strong>${formatYen(Number(item.quantity || 0) * Number(item.unit_price || 0))}</strong>
+        `;
+        elements.detailItems.appendChild(row);
+      }
+    }
+
+    function renderStatusActions(order, nextStatuses) {
+      elements.statusActions.innerHTML = "";
+      elements.statusLockedNote.style.display = "none";
+      elements.statusLockedNote.textContent = "";
+
+      if (
+        ["delivered", "cancelled"].includes(order.status)
+      ) {
+        elements.statusLockedNote.style.display = "block";
+        elements.statusLockedNote.textContent =
+          order.status === "delivered"
+            ? "この注文は受け渡し済みです。誤操作防止のため、通常画面からは状態を変更できません。"
+            : "この注文はキャンセル済みです。誤操作防止のため、通常画面からは状態を変更できません。";
+        return;
+      }
+
+      if (!nextStatuses.length) {
+        elements.statusLockedNote.style.display = "block";
+        elements.statusLockedNote.textContent =
+          "現在の状態から選択できる次の工程がありません。";
+        return;
+      }
+
+      for (const nextStatus of nextStatuses) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "status-action";
+
+        if (nextStatus === "cancelled") {
+          button.classList.add("danger");
+        }
+
+        if (
+          ["ready", "stored", "delivered"].includes(nextStatus)
+        ) {
+          button.classList.add("complete");
+        }
+
+        button.textContent =
+          nextStatus === "delivered"
+            ? "受け渡し完了"
+            : `${statusLabel(nextStatus)}へ変更`;
+
+        button.addEventListener("click", () =>
+          updateOrderStatus(nextStatus)
+        );
+
+        elements.statusActions.appendChild(button);
+      }
+    }
+
+    async function updateOrderStatus(toStatus) {
+      const detail = state.selectedOrderDetail;
+      const order = detail?.order;
+
+      if (!order) {
+        showMessage(
+          elements.managementMessage,
+          "注文を選択してください。",
+          "error"
+        );
+        return;
+      }
+
+      const reason = elements.statusChangeReason.value.trim();
+
+      if (
+        ["rewash", "cancelled"].includes(toStatus) &&
+        !reason
+      ) {
+        showMessage(
+          elements.managementMessage,
+          "再洗い・確認中またはキャンセルへ変更する場合は理由を入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      if (
+        toStatus === "delivered" &&
+        !window.confirm(
+          `${order.order_number}を受け渡し済みにします。品物点数とお客様を確認しましたか？`
+        )
+      ) {
+        return;
+      }
+
+      if (
+        toStatus === "cancelled" &&
+        !window.confirm(
+          `${order.order_number}をキャンセルします。よろしいですか？`
+        )
+      ) {
+        return;
+      }
+
+      clearMessage(elements.managementMessage);
+      setManagementButtonsDisabled(true);
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(
+            `/api/admin/orders/${order.id}/status`
+          ),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              to_status: toStatus,
+              expected_status: order.status,
+              reason: reason || null,
+              changed_by_label:
+                "受付PC STEP CLEANING-6"
+            })
+          }
+        );
+
+        await loadOrderDetail(order.id);
+        await loadManagementOrders();
+
+        showMessage(
+          elements.managementMessage,
+          `${order.order_number}を「${statusLabel(toStatus)}」へ更新しました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.managementMessage,
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        setManagementButtonsDisabled(false);
+      }
+    }
+
+    async function updateOrderSchedule() {
+      const detail = state.selectedOrderDetail;
+      const order = detail?.order;
+
+      if (!order) {
+        showMessage(
+          elements.managementMessage,
+          "注文を選択してください。",
+          "error"
+        );
+        return;
+      }
+
+      const promisedDate =
+        elements.managementPromisedDate.value;
+      const reason =
+        elements.scheduleChangeReason.value.trim();
+
+      if (!promisedDate) {
+        showMessage(
+          elements.managementMessage,
+          "仕上がり予定日を選択してください。",
+          "error"
+        );
+        return;
+      }
+
+      if (!reason) {
+        showMessage(
+          elements.managementMessage,
+          "仕上がり予定日の変更理由を入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      clearMessage(elements.managementMessage);
+      setManagementButtonsDisabled(true);
+
+      try {
+        await apiFetch(
+          buildAdminUrl(
+            `/api/admin/orders/${order.id}/schedule`
+          ),
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              promised_date: promisedDate,
+              expected_promised_date:
+                order.promised_date || null,
+              reason,
+              apply_to_items: true,
+              changed_by_label:
+                "受付PC STEP CLEANING-6"
+            })
+          }
+        );
+
+        await loadOrderDetail(order.id);
+        await loadManagementOrders();
+
+        showMessage(
+          elements.managementMessage,
+          `${order.order_number}の仕上がり予定日を${formatDateJa(promisedDate)}へ更新しました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.managementMessage,
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        setManagementButtonsDisabled(false);
+      }
+    }
+
+    function setManagementButtonsDisabled(disabled) {
+      elements.saveScheduleButton.disabled = disabled;
+
+      for (const button of elements.statusActions.querySelectorAll(
+        "button"
+      )) {
+        button.disabled = disabled;
+      }
+    }
+
+    function renderDetailTimeline(
+      statusHistory,
+      scheduleHistory
+    ) {
+      const orderHistory = statusHistory
+        .filter((entry) => entry.target_type === "order")
+        .map((entry) => ({
+          type: "status",
+          created_at: entry.created_at,
+          title:
+            entry.from_status === null
+              ? `${statusLabel(entry.to_status)}で登録`
+              : `${statusLabel(entry.from_status)} → ${statusLabel(entry.to_status)}`,
+          reason: entry.reason,
+          changed_by_label: entry.changed_by_label
+        }));
+
+      const scheduleEntries = scheduleHistory.map((entry) => ({
+        type: "schedule",
+        created_at: entry.created_at,
+        title:
+          `仕上がり予定日：${formatDateJa(entry.from_promised_date)} → ${formatDateJa(entry.to_promised_date)}`,
+        reason: entry.reason,
+        changed_by_label: entry.changed_by_label
+      }));
+
+      const entries = [...orderHistory, ...scheduleEntries].sort(
+        (left, right) =>
+          new Date(right.created_at).getTime() -
+          new Date(left.created_at).getTime()
+      );
+
+      elements.detailTimeline.innerHTML = "";
+
+      if (!entries.length) {
+        elements.detailTimeline.innerHTML =
+          '<div class="empty-state">変更履歴はありません。</div>';
+        return;
+      }
+
+      for (const entry of entries) {
+        const row = document.createElement("div");
+        row.className = "timeline-entry";
+        row.innerHTML = `
+          <div class="timeline-title">
+            ${escapeHtml(entry.title)}
+          </div>
+          <div class="timeline-meta">
+            ${escapeHtml(formatDateTimeJa(entry.created_at))}
+            ${
+              entry.changed_by_label
+                ? `｜${escapeHtml(entry.changed_by_label)}`
+                : ""
+            }
+            ${
+              entry.reason
+                ? `<br>理由：${escapeHtml(entry.reason)}`
+                : ""
+            }
+          </div>
+        `;
+        elements.detailTimeline.appendChild(row);
+      }
+    }
+
     function resetReception() {
       clearCustomer();
       elements.customerSearch.value = "";
@@ -1656,6 +2669,36 @@
       elements.adminKey.focus();
       setStatus("管理コードを消去しました。再入力してください。");
     });
+
+    elements.receptionModeButton.addEventListener(
+      "click",
+      () => switchMode("reception")
+    );
+    elements.managementModeButton.addEventListener(
+      "click",
+      () => switchMode("management")
+    );
+    elements.orderSearchButton.addEventListener(
+      "click",
+      loadManagementOrders
+    );
+    elements.refreshOrdersButton.addEventListener(
+      "click",
+      loadManagementOrders
+    );
+    elements.orderSearch.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        loadManagementOrders();
+      }
+    });
+    elements.orderStatusFilter.addEventListener(
+      "change",
+      loadManagementOrders
+    );
+    elements.saveScheduleButton.addEventListener(
+      "click",
+      updateOrderSchedule
+    );
 
     elements.connectButton.addEventListener("click", checkConnection);
     elements.searchButton.addEventListener("click", searchCustomers);
