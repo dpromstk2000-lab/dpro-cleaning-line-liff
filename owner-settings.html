@@ -447,6 +447,83 @@
       margin-top: 10px;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
+    .pane-heading {
+      margin-bottom: 12px;
+      padding: 14px 16px;
+      border: 1px solid #bcdadd;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#f4fbfb,#fff);
+      box-shadow: var(--shadow);
+    }
+
+    .pane-heading h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .pane-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .shop-subnav {
+      position: sticky;
+      top: 10px;
+      z-index: 15;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+      padding: 9px;
+      border: 1px solid #c9dde1;
+      border-radius: 13px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 22px rgba(24,56,70,.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .shop-subnav-link {
+      min-height: 37px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      padding: 7px 10px;
+      color: var(--primary-dark);
+      background: #eef8f9;
+      font-size: 11px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .shop-subnav-link:hover {
+      border-color: #b9d6da;
+    }
+
+    .shop-subnav-link.active {
+      color: #fff;
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+
+    .pane-action-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .settings-index-link {
+      width: 100%;
+    }
+
     .toast {
       position: fixed;
       z-index: 1000;
@@ -510,6 +587,17 @@
         white-space: nowrap;
       }
 
+      .shop-subnav {
+        top: 58px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      .shop-subnav-link {
+        min-width: max-content;
+        white-space: nowrap;
+      }
+
       .grid-4 { grid-template-columns: repeat(2,1fr); }
       .service-row { grid-template-columns: repeat(3,1fr); }
       .service-actions { grid-column: 1 / -1; }
@@ -537,7 +625,7 @@
           <div class="subtitle">店舗設定・料金メニュー・通知設定</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-11A</div>
+      <div class="version">STEP CLEANING-11B</div>
     </div>
   </header>
 
@@ -566,32 +654,20 @@
       <aside class="settings-index" aria-label="店舗設定インデックス">
         <h2 class="settings-index-title">設定メニュー</h2>
         <div class="settings-index-note">
-          項目を押すと、その設定まで移動します。
+          大項目を切り替えて、必要な設定だけを表示します。
         </div>
 
         <nav class="settings-index-nav">
-          <a class="settings-index-link active" href="#section-basic" data-section="section-basic">
+          <a class="settings-index-link active" href="#pane-shop" data-pane="shop">
             <span class="settings-index-number">1</span>
-            店舗基本情報
+            店舗設定
           </a>
-          <a class="settings-index-link" href="#section-hours" data-section="section-hours">
+          <a class="settings-index-link" href="#pane-services" data-pane="services">
             <span class="settings-index-number">2</span>
-            営業時間・定休日
-          </a>
-          <a class="settings-index-link" href="#section-rules" data-section="section-rules">
-            <span class="settings-index-number">3</span>
-            仕上がり・保管
-          </a>
-          <a class="settings-index-link" href="#section-notifications" data-section="section-notifications">
-            <span class="settings-index-number">4</span>
-            通知・会員証
-          </a>
-          <a class="settings-index-link" href="#section-services" data-section="section-services">
-            <span class="settings-index-number">5</span>
             料金メニュー
           </a>
-          <a class="settings-index-link" href="#section-history" data-section="section-history">
-            <span class="settings-index-number">6</span>
+          <a class="settings-index-link" href="#pane-history" data-pane="history">
+            <span class="settings-index-number">3</span>
             設定変更履歴
           </a>
         </nav>
@@ -601,8 +677,30 @@
         </button>
       </aside>
 
-      <div class="settings-main">
-        <section class="panel section-visible" id="section-basic">
+      <div class="settings-main" id="settingsMain" data-active-pane="shop">
+        <div class="pane-heading" id="pane-shop" data-pane-section="shop">
+          <h2>店舗設定</h2>
+          <p>
+            基本情報・営業時間・仕上がりルール・通知設定をまとめて確認できます。
+          </p>
+        </div>
+
+        <nav class="shop-subnav" aria-label="店舗設定内メニュー" data-pane-section="shop">
+          <a class="shop-subnav-link active" href="#section-basic" data-shop-section="section-basic">
+            基本情報
+          </a>
+          <a class="shop-subnav-link" href="#section-hours" data-shop-section="section-hours">
+            営業時間・定休日
+          </a>
+          <a class="shop-subnav-link" href="#section-rules" data-shop-section="section-rules">
+            仕上がり・保管
+          </a>
+          <a class="shop-subnav-link" href="#section-notifications" data-shop-section="section-notifications">
+            通知・会員証
+          </a>
+        </nav>
+
+        <section class="panel section-visible" id="section-basic" data-pane-section="shop">
           <div class="section-title">
             <h2>店舗基本情報</h2>
             <div class="section-note">会員証・通知文面・受付画面へ反映</div>
@@ -635,7 +733,7 @@
           </div>
         </section>
 
-        <section class="panel" id="section-hours">
+        <section class="panel" id="section-hours" data-pane-section="shop">
           <div class="section-title">
             <h2>営業時間・定休日</h2>
             <div class="section-note">休業日は「休み」をON</div>
@@ -650,7 +748,7 @@
           </div>
         </section>
 
-        <section class="panel" id="section-rules">
+        <section class="panel" id="section-rules" data-pane-section="shop">
           <div class="section-title">
             <h2>仕上がり・保管ルール</h2>
           </div>
@@ -685,7 +783,7 @@
           </div>
         </section>
 
-        <section class="panel" id="section-notifications">
+        <section class="panel" id="section-notifications" data-pane-section="shop">
           <div class="section-title">
             <h2>通知・会員証設定</h2>
           </div>
@@ -720,7 +818,7 @@
           </div>
         </section>
 
-        <div class="save-bar">
+        <div class="save-bar" data-pane-section="shop">
           <button id="reloadSettingsButton" class="button button-secondary" type="button">
             保存せず再読み込み
           </button>
@@ -729,7 +827,14 @@
           </button>
         </div>
 
-        <section class="panel" id="section-services" style="margin-top:16px">
+        <div class="pane-heading" id="pane-services" data-pane-section="services" hidden>
+          <h2>料金メニュー</h2>
+          <p>
+            品目料金・加工料金の変更、停止、再開、新規追加を行います。
+          </p>
+        </div>
+
+        <section class="panel" id="section-services" data-pane-section="services" hidden>
           <div class="section-title">
             <div>
               <h2>料金メニュー</h2>
@@ -783,7 +888,14 @@
           </div>
         </section>
 
-        <section class="panel" id="section-history">
+        <div class="pane-heading" id="pane-history" data-pane-section="history" hidden>
+          <h2>設定変更履歴</h2>
+          <p>
+            店舗設定・料金メニューで行った変更を確認できます。
+          </p>
+        </div>
+
+        <section class="panel" id="section-history" data-pane-section="history" hidden>
           <div class="section-title">
             <h2>設定変更履歴</h2>
             <div class="section-note">最新50件</div>
@@ -802,7 +914,7 @@
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
     const PAGE_VERSION =
-      "CLEANING-11A-LEFT-INDEX-NAV-20260712";
+      "CLEANING-11B-HYBRID-INDEX-PANE-20260712";
 
     const DAYS = [
       ["mon", "月曜日"],
@@ -1109,7 +1221,7 @@
           pickup_delivery: elements.featurePickupDelivery.checked,
           customer_qr: elements.featureCustomerQr.checked
         },
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11B"
       };
     }
 
@@ -1241,7 +1353,7 @@
         display_order: Number(get("display_order")),
         is_active: isActive,
         metadata: service.metadata || {},
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11B"
       };
 
       try {
@@ -1285,7 +1397,7 @@
         display_order: Number(elements.newDisplayOrder.value),
         is_active: true,
         metadata: {},
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11B"
       };
 
       try {
@@ -1422,28 +1534,81 @@
         });
       });
 
-    const sectionIds = [
+    const paneNames = [
+      "shop",
+      "services",
+      "history"
+    ];
+
+    const shopSectionIds = [
       "section-basic",
       "section-hours",
       "section-rules",
-      "section-notifications",
-      "section-services",
-      "section-history"
+      "section-notifications"
     ];
 
-    const indexLinks = [
+    const paneLinks = [
       ...document.querySelectorAll(".settings-index-link")
     ];
 
-    function setActiveSection(sectionId) {
-      indexLinks.forEach((link) => {
+    const shopSubnavLinks = [
+      ...document.querySelectorAll(".shop-subnav-link")
+    ];
+
+    function setActivePane(paneName, options = {}) {
+      const resolvedPane = paneNames.includes(paneName)
+        ? paneName
+        : "shop";
+
+      document.getElementById("settingsMain")
+        ?.setAttribute("data-active-pane", resolvedPane);
+
+      document.querySelectorAll("[data-pane-section]")
+        .forEach((element) => {
+          element.hidden =
+            element.dataset.paneSection !== resolvedPane;
+        });
+
+      paneLinks.forEach((link) => {
         link.classList.toggle(
           "active",
-          link.dataset.section === sectionId
+          link.dataset.pane === resolvedPane
         );
       });
 
-      sectionIds.forEach((id) => {
+      if (resolvedPane === "shop") {
+        setActiveShopSection("section-basic");
+      }
+
+      if (options.updateHash !== false) {
+        history.replaceState(
+          null,
+          "",
+          `#pane-${resolvedPane}`
+        );
+      }
+
+      if (options.scroll !== false) {
+        const paneHeading = document.getElementById(
+          `pane-${resolvedPane}`
+        );
+
+        paneHeading?.scrollIntoView({
+          behavior: options.instant ? "auto" : "smooth",
+          block: "start"
+        });
+      }
+    }
+
+    function setActiveShopSection(sectionId) {
+      shopSubnavLinks.forEach((link) => {
+        link.classList.toggle(
+          "active",
+          link.dataset.shopSection === sectionId
+        );
+      });
+
+      shopSectionIds.forEach((id) => {
         document.getElementById(id)?.classList.toggle(
           "section-visible",
           id === sectionId
@@ -1451,33 +1616,53 @@
       });
     }
 
-    indexLinks.forEach((link) => {
+    paneLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        setActivePane(link.dataset.pane);
+      });
+    });
+
+    shopSubnavLinks.forEach((link) => {
       link.addEventListener("click", (event) => {
         event.preventDefault();
 
-        const sectionId = link.dataset.section;
+        const sectionId = link.dataset.shopSection;
         const section = document.getElementById(sectionId);
 
         if (!section) return;
 
-        setActiveSection(sectionId);
+        setActiveShopSection(sectionId);
         section.scrollIntoView({
           behavior: "smooth",
           block: "start"
         });
 
-        history.replaceState(null, "", `#${sectionId}`);
+        history.replaceState(
+          null,
+          "",
+          `#${sectionId}`
+        );
       });
     });
 
-    const sectionObserver = new IntersectionObserver(
+    const shopSectionObserver = new IntersectionObserver(
       (entries) => {
         const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          .filter(
+            (entry) =>
+              entry.isIntersecting &&
+              !entry.target.hidden
+          )
+          .sort(
+            (a, b) =>
+              b.intersectionRatio - a.intersectionRatio
+          );
 
         if (visibleEntries.length) {
-          setActiveSection(visibleEntries[0].target.id);
+          setActiveShopSection(
+            visibleEntries[0].target.id
+          );
         }
       },
       {
@@ -1486,9 +1671,11 @@
       }
     );
 
-    sectionIds.forEach((id) => {
+    shopSectionIds.forEach((id) => {
       const section = document.getElementById(id);
-      if (section) sectionObserver.observe(section);
+      if (section) {
+        shopSectionObserver.observe(section);
+      }
     });
 
     document.getElementById("indexTopButton")
@@ -1500,16 +1687,37 @@
           });
       });
 
-    if (location.hash && sectionIds.includes(location.hash.slice(1))) {
+    const initialHash = location.hash.slice(1);
+
+    if (initialHash === "pane-services") {
+      setActivePane("services", {
+        scroll: false,
+        updateHash: false
+      });
+    } else if (initialHash === "pane-history") {
+      setActivePane("history", {
+        scroll: false,
+        updateHash: false
+      });
+    } else if (shopSectionIds.includes(initialHash)) {
+      setActivePane("shop", {
+        scroll: false,
+        updateHash: false
+      });
+
       setTimeout(() => {
-        const sectionId = location.hash.slice(1);
-        setActiveSection(sectionId);
-        document.getElementById(sectionId)
+        setActiveShopSection(initialHash);
+        document.getElementById(initialHash)
           ?.scrollIntoView({
             behavior: "auto",
             block: "start"
           });
       }, 100);
+    } else {
+      setActivePane("shop", {
+        scroll: false,
+        updateHash: false
+      });
     }
 
     renderHoursInputs();
