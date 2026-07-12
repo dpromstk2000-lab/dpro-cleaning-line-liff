@@ -116,6 +116,30 @@
       margin-bottom: 18px;
     }
 
+    .admin-key-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .admin-key-clear {
+      min-width: 66px;
+      min-height: 44px;
+      border: 1px solid #cbd9e1;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--danger);
+      padding: 8px 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .admin-key-clear:hover {
+      border-color: var(--danger);
+      background: #fff4f5;
+    }
+
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -579,7 +603,7 @@
           <div class="subtitle">店頭受付・複数品登録</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-5</div>
+      <div class="version">STEP CLEANING-5-R1</div>
     </div>
   </header>
 
@@ -587,7 +611,17 @@
     <section class="system-strip">
       <div>
         <label for="adminKey">管理コード</label>
-        <input id="adminKey" type="password" value="1234" autocomplete="off">
+        <div class="admin-key-row">
+          <input id="adminKey" type="password" value="1234" autocomplete="off">
+          <button
+            id="clearAdminKeyButton"
+            class="admin-key-clear"
+            type="button"
+            aria-label="管理コードを消去"
+          >
+            消去
+          </button>
+        </div>
       </div>
       <div>
         <label for="shopCode">店舗コード</label>
@@ -749,7 +783,7 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-5-RECEPTION-20260712";
+    const PAGE_VERSION = "CLEANING-5-R1-ADMIN-KEY-CLEAR-20260712";
 
     const state = {
       selectedCustomer: null,
@@ -761,6 +795,7 @@
 
     const elements = {
       adminKey: document.getElementById("adminKey"),
+      clearAdminKeyButton: document.getElementById("clearAdminKeyButton"),
       shopCode: document.getElementById("shopCode"),
       connectButton: document.getElementById("connectButton"),
       apiStatus: document.getElementById("apiStatus"),
@@ -1615,6 +1650,12 @@
       addItem();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    elements.clearAdminKeyButton.addEventListener("click", () => {
+      elements.adminKey.value = "";
+      elements.adminKey.focus();
+      setStatus("管理コードを消去しました。再入力してください。");
+    });
 
     elements.connectButton.addEventListener("click", checkConnection);
     elements.searchButton.addEventListener("click", searchCustomers);
