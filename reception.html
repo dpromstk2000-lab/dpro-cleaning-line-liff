@@ -734,6 +734,13 @@
       line-height: 1.7;
     }
 
+    .management-locked input:disabled,
+    .management-locked button:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+      background: #eef2f4;
+    }
+
     .item-summary-list {
       display: grid;
       gap: 9px;
@@ -866,7 +873,7 @@
           <div class="subtitle">店頭受付・注文状況管理</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-6</div>
+      <div class="version">STEP CLEANING-6-R1</div>
     </div>
   </header>
 
@@ -1140,7 +1147,7 @@
         </div>
 
         <div class="detail-subtitle">仕上がり予定日の変更</div>
-        <div class="management-actions">
+        <div id="scheduleManagementArea" class="management-actions">
           <div class="grid grid-2">
             <div>
               <label for="managementPromisedDate">仕上がり予定日</label>
@@ -1192,7 +1199,7 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-6-STATUS-SCHEDULE-MANAGEMENT-20260712";
+    const PAGE_VERSION = "CLEANING-6-R1-COMPLETED-ORDER-UI-LOCK-20260712";
 
     const state = {
       selectedCustomer: null,
@@ -1260,6 +1267,8 @@
       detailItemCount: document.getElementById("detailItemCount"),
       detailTotalAmount: document.getElementById("detailTotalAmount"),
       detailPaymentStatus: document.getElementById("detailPaymentStatus"),
+      scheduleManagementArea:
+        document.getElementById("scheduleManagementArea"),
       managementPromisedDate:
         document.getElementById("managementPromisedDate"),
       scheduleChangeReason:
@@ -2298,6 +2307,20 @@
       elements.scheduleChangeReason.value = "";
       elements.statusChangeReason.value = "";
 
+      const managementLocked =
+        ["delivered", "cancelled"].includes(order.status);
+
+      elements.scheduleManagementArea.classList.toggle(
+        "management-locked",
+        managementLocked
+      );
+      elements.managementPromisedDate.disabled =
+        managementLocked;
+      elements.scheduleChangeReason.disabled =
+        managementLocked;
+      elements.saveScheduleButton.disabled =
+        managementLocked;
+
       renderDetailItems(items);
       renderStatusActions(
         order,
@@ -2573,7 +2596,17 @@
     }
 
     function setManagementButtonsDisabled(disabled) {
-      elements.saveScheduleButton.disabled = disabled;
+      const orderStatus =
+        state.selectedOrderDetail?.order?.status || "";
+      const managementLocked =
+        ["delivered", "cancelled"].includes(orderStatus);
+
+      elements.saveScheduleButton.disabled =
+        disabled || managementLocked;
+      elements.managementPromisedDate.disabled =
+        managementLocked;
+      elements.scheduleChangeReason.disabled =
+        managementLocked;
 
       for (const button of elements.statusActions.querySelectorAll(
         "button"
