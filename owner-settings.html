@@ -24,6 +24,11 @@
 
     * { box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 18px;
+    }
+
     body {
       margin: 0;
       background: var(--bg);
@@ -44,7 +49,7 @@
     }
 
     .header-inner {
-      width: min(1250px,100%);
+      width: min(1450px,100%);
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -78,7 +83,7 @@
     }
 
     .container {
-      width: min(1250px,calc(100% - 24px));
+      width: min(1450px,calc(100% - 24px));
       margin: 18px auto 50px;
     }
 
@@ -339,6 +344,109 @@
       font-size: 12px;
     }
 
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 240px minmax(0,1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .settings-index {
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.96);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .settings-index-title {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .settings-index-note {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .settings-index-nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .settings-index-link {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      color: var(--ink);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: none;
+      transition: .16s ease;
+    }
+
+    .settings-index-link:hover {
+      border-color: #c4dade;
+      background: #f1f9fa;
+    }
+
+    .settings-index-link.active {
+      color: #fff;
+      border-color: var(--primary);
+      background: var(--primary);
+      box-shadow: 0 7px 16px rgba(7,130,142,.18);
+    }
+
+    .settings-index-number {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      color: var(--primary-dark);
+      background: #e7f5f6;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .settings-index-link.active .settings-index-number {
+      color: var(--primary-dark);
+      background: #fff;
+    }
+
+    .settings-main {
+      min-width: 0;
+    }
+
+    .settings-main .panel {
+      scroll-margin-top: 18px;
+    }
+
+    .settings-main .panel.section-visible {
+      border-color: #a9d8dc;
+      box-shadow:
+        0 0 0 3px rgba(7,130,142,.06),
+        var(--shadow);
+    }
+
+    .index-top-button {
+      width: 100%;
+      margin-top: 10px;
+    }
+
     .toast {
       position: fixed;
       z-index: 1000;
@@ -362,7 +470,46 @@
     .toast.visible { transform: translate(-50%,0); opacity: 1; }
     .toast.error { background: #a93240; }
 
+    @media (max-width: 1050px) {
+      .settings-layout {
+        grid-template-columns: 205px minmax(0,1fr);
+      }
+
+      .settings-index-link {
+        font-size: 11px;
+      }
+    }
+
     @media (max-width: 950px) {
+      .settings-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .settings-index {
+        top: 0;
+        padding: 9px;
+        border-radius: 0 0 14px 14px;
+      }
+
+      .settings-index-title,
+      .settings-index-note,
+      .index-top-button {
+        display: none;
+      }
+
+      .settings-index-nav {
+        display: flex;
+        gap: 7px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: thin;
+      }
+
+      .settings-index-link {
+        min-width: max-content;
+        white-space: nowrap;
+      }
+
       .grid-4 { grid-template-columns: repeat(2,1fr); }
       .service-row { grid-template-columns: repeat(3,1fr); }
       .service-actions { grid-column: 1 / -1; }
@@ -390,12 +537,12 @@
           <div class="subtitle">店舗設定・料金メニュー・通知設定</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-11</div>
+      <div class="version">STEP CLEANING-11A</div>
     </div>
   </header>
 
   <main class="container">
-    <section class="panel">
+    <section class="panel" id="connection-panel">
       <div class="connection-grid">
         <div>
           <label for="adminKey">管理コード</label>
@@ -415,194 +562,236 @@
       </div>
     </section>
 
-    <section class="panel">
-      <div class="section-title">
-        <h2>店舗基本情報</h2>
-        <div class="section-note">会員証・通知文面・受付画面へ反映</div>
-      </div>
-      <div class="grid-2">
-        <div>
-          <label for="shopName">店舗名 *</label>
-          <input id="shopName">
+    <div class="settings-layout">
+      <aside class="settings-index" aria-label="店舗設定インデックス">
+        <h2 class="settings-index-title">設定メニュー</h2>
+        <div class="settings-index-note">
+          項目を押すと、その設定まで移動します。
         </div>
-        <div>
-          <label for="shopNameShort">通知用の短い店舗名</label>
-          <input id="shopNameShort">
-        </div>
-        <div>
-          <label for="phone">電話番号</label>
-          <input id="phone">
-        </div>
-        <div>
-          <label for="postalCode">郵便番号</label>
-          <input id="postalCode">
-        </div>
-      </div>
-      <div style="margin-top:12px">
-        <label for="address">住所</label>
-        <input id="address">
-      </div>
-      <div style="margin-top:12px">
-        <label for="receiptNote">受取時の案内</label>
-        <textarea id="receiptNote"></textarea>
-      </div>
-    </section>
 
-    <section class="panel">
-      <div class="section-title">
-        <h2>営業時間・定休日</h2>
-        <div class="section-note">休業日は「休み」をON</div>
-      </div>
-      <div id="hoursGrid" class="hours-grid"></div>
-      <div style="margin-top:14px">
-        <label for="temporaryClosedDates">臨時休業日</label>
-        <textarea
-          id="temporaryClosedDates"
-          placeholder="2026-08-13&#10;2026-08-14&#10;1行に1日"
-        ></textarea>
-      </div>
-    </section>
+        <nav class="settings-index-nav">
+          <a class="settings-index-link active" href="#section-basic" data-section="section-basic">
+            <span class="settings-index-number">1</span>
+            店舗基本情報
+          </a>
+          <a class="settings-index-link" href="#section-hours" data-section="section-hours">
+            <span class="settings-index-number">2</span>
+            営業時間・定休日
+          </a>
+          <a class="settings-index-link" href="#section-rules" data-section="section-rules">
+            <span class="settings-index-number">3</span>
+            仕上がり・保管
+          </a>
+          <a class="settings-index-link" href="#section-notifications" data-section="section-notifications">
+            <span class="settings-index-number">4</span>
+            通知・会員証
+          </a>
+          <a class="settings-index-link" href="#section-services" data-section="section-services">
+            <span class="settings-index-number">5</span>
+            料金メニュー
+          </a>
+          <a class="settings-index-link" href="#section-history" data-section="section-history">
+            <span class="settings-index-number">6</span>
+            設定変更履歴
+          </a>
+        </nav>
 
-    <section class="panel">
-      <div class="section-title">
-        <h2>仕上がり・保管ルール</h2>
-      </div>
-      <div class="grid-3">
-        <div>
-          <label for="standardFinishDays">標準仕上がり日数</label>
-          <input id="standardFinishDays" type="number" min="0" max="60">
-        </div>
-        <div>
-          <label for="storageGraceDays">保管猶予日数</label>
-          <input id="storageGraceDays" type="number" min="0" max="365">
-        </div>
-        <div>
-          <label for="longStorageDays">長期保管判定日数</label>
-          <input id="longStorageDays" type="number" min="1" max="730">
-        </div>
-      </div>
-
-      <div class="grid-3" style="margin-top:12px">
-        <label class="check-card">
-          <input id="rushEnabled" type="checkbox">
-          お急ぎ仕上げを使用
-        </label>
-        <label class="check-card">
-          <input id="sameDayEnabled" type="checkbox">
-          当日仕上げを使用
-        </label>
-        <label class="check-card">
-          <input id="pickupDeliveryEnabled" type="checkbox">
-          集配サービスを使用
-        </label>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="section-title">
-        <h2>通知・会員証設定</h2>
-      </div>
-      <div class="grid-3">
-        <label class="check-card">
-          <input id="notifyAccepted" type="checkbox">
-          受付完了通知を使用
-        </label>
-        <label class="check-card">
-          <input id="notifyReady" type="checkbox">
-          仕上がり通知を使用
-        </label>
-        <div>
-          <label for="followupDays">受取再案内日数</label>
-          <input id="followupDays" placeholder="7,14,30">
-        </div>
-      </div>
-
-      <div class="grid-3" style="margin-top:12px">
-        <label class="check-card">
-          <input id="featurePhoto" type="checkbox">
-          品物写真機能
-        </label>
-        <label class="check-card">
-          <input id="featurePickupDelivery" type="checkbox">
-          集配機能表示
-        </label>
-        <label class="check-card">
-          <input id="featureCustomerQr" type="checkbox">
-          LINE会員証
-        </label>
-      </div>
-    </section>
-
-    <div class="save-bar">
-      <button id="reloadSettingsButton" class="button button-secondary" type="button">
-        保存せず再読み込み
-      </button>
-      <button id="saveShopButton" class="button button-primary" type="button">
-        店舗設定を保存
-      </button>
-    </div>
-
-    <section class="panel" style="margin-top:16px">
-      <div class="section-title">
-        <div>
-          <h2>料金メニュー</h2>
-          <div class="section-note">受付画面の品目・加工選択へ反映</div>
-        </div>
-      </div>
-
-      <div class="service-toolbar">
-        <button class="tab-button active" data-tab="item" type="button">品目料金</button>
-        <button class="tab-button" data-tab="option" type="button">加工料金</button>
-        <button class="tab-button" data-tab="inactive" type="button">停止中</button>
-      </div>
-
-      <div id="serviceList" class="service-list"></div>
-
-      <div class="new-service" style="margin-top:14px">
-        <h3 id="newServiceTitle" style="margin:0 0 12px;font-size:15px">
-          新しい品目を追加
-        </h3>
-        <div class="grid-4">
-          <div>
-            <label for="newServiceName">名称 *</label>
-            <input id="newServiceName">
-          </div>
-          <div>
-            <label for="newCategory">カテゴリ</label>
-            <input id="newCategory" placeholder="衣類・寝具・加工">
-          </div>
-          <div>
-            <label for="newPrice">料金</label>
-            <input id="newPrice" type="number" min="0" value="0">
-          </div>
-          <div>
-            <label for="newFinishDays">追加日数</label>
-            <input id="newFinishDays" type="number" min="0" max="60" value="0">
-          </div>
-        </div>
-        <div class="grid-2" style="margin-top:10px">
-          <div>
-            <label for="newDisplayOrder">表示順</label>
-            <input id="newDisplayOrder" type="number" min="0" max="9999" value="100">
-          </div>
-          <div>
-            <label for="newDescription">説明</label>
-            <input id="newDescription">
-          </div>
-        </div>
-        <button id="addServiceButton" class="button button-success" type="button" style="margin-top:11px">
-          料金メニューを追加
+        <button id="indexTopButton" class="button button-secondary index-top-button" type="button">
+          ページ上部へ
         </button>
-      </div>
-    </section>
+      </aside>
 
-    <section class="panel">
-      <div class="section-title">
-        <h2>設定変更履歴</h2>
-        <div class="section-note">最新50件</div>
+      <div class="settings-main">
+        <section class="panel section-visible" id="section-basic">
+          <div class="section-title">
+            <h2>店舗基本情報</h2>
+            <div class="section-note">会員証・通知文面・受付画面へ反映</div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label for="shopName">店舗名 *</label>
+              <input id="shopName">
+            </div>
+            <div>
+              <label for="shopNameShort">通知用の短い店舗名</label>
+              <input id="shopNameShort">
+            </div>
+            <div>
+              <label for="phone">電話番号</label>
+              <input id="phone">
+            </div>
+            <div>
+              <label for="postalCode">郵便番号</label>
+              <input id="postalCode">
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <label for="address">住所</label>
+            <input id="address">
+          </div>
+          <div style="margin-top:12px">
+            <label for="receiptNote">受取時の案内</label>
+            <textarea id="receiptNote"></textarea>
+          </div>
+        </section>
+
+        <section class="panel" id="section-hours">
+          <div class="section-title">
+            <h2>営業時間・定休日</h2>
+            <div class="section-note">休業日は「休み」をON</div>
+          </div>
+          <div id="hoursGrid" class="hours-grid"></div>
+          <div style="margin-top:14px">
+            <label for="temporaryClosedDates">臨時休業日</label>
+            <textarea
+              id="temporaryClosedDates"
+              placeholder="2026-08-13&#10;2026-08-14&#10;1行に1日"
+            ></textarea>
+          </div>
+        </section>
+
+        <section class="panel" id="section-rules">
+          <div class="section-title">
+            <h2>仕上がり・保管ルール</h2>
+          </div>
+          <div class="grid-3">
+            <div>
+              <label for="standardFinishDays">標準仕上がり日数</label>
+              <input id="standardFinishDays" type="number" min="0" max="60">
+            </div>
+            <div>
+              <label for="storageGraceDays">保管猶予日数</label>
+              <input id="storageGraceDays" type="number" min="0" max="365">
+            </div>
+            <div>
+              <label for="longStorageDays">長期保管判定日数</label>
+              <input id="longStorageDays" type="number" min="1" max="730">
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:12px">
+            <label class="check-card">
+              <input id="rushEnabled" type="checkbox">
+              お急ぎ仕上げを使用
+            </label>
+            <label class="check-card">
+              <input id="sameDayEnabled" type="checkbox">
+              当日仕上げを使用
+            </label>
+            <label class="check-card">
+              <input id="pickupDeliveryEnabled" type="checkbox">
+              集配サービスを使用
+            </label>
+          </div>
+        </section>
+
+        <section class="panel" id="section-notifications">
+          <div class="section-title">
+            <h2>通知・会員証設定</h2>
+          </div>
+          <div class="grid-3">
+            <label class="check-card">
+              <input id="notifyAccepted" type="checkbox">
+              受付完了通知を使用
+            </label>
+            <label class="check-card">
+              <input id="notifyReady" type="checkbox">
+              仕上がり通知を使用
+            </label>
+            <div>
+              <label for="followupDays">受取再案内日数</label>
+              <input id="followupDays" placeholder="7,14,30">
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:12px">
+            <label class="check-card">
+              <input id="featurePhoto" type="checkbox">
+              品物写真機能
+            </label>
+            <label class="check-card">
+              <input id="featurePickupDelivery" type="checkbox">
+              集配機能表示
+            </label>
+            <label class="check-card">
+              <input id="featureCustomerQr" type="checkbox">
+              LINE会員証
+            </label>
+          </div>
+        </section>
+
+        <div class="save-bar">
+          <button id="reloadSettingsButton" class="button button-secondary" type="button">
+            保存せず再読み込み
+          </button>
+          <button id="saveShopButton" class="button button-primary" type="button">
+            店舗設定を保存
+          </button>
+        </div>
+
+        <section class="panel" id="section-services" style="margin-top:16px">
+          <div class="section-title">
+            <div>
+              <h2>料金メニュー</h2>
+              <div class="section-note">受付画面の品目・加工選択へ反映</div>
+            </div>
+          </div>
+
+          <div class="service-toolbar">
+            <button class="tab-button active" data-tab="item" type="button">品目料金</button>
+            <button class="tab-button" data-tab="option" type="button">加工料金</button>
+            <button class="tab-button" data-tab="inactive" type="button">停止中</button>
+          </div>
+
+          <div id="serviceList" class="service-list"></div>
+
+          <div class="new-service" style="margin-top:14px">
+            <h3 id="newServiceTitle" style="margin:0 0 12px;font-size:15px">
+              新しい品目を追加
+            </h3>
+            <div class="grid-4">
+              <div>
+                <label for="newServiceName">名称 *</label>
+                <input id="newServiceName">
+              </div>
+              <div>
+                <label for="newCategory">カテゴリ</label>
+                <input id="newCategory" placeholder="衣類・寝具・加工">
+              </div>
+              <div>
+                <label for="newPrice">料金</label>
+                <input id="newPrice" type="number" min="0" value="0">
+              </div>
+              <div>
+                <label for="newFinishDays">追加日数</label>
+                <input id="newFinishDays" type="number" min="0" max="60" value="0">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div>
+                <label for="newDisplayOrder">表示順</label>
+                <input id="newDisplayOrder" type="number" min="0" max="9999" value="100">
+              </div>
+              <div>
+                <label for="newDescription">説明</label>
+                <input id="newDescription">
+              </div>
+            </div>
+            <button id="addServiceButton" class="button button-success" type="button" style="margin-top:11px">
+              料金メニューを追加
+            </button>
+          </div>
+        </section>
+
+        <section class="panel" id="section-history">
+          <div class="section-title">
+            <h2>設定変更履歴</h2>
+            <div class="section-note">最新50件</div>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
       </div>
-      <div id="historyList" class="history-list"></div>
-    </section>
+    </div>
   </main>
 
   <div id="toast" class="toast"></div>
@@ -613,7 +802,7 @@
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
     const PAGE_VERSION =
-      "CLEANING-11-OWNER-SETTINGS-SERVICE-MENU-20260712";
+      "CLEANING-11A-LEFT-INDEX-NAV-20260712";
 
     const DAYS = [
       ["mon", "月曜日"],
@@ -920,7 +1109,7 @@
           pickup_delivery: elements.featurePickupDelivery.checked,
           customer_qr: elements.featureCustomerQr.checked
         },
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
       };
     }
 
@@ -1052,7 +1241,7 @@
         display_order: Number(get("display_order")),
         is_active: isActive,
         metadata: service.metadata || {},
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
       };
 
       try {
@@ -1096,7 +1285,7 @@
         display_order: Number(elements.newDisplayOrder.value),
         is_active: true,
         metadata: {},
-        changed_by_label: "オーナー設定画面 STEP CLEANING-11"
+        changed_by_label: "オーナー設定画面 STEP CLEANING-11A"
       };
 
       try {
@@ -1232,6 +1421,96 @@
           updateTabs();
         });
       });
+
+    const sectionIds = [
+      "section-basic",
+      "section-hours",
+      "section-rules",
+      "section-notifications",
+      "section-services",
+      "section-history"
+    ];
+
+    const indexLinks = [
+      ...document.querySelectorAll(".settings-index-link")
+    ];
+
+    function setActiveSection(sectionId) {
+      indexLinks.forEach((link) => {
+        link.classList.toggle(
+          "active",
+          link.dataset.section === sectionId
+        );
+      });
+
+      sectionIds.forEach((id) => {
+        document.getElementById(id)?.classList.toggle(
+          "section-visible",
+          id === sectionId
+        );
+      });
+    }
+
+    indexLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const sectionId = link.dataset.section;
+        const section = document.getElementById(sectionId);
+
+        if (!section) return;
+
+        setActiveSection(sectionId);
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+        history.replaceState(null, "", `#${sectionId}`);
+      });
+    });
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries.length) {
+          setActiveSection(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-18% 0px -62% 0px",
+        threshold: [0.05, 0.2, 0.5]
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) sectionObserver.observe(section);
+    });
+
+    document.getElementById("indexTopButton")
+      ?.addEventListener("click", () => {
+        document.getElementById("connection-panel")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+      });
+
+    if (location.hash && sectionIds.includes(location.hash.slice(1))) {
+      setTimeout(() => {
+        const sectionId = location.hash.slice(1);
+        setActiveSection(sectionId);
+        document.getElementById(sectionId)
+          ?.scrollIntoView({
+            behavior: "auto",
+            block: "start"
+          });
+      }, 100);
+    }
 
     renderHoursInputs();
     loadSettings();
