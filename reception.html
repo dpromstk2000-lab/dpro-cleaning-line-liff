@@ -774,6 +774,112 @@
       line-height: 1.5;
     }
 
+
+    .notification-panel {
+      border: 1px solid #bcdde0;
+      border-radius: 15px;
+      background: #f6fcfc;
+      padding: 16px;
+    }
+
+    .notification-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.8fr) minmax(160px, 0.7fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .notification-message {
+      min-height: 260px;
+      line-height: 1.75;
+      background: #fff;
+    }
+
+    .notification-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .notification-copy-button {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .notification-sent-button {
+      color: var(--success);
+      background: #e8f8f1;
+      border: 1px solid #b9dfd0;
+    }
+
+    .notification-lock {
+      display: none;
+      border: 1px solid #d5dfe4;
+      border-radius: 12px;
+      background: #f1f4f6;
+      color: #52636d;
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .notification-lock.visible {
+      display: block;
+    }
+
+    .notification-history {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .notification-history-entry {
+      border-left: 4px solid #85cdd1;
+      border-radius: 0 12px 12px 0;
+      background: #fff;
+      padding: 11px 13px;
+    }
+
+    .notification-history-title {
+      font-weight: 900;
+    }
+
+    .notification-history-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .notification-history-message {
+      margin-top: 7px;
+      color: #40545f;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .notification-status {
+      display: inline-flex;
+      margin-left: 7px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .notification-status-copied {
+      background: #eaf6ff;
+      color: #27658d;
+    }
+
+    .notification-status-sent {
+      background: #e7f8ef;
+      color: #19714e;
+    }
+
     .timeline {
       display: grid;
       gap: 10px;
@@ -852,7 +958,8 @@
       .order-card,
       .detail-hero,
       .management-actions,
-      .item-summary-row {
+      .item-summary-row,
+      .notification-grid {
         grid-template-columns: 1fr;
       }
 
@@ -870,10 +977,10 @@
         <div class="brand-mark">👔</div>
         <div>
           <h1>DPRO クリーニング LINE</h1>
-          <div class="subtitle">店頭受付・注文状況管理</div>
+          <div class="subtitle">店頭受付・注文状況・受取案内</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-6-R1</div>
+      <div class="version">STEP CLEANING-7</div>
     </div>
   </header>
 
@@ -1188,6 +1295,66 @@
         <div class="detail-subtitle">お預かり品</div>
         <div id="detailItems" class="item-summary-list"></div>
 
+        <div class="detail-subtitle">仕上がり通知・受取案内</div>
+        <div class="notification-panel">
+          <div id="notificationLock" class="notification-lock"></div>
+
+          <div id="notificationEditor">
+            <div class="notification-grid">
+              <div>
+                <label for="notificationTemplateType">文面の種類</label>
+                <select id="notificationTemplateType">
+                  <option value="ready">仕上がり通知</option>
+                  <option value="uncollected_followup">受取再案内</option>
+                  <option value="long_storage">長期保管案内</option>
+                </select>
+              </div>
+              <div>
+                <label for="notificationChannel">案内方法</label>
+                <select id="notificationChannel">
+                  <option value="line">LINE</option>
+                  <option value="sms">SMS</option>
+                  <option value="phone">電話案内</option>
+                  <option value="other">その他</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="notificationMessage">案内文面</label>
+            <textarea
+              id="notificationMessage"
+              class="notification-message"
+              placeholder="案内文面がここに表示されます"
+            ></textarea>
+
+            <div id="notificationDestination" class="small" style="margin-top:8px"></div>
+
+            <div class="notification-actions">
+              <button
+                id="copyNotificationButton"
+                class="button notification-copy-button"
+                type="button"
+              >
+                文面をコピー
+              </button>
+              <button
+                id="markNotificationSentButton"
+                class="button notification-sent-button"
+                type="button"
+              >
+                送信済みに記録
+              </button>
+            </div>
+          </div>
+
+          <div id="notificationMessageResult" class="message"></div>
+
+          <div class="detail-subtitle" style="margin-top:18px">
+            案内履歴
+          </div>
+          <div id="notificationHistory" class="notification-history"></div>
+        </div>
+
         <div class="detail-subtitle">変更履歴</div>
         <div id="detailTimeline" class="timeline"></div>
       </section>
@@ -1199,7 +1366,7 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-6-R1-COMPLETED-ORDER-UI-LOCK-20260712";
+    const PAGE_VERSION = "CLEANING-7-NOTIFICATION-COPY-HISTORY-20260712";
 
     const state = {
       selectedCustomer: null,
@@ -1210,7 +1377,9 @@
       activeMode: "reception",
       managementOrders: [],
       selectedOrderDetail: null,
-      managementLoading: false
+      managementLoading: false,
+      notificationTemplates: {},
+      notificationRecording: false
     };
 
     const elements = {
@@ -1280,6 +1449,24 @@
       statusLockedNote: document.getElementById("statusLockedNote"),
       managementMessage: document.getElementById("managementMessage"),
       detailItems: document.getElementById("detailItems"),
+      notificationLock: document.getElementById("notificationLock"),
+      notificationEditor: document.getElementById("notificationEditor"),
+      notificationTemplateType:
+        document.getElementById("notificationTemplateType"),
+      notificationChannel:
+        document.getElementById("notificationChannel"),
+      notificationMessage:
+        document.getElementById("notificationMessage"),
+      notificationDestination:
+        document.getElementById("notificationDestination"),
+      copyNotificationButton:
+        document.getElementById("copyNotificationButton"),
+      markNotificationSentButton:
+        document.getElementById("markNotificationSentButton"),
+      notificationMessageResult:
+        document.getElementById("notificationMessageResult"),
+      notificationHistory:
+        document.getElementById("notificationHistory"),
       detailTimeline: document.getElementById("detailTimeline")
     };
 
@@ -2326,6 +2513,7 @@
         order,
         data.allowed_next_statuses || []
       );
+      renderNotificationTools(data);
       renderDetailTimeline(
         data.history || [],
         data.schedule_history || []
@@ -2613,6 +2801,351 @@
       )) {
         button.disabled = disabled;
       }
+
+      if (
+        elements.notificationEditor.style.display !== "none"
+      ) {
+        setNotificationButtonsDisabled(disabled);
+      }
+    }
+
+    function renderNotificationTools(data) {
+      const order = data.order || {};
+      const customer = data.customer || {};
+      const notifications = data.notifications || [];
+
+      state.notificationTemplates =
+        data.notification_templates || {};
+
+      clearMessage(elements.notificationMessageResult);
+      renderNotificationHistory(notifications);
+
+      const canNotify = ["ready", "stored"].includes(order.status);
+      const locked = ["delivered", "cancelled"].includes(
+        order.status
+      );
+
+      elements.notificationEditor.style.display =
+        canNotify ? "block" : "none";
+      elements.notificationLock.classList.toggle(
+        "visible",
+        !canNotify
+      );
+
+      if (locked) {
+        elements.notificationLock.textContent =
+          "この注文は受け渡し済みまたはキャンセル済みのため、新しい案内は作成できません。過去の案内履歴は確認できます。";
+      } else if (!canNotify) {
+        elements.notificationLock.textContent =
+          "仕上がり通知・受取案内は、注文が「仕上がり済み」または「保管中」になった後に使用できます。";
+      } else {
+        elements.notificationLock.textContent = "";
+      }
+
+      if (!canNotify) {
+        return;
+      }
+
+      const defaultType =
+        order.status === "stored"
+          ? "uncollected_followup"
+          : "ready";
+      elements.notificationTemplateType.value = defaultType;
+
+      const defaultChannel = customer.line_user_id
+        ? "line"
+        : "phone";
+      elements.notificationChannel.value = defaultChannel;
+
+      applyNotificationTemplate();
+      updateNotificationDestination();
+    }
+
+    function applyNotificationTemplate() {
+      const type = elements.notificationTemplateType.value;
+      const template = state.notificationTemplates[type];
+
+      elements.notificationMessage.value =
+        template?.message_body || "";
+    }
+
+    function updateNotificationDestination() {
+      const detail = state.selectedOrderDetail;
+      const customer = detail?.customer || {};
+      const channel = elements.notificationChannel.value;
+      let text = "連絡先：未登録";
+
+      if (channel === "line") {
+        text = customer.line_user_id
+          ? "連絡先：LINE連携済み"
+          : "連絡先：LINE未連携（電話番号を確認してください）";
+      } else if (channel === "sms" || channel === "phone") {
+        text =
+          `連絡先：${customer.phone_raw || customer.phone_normalized || "電話番号未登録"}`;
+      } else {
+        text = "連絡先：その他の方法";
+      }
+
+      elements.notificationDestination.textContent = text;
+    }
+
+    function getNotificationDestination() {
+      const detail = state.selectedOrderDetail;
+      const customer = detail?.customer || {};
+      const channel = elements.notificationChannel.value;
+
+      if (channel === "line") {
+        return customer.line_user_id || null;
+      }
+
+      if (channel === "sms" || channel === "phone") {
+        return (
+          customer.phone_raw ||
+          customer.phone_normalized ||
+          null
+        );
+      }
+
+      return null;
+    }
+
+    async function copyNotificationMessage() {
+      const message = elements.notificationMessage.value.trim();
+
+      if (!message) {
+        showMessage(
+          elements.notificationMessageResult,
+          "コピーする案内文面がありません。",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        await copyTextToClipboard(message);
+        await recordNotification("copied");
+
+        const orderId =
+          state.selectedOrderDetail?.order?.id;
+        await loadOrderDetail(orderId);
+
+        showMessage(
+          elements.notificationMessageResult,
+          "案内文面をコピーし、コピー履歴を保存しました。",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.notificationMessageResult,
+          error.data?.message || error.message,
+          "error"
+        );
+      }
+    }
+
+    async function markNotificationSent() {
+      const detail = state.selectedOrderDetail;
+      const order = detail?.order;
+      const message = elements.notificationMessage.value.trim();
+      const channelLabel =
+        elements.notificationChannel.options[
+          elements.notificationChannel.selectedIndex
+        ]?.text || "案内";
+
+      if (!order || !message) {
+        showMessage(
+          elements.notificationMessageResult,
+          "注文と案内文面を確認してください。",
+          "error"
+        );
+        return;
+      }
+
+      if (
+        !window.confirm(
+          `${order.order_number}を「${channelLabel}で送信済み」として記録します。実際の送信・案内は完了していますか？`
+        )
+      ) {
+        return;
+      }
+
+      try {
+        await recordNotification("sent");
+        await loadOrderDetail(order.id);
+        await loadManagementOrders();
+
+        showMessage(
+          elements.notificationMessageResult,
+          `${channelLabel}で送信済みとして記録しました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.notificationMessageResult,
+          error.data?.message || error.message,
+          "error"
+        );
+      }
+    }
+
+    async function recordNotification(sendStatus) {
+      if (state.notificationRecording) {
+        return;
+      }
+
+      const detail = state.selectedOrderDetail;
+      const order = detail?.order;
+
+      if (!order) {
+        throw new Error("注文を選択してください。");
+      }
+
+      state.notificationRecording = true;
+      setNotificationButtonsDisabled(true);
+
+      try {
+        return await apiFetch(
+          buildAdminUrl(
+            `/api/admin/orders/${order.id}/notifications`
+          ),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              notification_type:
+                elements.notificationTemplateType.value,
+              channel: elements.notificationChannel.value,
+              send_status: sendStatus,
+              destination: getNotificationDestination(),
+              message_body:
+                elements.notificationMessage.value.trim(),
+              operator_label:
+                "受付PC STEP CLEANING-7"
+            })
+          }
+        );
+      } finally {
+        state.notificationRecording = false;
+        setNotificationButtonsDisabled(false);
+      }
+    }
+
+    function setNotificationButtonsDisabled(disabled) {
+      elements.copyNotificationButton.disabled = disabled;
+      elements.markNotificationSentButton.disabled = disabled;
+      elements.notificationTemplateType.disabled = disabled;
+      elements.notificationChannel.disabled = disabled;
+    }
+
+    async function copyTextToClipboard(text) {
+      if (
+        navigator.clipboard &&
+        window.isSecureContext
+      ) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      const copied = document.execCommand("copy");
+      textarea.remove();
+
+      if (!copied) {
+        throw new Error(
+          "文面をコピーできませんでした。ブラウザの権限を確認してください。"
+        );
+      }
+    }
+
+    function renderNotificationHistory(notifications) {
+      elements.notificationHistory.innerHTML = "";
+
+      if (!notifications.length) {
+        elements.notificationHistory.innerHTML =
+          '<div class="empty-state">案内履歴はありません。</div>';
+        return;
+      }
+
+      const typeLabels = {
+        ready: "仕上がり通知",
+        uncollected_followup: "受取再案内",
+        long_storage: "長期保管案内",
+        custom: "個別案内"
+      };
+
+      const channelLabels = {
+        line: "LINE",
+        sms: "SMS",
+        phone: "電話",
+        copy: "コピー",
+        other: "その他"
+      };
+
+      const statusLabels = {
+        copied: "コピー済み",
+        sent: "送信済み",
+        failed: "失敗",
+        pending: "未送信",
+        cancelled: "取消"
+      };
+
+      for (const notification of notifications) {
+        const row = document.createElement("div");
+        row.className = "notification-history-entry";
+        const preview = String(
+          notification.message_body || ""
+        ).slice(0, 180);
+
+        row.innerHTML = `
+          <div class="notification-history-title">
+            ${escapeHtml(
+              typeLabels[notification.notification_type] ||
+              notification.notification_type
+            )}
+            <span class="notification-status notification-status-${escapeHtml(notification.send_status)}">
+              ${escapeHtml(
+                statusLabels[notification.send_status] ||
+                notification.send_status
+              )}
+            </span>
+          </div>
+          <div class="notification-history-meta">
+            ${escapeHtml(formatDateTimeJa(
+              notification.sent_at ||
+              notification.created_at
+            ))}
+            ｜${escapeHtml(
+              channelLabels[notification.channel] ||
+              notification.channel
+            )}
+            ${
+              notification.operator_label
+                ? `｜${escapeHtml(notification.operator_label)}`
+                : ""
+            }
+          </div>
+          <div class="notification-history-message">
+            ${escapeHtml(preview)}
+            ${
+              String(notification.message_body || "").length > 180
+                ? "…"
+                : ""
+            }
+          </div>
+        `;
+        elements.notificationHistory.appendChild(row);
+      }
     }
 
     function renderDetailTimeline(
@@ -2731,6 +3264,22 @@
     elements.saveScheduleButton.addEventListener(
       "click",
       updateOrderSchedule
+    );
+    elements.notificationTemplateType.addEventListener(
+      "change",
+      applyNotificationTemplate
+    );
+    elements.notificationChannel.addEventListener(
+      "change",
+      updateNotificationDestination
+    );
+    elements.copyNotificationButton.addEventListener(
+      "click",
+      copyNotificationMessage
+    );
+    elements.markNotificationSentButton.addEventListener(
+      "click",
+      markNotificationSent
     );
 
     elements.connectButton.addEventListener("click", checkConnection);
