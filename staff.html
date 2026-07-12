@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜スタッフ作業ボード</title>
+  <style>
+    :root {
+      --bg: #eef5f7;
+      --panel: #ffffff;
+      --line: #d7e4e9;
+      --ink: #173543;
+      --muted: #6c7f89;
+      --primary: #07828e;
+      --primary-dark: #05616a;
+      --success: #17815d;
+      --warning: #a96800;
+      --danger: #bd3b49;
+      --purple: #6a4ab0;
+      --shadow: 0 12px 30px rgba(24, 56, 70, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+    }
+
+    .header {
+      padding: 22px 18px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, #05636d 0%, #07828e 58%, #0ca7a9 100%);
+    }
+
+    .header-inner {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.17);
+      font-size: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+    }
+
+    .version {
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .container {
+      width: min(1500px, calc(100% - 24px));
+      margin: 18px auto 42px;
+    }
+
+    .panel {
+      margin-bottom: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .connection-grid {
+      display: grid;
+      grid-template-columns:
+        minmax(160px, 0.8fr)
+        auto
+        minmax(180px, 0.8fr)
+        minmax(210px, 1fr)
+        auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #c7d8df;
+      border-radius: 11px;
+      padding: 9px 12px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(7,130,142,0.12);
+    }
+
+    .button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 11px;
+      padding: 9px 14px;
+      font-weight: 900;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .button-secondary {
+      color: var(--primary-dark);
+      background: #e6f5f6;
+    }
+
+    .button-danger {
+      color: var(--danger);
+      background: #fff0f2;
+      border: 1px solid #edc5ca;
+    }
+
+    .clear-button {
+      min-width: 66px;
+      color: var(--danger);
+      background: #fff;
+      border: 1px solid #d5e0e5;
+    }
+
+    .status-line {
+      margin-top: 10px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .status-line.success {
+      color: #126847;
+      border-color: #bfe2d3;
+      background: #ebf9f3;
+    }
+
+    .status-line.error {
+      color: #982e3b;
+      border-color: #edc5ca;
+      background: #fff0f2;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) auto auto auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .auto-refresh {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .auto-refresh input {
+      width: 18px;
+      min-height: auto;
+      height: 18px;
+      margin: 0;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 11px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fbfdfe;
+    }
+
+    .summary-card.warning {
+      border-color: #efd7ad;
+      background: #fff9ed;
+    }
+
+    .summary-card.danger {
+      border-color: #edc5ca;
+      background: #fff1f3;
+    }
+
+    .summary-card.success {
+      border-color: #bee2d3;
+      background: #edf9f4;
+    }
+
+    .summary-card.purple {
+      border-color: #d9cdef;
+      background: #f6f2ff;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .summary-value {
+      margin-top: 5px;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .board-shell {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .board {
+      min-width: 1320px;
+      display: grid;
+      grid-template-columns:
+        minmax(245px, 1fr)
+        minmax(245px, 1fr)
+        minmax(245px, 1fr)
+        minmax(245px, 1fr)
+        minmax(245px, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #f5f9fa;
+      overflow: hidden;
+    }
+
+    .lane-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 13px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .lane-title {
+      font-weight: 900;
+    }
+
+    .lane-count {
+      min-width: 28px;
+      min-height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: #e7f5f6;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .lane-body {
+      display: grid;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .order-card {
+      border: 1px solid #d4e1e6;
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 7px 18px rgba(27, 55, 68, 0.05);
+    }
+
+    .order-card.overdue {
+      border: 2px solid #df7580;
+    }
+
+    .order-card.rewash {
+      border: 2px solid #e2a05f;
+    }
+
+    .order-card.due_today {
+      border: 2px solid #dfbc6c;
+    }
+
+    .order-card.ready_not_notified {
+      border: 2px solid #58b9bd;
+    }
+
+    .order-card.long_storage {
+      border: 2px solid #9b80d1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .order-number {
+      font-size: 15px;
+      font-weight: 900;
+      word-break: break-all;
+    }
+
+    .customer-name {
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .customer-meta {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .status-badge,
+    .urgency-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 25px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-accepted { background: #e8f4ff; color: #23608c; }
+    .status-inspecting { background: #fff4d9; color: #8a5a00; }
+    .status-cleaning { background: #e8f7f8; color: #08707b; }
+    .status-finishing { background: #efeaff; color: #5e45a8; }
+    .status-ready { background: #e7f8ef; color: #13744d; }
+    .status-stored { background: #f2edff; color: #6441a5; }
+    .status-rewash { background: #fff0e6; color: #a84d0b; }
+
+    .urgency-badge {
+      margin-top: 6px;
+      color: #fff;
+      background: var(--danger);
+    }
+
+    .urgency-due_today { background: #b47a05; }
+    .urgency-ready_not_notified { background: #14808b; }
+    .urgency-long_storage { background: var(--purple); }
+    .urgency-rewash { background: #b85a13; }
+
+    .card-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 11px;
+    }
+
+    .detail-box {
+      border: 1px solid #e2eaee;
+      border-radius: 10px;
+      padding: 8px;
+      background: #fbfdfe;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .detail-value {
+      margin-top: 3px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .item-list {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #d7e2e7;
+    }
+
+    .item-row {
+      margin-top: 6px;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .item-name {
+      font-weight: 900;
+    }
+
+    .item-note {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .actions {
+      display: grid;
+      gap: 7px;
+      margin-top: 11px;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .action-button {
+      min-height: 38px;
+      border: 1px solid #bbd8dc;
+      border-radius: 10px;
+      color: var(--primary-dark);
+      background: #edf9fa;
+      padding: 7px 9px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .action-button.complete {
+      color: var(--success);
+      border-color: #b9dfd0;
+      background: #ebf9f3;
+    }
+
+    .action-button.rewash {
+      color: #a54e0f;
+      border-color: #ebc8a8;
+      background: #fff5ec;
+    }
+
+    .empty {
+      padding: 22px 12px;
+      border: 1px dashed #cad8de;
+      border-radius: 12px;
+      color: var(--muted);
+      background: #fbfdfe;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 24px;
+      width: min(520px, calc(100% - 28px));
+      transform: translate(-50%, 30px);
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 13px;
+      padding: 13px 16px;
+      color: #fff;
+      background: #173543;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.2);
+      transition: 0.22s ease;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .toast.visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #a93240;
+    }
+
+    @media (max-width: 1050px) {
+      .connection-grid {
+        grid-template-columns: 1fr auto 1fr;
+      }
+
+      .connection-grid .staff-field {
+        grid-column: 1 / 3;
+      }
+
+      .connection-grid .connect-field {
+        grid-column: 3;
+        grid-row: 2;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .version {
+        display: none;
+      }
+
+      .connection-grid,
+      .toolbar,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .connection-grid .staff-field,
+      .connection-grid .connect-field {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .connection-grid .clear-field {
+        position: absolute;
+        right: 28px;
+        margin-top: 22px;
+      }
+
+      .board-shell {
+        overflow: visible;
+      }
+
+      .board {
+        min-width: 0;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">🧺</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">スタッフ・本日の作業ボード</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-9</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="connection-grid">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input
+            id="adminKey"
+            type="password"
+            value="1234"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="clear-field">
+          <button
+            id="clearAdminKeyButton"
+            class="button clear-button"
+            type="button"
+          >
+            消去
+          </button>
+        </div>
+
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input
+            id="shopCode"
+            value="cleaning_demo"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="staff-field">
+          <label for="staffSelect">担当スタッフ</label>
+          <select id="staffSelect">
+            <option value="">接続後に選択</option>
+          </select>
+        </div>
+
+        <div class="connect-field">
+          <button
+            id="connectButton"
+            class="button button-primary"
+            type="button"
+          >
+            作業一覧を開く
+          </button>
+        </div>
+      </div>
+
+      <div id="connectionStatus" class="status-line">
+        管理コードを入力して作業一覧を開いてください。
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <label for="searchInput">
+            受付番号・氏名・会員番号・電話番号
+          </label>
+          <input
+            id="searchInput"
+            placeholder="例：CL-20260712-D003"
+            autocomplete="off"
+          >
+        </div>
+
+        <button
+          id="searchButton"
+          class="button button-primary"
+          type="button"
+        >
+          検索
+        </button>
+
+        <button
+          id="refreshButton"
+          class="button button-secondary"
+          type="button"
+        >
+          最新情報へ更新
+        </button>
+
+        <label class="auto-refresh">
+          <input id="autoRefreshToggle" type="checkbox" checked>
+          60秒ごとに自動更新
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="summary-grid">
+        <div class="summary-card warning">
+          <div class="summary-label">本日仕上げ</div>
+          <div id="dueTodayCount" class="summary-value">0</div>
+        </div>
+        <div class="summary-card danger">
+          <div class="summary-label">予定日超過</div>
+          <div id="overdueCount" class="summary-value">0</div>
+        </div>
+        <div class="summary-card success">
+          <div class="summary-label">受取待ち</div>
+          <div id="uncollectedCount" class="summary-value">0</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">仕上がり未通知</div>
+          <div id="notNotifiedCount" class="summary-value">0</div>
+        </div>
+        <div class="summary-card purple">
+          <div class="summary-label">再洗い・確認</div>
+          <div id="rewashCount" class="summary-value">0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="board-shell">
+        <div class="board">
+          <section class="lane">
+            <div class="lane-head">
+              <div class="lane-title">受付・検品</div>
+              <div id="laneReceptionCount" class="lane-count">0</div>
+            </div>
+            <div id="laneReception" class="lane-body"></div>
+          </section>
+
+          <section class="lane">
+            <div class="lane-head">
+              <div class="lane-title">洗浄中</div>
+              <div id="laneCleaningCount" class="lane-count">0</div>
+            </div>
+            <div id="laneCleaning" class="lane-body"></div>
+          </section>
+
+          <section class="lane">
+            <div class="lane-head">
+              <div class="lane-title">仕上げ中</div>
+              <div id="laneFinishingCount" class="lane-count">0</div>
+            </div>
+            <div id="laneFinishing" class="lane-body"></div>
+          </section>
+
+          <section class="lane">
+            <div class="lane-head">
+              <div class="lane-title">受取待ち・保管</div>
+              <div id="laneReadyCount" class="lane-count">0</div>
+            </div>
+            <div id="laneReady" class="lane-body"></div>
+          </section>
+
+          <section class="lane">
+            <div class="lane-head">
+              <div class="lane-title">再洗い・確認</div>
+              <div id="laneRewashCount" class="lane-count">0</div>
+            </div>
+            <div id="laneRewash" class="lane-body"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const PAGE_VERSION =
+      "CLEANING-9-STAFF-WORK-BOARD-20260712";
+    const STAFF_STORAGE_KEY =
+      "dpro_cleaning_selected_staff_id";
+
+    const STATUS_LABELS = {
+      accepted: "受付済み",
+      inspecting: "検品中",
+      cleaning: "洗浄中",
+      finishing: "仕上げ中",
+      ready: "仕上がり済み",
+      stored: "保管中",
+      delivered: "受け渡し済み",
+      rewash: "再洗い・確認中",
+      cancelled: "キャンセル"
+    };
+
+    const ACTION_LABELS = {
+      inspecting: "検品開始",
+      cleaning: "洗浄開始",
+      finishing: "仕上げへ",
+      ready: "仕上がり済み",
+      stored: "保管中へ",
+      delivered: "受け渡し完了"
+    };
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      clearAdminKeyButton:
+        document.getElementById("clearAdminKeyButton"),
+      shopCode: document.getElementById("shopCode"),
+      staffSelect: document.getElementById("staffSelect"),
+      connectButton: document.getElementById("connectButton"),
+      connectionStatus:
+        document.getElementById("connectionStatus"),
+      searchInput: document.getElementById("searchInput"),
+      searchButton: document.getElementById("searchButton"),
+      refreshButton: document.getElementById("refreshButton"),
+      autoRefreshToggle:
+        document.getElementById("autoRefreshToggle"),
+      dueTodayCount: document.getElementById("dueTodayCount"),
+      overdueCount: document.getElementById("overdueCount"),
+      uncollectedCount:
+        document.getElementById("uncollectedCount"),
+      notNotifiedCount:
+        document.getElementById("notNotifiedCount"),
+      rewashCount: document.getElementById("rewashCount"),
+      laneReception:
+        document.getElementById("laneReception"),
+      laneCleaning: document.getElementById("laneCleaning"),
+      laneFinishing:
+        document.getElementById("laneFinishing"),
+      laneReady: document.getElementById("laneReady"),
+      laneRewash: document.getElementById("laneRewash"),
+      laneReceptionCount:
+        document.getElementById("laneReceptionCount"),
+      laneCleaningCount:
+        document.getElementById("laneCleaningCount"),
+      laneFinishingCount:
+        document.getElementById("laneFinishingCount"),
+      laneReadyCount:
+        document.getElementById("laneReadyCount"),
+      laneRewashCount:
+        document.getElementById("laneRewashCount"),
+      toast: document.getElementById("toast")
+    };
+
+    const state = {
+      board: null,
+      loading: false,
+      updateInProgress: false,
+      autoRefreshTimer: null
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatDateJa(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) {
+        return value || "-";
+      }
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function formatTimeJa(value) {
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "-";
+      }
+
+      return new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function buildAdminUrl(path, params = {}) {
+      const url = new URL(`${API_BASE}${path}`);
+      url.searchParams.set(
+        "admin_key",
+        elements.adminKey.value.trim()
+      );
+      url.searchParams.set(
+        "shop_code",
+        elements.shopCode.value.trim() || "cleaning_demo"
+      );
+
+      for (const [key, value] of Object.entries(params)) {
+        if (
+          value !== undefined &&
+          value !== null &&
+          value !== ""
+        ) {
+          url.searchParams.set(key, value);
+        }
+      }
+
+      return url.toString();
+    }
+
+    async function apiFetch(url, options = {}) {
+      const response = await fetch(url, options);
+      const contentType =
+        response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `APIからJSON以外の応答が返りました（HTTP ${response.status}）`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || "API処理に失敗しました。"
+        );
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function loadBoard() {
+      if (state.loading) {
+        return;
+      }
+
+      if (!elements.adminKey.value.trim()) {
+        setConnectionStatus(
+          "管理コードを入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      state.loading = true;
+      setBusy(true);
+      setConnectionStatus("作業一覧を読み込んでいます。");
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/staff-work-board", {
+            q: elements.searchInput.value.trim()
+          })
+        );
+
+        state.board = data.board;
+        populateStaffSelect(data.board.staff || []);
+        renderBoard(data.board);
+        setConnectionStatus(
+          `${data.board.shop?.shop_name || "店舗"}の作業一覧を更新しました。最終更新 ${formatTimeJa(new Date())}`,
+          "success"
+        );
+        startAutoRefresh();
+      } catch (error) {
+        console.error(error);
+        setConnectionStatus(
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        state.loading = false;
+        setBusy(false);
+      }
+    }
+
+    function populateStaffSelect(staff) {
+      const previous =
+        elements.staffSelect.value ||
+        localStorage.getItem(STAFF_STORAGE_KEY) ||
+        "";
+
+      elements.staffSelect.innerHTML =
+        '<option value="">担当スタッフを選択</option>';
+
+      for (const member of staff) {
+        const option = document.createElement("option");
+        option.value = member.id;
+        option.textContent =
+          `${member.display_name}（${roleLabel(member.role)}）`;
+        option.dataset.displayName = member.display_name;
+        elements.staffSelect.appendChild(option);
+      }
+
+      if (
+        previous &&
+        [...elements.staffSelect.options]
+          .some((option) => option.value === previous)
+      ) {
+        elements.staffSelect.value = previous;
+      }
+    }
+
+    function roleLabel(role) {
+      return {
+        owner: "オーナー",
+        manager: "責任者",
+        reception: "受付",
+        factory: "工場",
+        delivery: "配送"
+      }[role] || role;
+    }
+
+    function renderBoard(board) {
+      const tasks = board.tasks || {};
+
+      elements.dueTodayCount.textContent =
+        Number(tasks.due_today_count || 0);
+      elements.overdueCount.textContent =
+        Number(tasks.overdue_work_count || 0);
+      elements.uncollectedCount.textContent =
+        Number(tasks.uncollected_count || 0);
+      elements.notNotifiedCount.textContent =
+        Number(tasks.ready_not_notified_count || 0);
+      elements.rewashCount.textContent =
+        Number(tasks.rewash_count || 0);
+
+      const orders = Array.isArray(board.orders)
+        ? board.orders
+        : [];
+
+      const lanes = {
+        reception: orders.filter((order) =>
+          ["accepted", "inspecting"].includes(order.status)
+        ),
+        cleaning: orders.filter(
+          (order) => order.status === "cleaning"
+        ),
+        finishing: orders.filter(
+          (order) => order.status === "finishing"
+        ),
+        ready: orders.filter((order) =>
+          ["ready", "stored"].includes(order.status)
+        ),
+        rewash: orders.filter(
+          (order) => order.status === "rewash"
+        )
+      };
+
+      renderLane(elements.laneReception, lanes.reception);
+      renderLane(elements.laneCleaning, lanes.cleaning);
+      renderLane(elements.laneFinishing, lanes.finishing);
+      renderLane(elements.laneReady, lanes.ready);
+      renderLane(elements.laneRewash, lanes.rewash);
+
+      elements.laneReceptionCount.textContent =
+        lanes.reception.length;
+      elements.laneCleaningCount.textContent =
+        lanes.cleaning.length;
+      elements.laneFinishingCount.textContent =
+        lanes.finishing.length;
+      elements.laneReadyCount.textContent =
+        lanes.ready.length;
+      elements.laneRewashCount.textContent =
+        lanes.rewash.length;
+    }
+
+    function renderLane(container, orders) {
+      container.innerHTML = "";
+
+      if (!orders.length) {
+        container.innerHTML =
+          '<div class="empty">現在の作業はありません。</div>';
+        return;
+      }
+
+      for (const order of orders) {
+        container.appendChild(buildOrderCard(order));
+      }
+    }
+
+    function buildOrderCard(order) {
+      const card = document.createElement("article");
+      const urgencyCode =
+        order.urgency?.code || "normal";
+
+      card.className =
+        `order-card ${urgencyCode !== "normal" ? urgencyCode : ""}`;
+
+      const customer = order.customer || {};
+      const items = Array.isArray(order.items)
+        ? order.items
+        : [];
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div>
+            <div class="order-number">
+              ${escapeHtml(order.order_number)}
+            </div>
+            <div class="customer-name">
+              ${escapeHtml(customer.full_name || "-")}
+            </div>
+            <div class="customer-meta">
+              ${escapeHtml(customer.customer_number || "-")}
+            </div>
+          </div>
+          <div style="text-align:right">
+            <span class="status-badge status-${escapeHtml(order.status)}">
+              ${escapeHtml(STATUS_LABELS[order.status] || order.status)}
+            </span>
+            ${
+              order.urgency?.label
+                ? `<div><span class="urgency-badge urgency-${escapeHtml(urgencyCode)}">${escapeHtml(order.urgency.label)}</span></div>`
+                : ""
+            }
+          </div>
+        </div>
+
+        <div class="card-details">
+          <div class="detail-box">
+            <div class="detail-label">仕上がり予定</div>
+            <div class="detail-value">
+              ${escapeHtml(formatDateJa(order.promised_date))}
+            </div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">品物・合計</div>
+            <div class="detail-value">
+              ${Number(order.item_count || 0)}点・${formatYen(order.total_amount)}
+            </div>
+          </div>
+        </div>
+
+        <div class="item-list">
+          ${items.map(buildItemHtml).join("")}
+        </div>
+
+        <div class="actions"></div>
+      `;
+
+      const actions = card.querySelector(".actions");
+      renderActions(actions, order);
+
+      return card;
+    }
+
+    function buildItemHtml(item) {
+      const options = Array.isArray(item.options)
+        ? item.options
+        : [];
+      const flags = item.condition_flags || {};
+      const notes = [];
+
+      if (options.length) {
+        notes.push(
+          `加工：${options.map((option) => option.option_name).join("、")}`
+        );
+      }
+
+      if (flags.stain) {
+        notes.push("シミあり");
+      }
+
+      if (flags.tear || flags.damage) {
+        notes.push("破れ・傷あり");
+      }
+
+      if (flags.button_missing) {
+        notes.push("ボタン欠損");
+      }
+
+      if (item.customer_visible_note) {
+        notes.push(item.customer_visible_note);
+      }
+
+      if (item.internal_note) {
+        notes.push(`内部：${item.internal_note}`);
+      }
+
+      return `
+        <div class="item-row">
+          <div class="item-name">
+            ${escapeHtml(item.item_name)} × ${Number(item.quantity || 0)}
+          </div>
+          ${
+            notes.length
+              ? `<div class="item-note">${escapeHtml(notes.join("｜"))}</div>`
+              : ""
+          }
+        </div>
+      `;
+    }
+
+    function renderActions(container, order) {
+      container.innerHTML = "";
+
+      const addButton = (
+        label,
+        toStatus,
+        className = ""
+      ) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          `action-button ${className}`.trim();
+        button.textContent = label;
+        button.addEventListener("click", () =>
+          updateStatus(order, toStatus)
+        );
+        return button;
+      };
+
+      if (order.status === "accepted") {
+        container.appendChild(
+          addButton("検品開始", "inspecting")
+        );
+        return;
+      }
+
+      if (order.status === "inspecting") {
+        container.appendChild(
+          addButton("洗浄開始", "cleaning")
+        );
+        container.appendChild(
+          addButton(
+            "再洗い・確認",
+            "rewash",
+            "rewash"
+          )
+        );
+        return;
+      }
+
+      if (order.status === "cleaning") {
+        container.appendChild(
+          addButton("仕上げへ", "finishing")
+        );
+        container.appendChild(
+          addButton(
+            "再洗い・確認",
+            "rewash",
+            "rewash"
+          )
+        );
+        return;
+      }
+
+      if (order.status === "finishing") {
+        container.appendChild(
+          addButton(
+            "仕上がり済み",
+            "ready",
+            "complete"
+          )
+        );
+        container.appendChild(
+          addButton(
+            "再洗い・確認",
+            "rewash",
+            "rewash"
+          )
+        );
+        return;
+      }
+
+      if (order.status === "ready") {
+        const row = document.createElement("div");
+        row.className = "action-row";
+        row.appendChild(
+          addButton("保管中へ", "stored")
+        );
+        row.appendChild(
+          addButton(
+            "受け渡し完了",
+            "delivered",
+            "complete"
+          )
+        );
+        container.appendChild(row);
+        container.appendChild(
+          addButton(
+            "再洗い・確認",
+            "rewash",
+            "rewash"
+          )
+        );
+        return;
+      }
+
+      if (order.status === "stored") {
+        container.appendChild(
+          addButton(
+            "受け渡し完了",
+            "delivered",
+            "complete"
+          )
+        );
+        container.appendChild(
+          addButton(
+            "再洗い・確認",
+            "rewash",
+            "rewash"
+          )
+        );
+        return;
+      }
+
+      if (order.status === "rewash") {
+        const row = document.createElement("div");
+        row.className = "action-row";
+        row.appendChild(
+          addButton("洗浄へ戻す", "cleaning")
+        );
+        row.appendChild(
+          addButton("仕上げへ戻す", "finishing")
+        );
+        container.appendChild(row);
+        container.appendChild(
+          addButton(
+            "仕上がり済み",
+            "ready",
+            "complete"
+          )
+        );
+      }
+    }
+
+    async function updateStatus(order, toStatus) {
+      if (state.updateInProgress) {
+        return;
+      }
+
+      const staffId = elements.staffSelect.value;
+
+      if (!staffId) {
+        showToast(
+          "担当スタッフを選択してください。",
+          true
+        );
+        elements.staffSelect.focus();
+        return;
+      }
+
+      const selectedOption =
+        elements.staffSelect.options[
+          elements.staffSelect.selectedIndex
+        ];
+      const staffName =
+        selectedOption?.dataset.displayName ||
+        selectedOption?.textContent ||
+        "スタッフ";
+
+      let reason = null;
+
+      if (toStatus === "rewash") {
+        reason = window.prompt(
+          "再洗い・確認の理由を入力してください。",
+          "仕上がり確認のため"
+        );
+
+        if (reason === null) {
+          return;
+        }
+
+        reason = reason.trim();
+
+        if (!reason) {
+          showToast(
+            "再洗い・確認の理由を入力してください。",
+            true
+          );
+          return;
+        }
+      }
+
+      if (
+        toStatus === "delivered" &&
+        !window.confirm(
+          `${order.order_number}\n${order.customer?.full_name || ""}様\n${order.item_count || 0}点\n\n受け渡し済みにします。品物とお客様を確認しましたか？`
+        )
+      ) {
+        return;
+      }
+
+      state.updateInProgress = true;
+      setBusy(true);
+
+      try {
+        await apiFetch(
+          buildAdminUrl(
+            `/api/admin/orders/${order.id}/status`
+          ),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              to_status: toStatus,
+              expected_status: order.status,
+              reason,
+              changed_by_staff_id: staffId,
+              changed_by_label:
+                `${staffName}（スタッフ画面）`
+            })
+          }
+        );
+
+        localStorage.setItem(
+          STAFF_STORAGE_KEY,
+          staffId
+        );
+
+        showToast(
+          `${order.order_number}を「${STATUS_LABELS[toStatus]}」へ更新しました。`
+        );
+
+        await loadBoard();
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      } finally {
+        state.updateInProgress = false;
+        setBusy(false);
+      }
+    }
+
+    function setBusy(disabled) {
+      elements.connectButton.disabled = disabled;
+      elements.searchButton.disabled = disabled;
+      elements.refreshButton.disabled = disabled;
+
+      for (const button of document.querySelectorAll(
+        ".action-button"
+      )) {
+        button.disabled = disabled;
+      }
+    }
+
+    function setConnectionStatus(message, type = "") {
+      elements.connectionStatus.textContent = message;
+      elements.connectionStatus.className =
+        `status-line ${type}`.trim();
+    }
+
+    let toastTimer = null;
+
+    function showToast(message, isError = false) {
+      elements.toast.textContent = message;
+      elements.toast.className =
+        `toast visible${isError ? " error" : ""}`;
+
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        elements.toast.className = "toast";
+      }, 3600);
+    }
+
+    function startAutoRefresh() {
+      window.clearInterval(state.autoRefreshTimer);
+
+      if (!elements.autoRefreshToggle.checked) {
+        return;
+      }
+
+      state.autoRefreshTimer = window.setInterval(() => {
+        if (
+          !document.hidden &&
+          !state.loading &&
+          !state.updateInProgress
+        ) {
+          loadBoard();
+        }
+      }, 60000);
+    }
+
+    elements.clearAdminKeyButton.addEventListener(
+      "click",
+      () => {
+        elements.adminKey.value = "";
+        elements.adminKey.focus();
+        setConnectionStatus(
+          "管理コードを消去しました。再入力してください。"
+        );
+      }
+    );
+
+    elements.connectButton.addEventListener(
+      "click",
+      loadBoard
+    );
+
+    elements.searchButton.addEventListener(
+      "click",
+      loadBoard
+    );
+
+    elements.refreshButton.addEventListener(
+      "click",
+      loadBoard
+    );
+
+    elements.searchInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Enter") {
+          loadBoard();
+        }
+      }
+    );
+
+    elements.staffSelect.addEventListener(
+      "change",
+      () => {
+        if (elements.staffSelect.value) {
+          localStorage.setItem(
+            STAFF_STORAGE_KEY,
+            elements.staffSelect.value
+          );
+        }
+      }
+    );
+
+    elements.autoRefreshToggle.addEventListener(
+      "change",
+      startAutoRefresh
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      () => window.clearInterval(state.autoRefreshTimer)
+    );
+
+    loadBoard();
+  </script>
+</body>
+</html>
