@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>DPRO クリーニング LINE｜店頭受付</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --panel: #ffffff;
+      --line: #dce6ed;
+      --ink: #153243;
+      --muted: #667985;
+      --primary: #087f8c;
+      --primary-dark: #05616b;
+      --accent: #ffb703;
+      --danger: #c73e4d;
+      --success: #16825d;
+      --shadow: 0 12px 30px rgba(20, 50, 67, 0.09);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .topbar {
+      background:
+        linear-gradient(135deg, #05616b 0%, #087f8c 55%, #0aa4a8 100%);
+      color: #fff;
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 27px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 13px;
+    }
+
+    .version {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 24px auto 60px;
+      padding: 0 20px;
+    }
+
+    .system-strip {
+      display: grid;
+      grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr) auto;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 9px;
+      border-radius: 12px;
+      background: #e6f5f6;
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #cbd9e1;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 12px;
+      outline: none;
+      transition: 0.18s ease;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.13);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 11px;
+      padding: 10px 16px;
+      font-weight: 800;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .button-secondary {
+      color: var(--primary-dark);
+      background: #e6f5f6;
+    }
+
+    .button-danger {
+      color: var(--danger);
+      background: #fff0f2;
+    }
+
+    .button-large {
+      min-height: 54px;
+      padding: 14px 24px;
+      font-size: 17px;
+    }
+
+    .status {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #f9fbfc;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .status.ok {
+      color: var(--success);
+      background: #eefaf5;
+      border-color: #bfe5d6;
+    }
+
+    .status.error {
+      color: var(--danger);
+      background: #fff3f4;
+      border-color: #efc9ce;
+    }
+
+    .notice {
+      border-left: 5px solid var(--primary);
+      background: #f0f9fa;
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #315b61;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .results {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .customer-card {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+      text-align: left;
+      color: var(--ink);
+    }
+
+    .customer-card:hover {
+      border-color: var(--primary);
+      background: #f5fbfb;
+    }
+
+    .customer-name {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .customer-meta {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .selected-customer {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px;
+      border: 2px solid #83cbd0;
+      border-radius: 14px;
+      background: #f1fbfb;
+      margin-top: 14px;
+    }
+
+    .selected-customer.visible {
+      display: flex;
+    }
+
+    details {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 15px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .details-body {
+      margin-top: 15px;
+    }
+
+    .items {
+      display: grid;
+      gap: 16px;
+    }
+
+    .item-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fbfdfe;
+      padding: 18px;
+    }
+
+    .item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .item-title {
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    .option-box {
+      margin-top: 14px;
+      border-top: 1px dashed #cddbe2;
+      padding-top: 14px;
+    }
+
+    .option-title {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .option-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .option-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .option-check input {
+      width: 18px;
+      min-height: 18px;
+      height: 18px;
+      margin: 0;
+    }
+
+    .option-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .option-controls input {
+      min-height: 38px;
+      padding: 7px 9px;
+    }
+
+    .conditions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+    }
+
+    .condition {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .condition input {
+      width: 17px;
+      height: 17px;
+      min-height: 17px;
+      margin: 0;
+    }
+
+    .summary-box {
+      position: sticky;
+      bottom: 12px;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+      gap: 12px;
+      align-items: center;
+      border: 2px solid #9ad5d8;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+    }
+
+    .summary-value {
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      border-radius: 14px;
+      padding: 15px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .message.success {
+      color: #0d6848;
+      background: #eaf9f2;
+      border: 1px solid #b9e4d2;
+    }
+
+    .message.error {
+      color: #9b2533;
+      background: #fff0f2;
+      border: 1px solid #f0c2c8;
+    }
+
+    .receipt {
+      display: none;
+      border: 2px solid #74c4a8;
+      background: #f2fcf8;
+    }
+
+    .receipt.visible {
+      display: block;
+    }
+
+    .receipt-number {
+      color: var(--success);
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .system-strip,
+      .grid-4,
+      .grid-3,
+      .option-grid,
+      .summary-box {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-box .button {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      .topbar {
+        padding: 20px 16px;
+      }
+
+      .panel {
+        padding: 17px;
+      }
+
+      .system-strip,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .option-grid,
+      .summary-box,
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+
+      .selected-customer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">👔</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">店頭受付・複数品登録</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-5</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="system-strip">
+      <div>
+        <label for="adminKey">管理コード</label>
+        <input id="adminKey" type="password" value="1234" autocomplete="off">
+      </div>
+      <div>
+        <label for="shopCode">店舗コード</label>
+        <input id="shopCode" value="cleaning_demo">
+      </div>
+      <button id="connectButton" class="button button-secondary" type="button">
+        API接続を確認
+      </button>
+    </section>
+
+    <div id="apiStatus" class="status">接続確認前です</div>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2><span class="step-number">1</span>お客様を選択</h2>
+      </div>
+
+      <div class="search-row">
+        <input
+          id="customerSearch"
+          placeholder="氏名・会員番号・電話番号で検索"
+          autocomplete="off"
+        >
+        <button id="searchButton" class="button button-primary" type="button">
+          検索
+        </button>
+      </div>
+
+      <div id="customerResults" class="results"></div>
+
+      <div id="selectedCustomer" class="selected-customer">
+        <div>
+          <div id="selectedCustomerName" class="customer-name"></div>
+          <div id="selectedCustomerMeta" class="customer-meta"></div>
+        </div>
+        <button id="clearCustomerButton" class="button button-secondary" type="button">
+          選び直す
+        </button>
+      </div>
+
+      <details>
+        <summary>新しいお客様を登録する</summary>
+        <div class="details-body">
+          <div class="grid grid-3">
+            <div>
+              <label for="newName">お名前 *</label>
+              <input id="newName" placeholder="例：岩口 大次郎">
+            </div>
+            <div>
+              <label for="newKana">フリガナ</label>
+              <input id="newKana" placeholder="例：イワグチ ダイジロウ">
+            </div>
+            <div>
+              <label for="newPhone">電話番号 *</label>
+              <input id="newPhone" inputmode="tel" placeholder="例：090-1111-2222">
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <button id="createCustomerButton" class="button button-secondary" type="button">
+              新規顧客を登録して選択
+            </button>
+          </div>
+          <div id="customerMessage" class="message"></div>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2><span class="step-number">2</span>受付内容</h2>
+      </div>
+
+      <div class="grid grid-4">
+        <div>
+          <label for="promisedDate">仕上がり予定日 *</label>
+          <input id="promisedDate" type="date">
+        </div>
+        <div>
+          <label for="paymentStatus">お支払い</label>
+          <select id="paymentStatus">
+            <option value="pay_on_pickup">受取時支払い</option>
+            <option value="paid">支払い済み</option>
+            <option value="unpaid">未払い</option>
+          </select>
+        </div>
+        <div>
+          <label for="discountAmount">割引額</label>
+          <input id="discountAmount" type="number" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label for="taxAmount">税額</label>
+          <input id="taxAmount" type="number" min="0" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:14px">
+        <div>
+          <label for="customerNote">お客様からのご要望</label>
+          <textarea id="customerNote" placeholder="例：襟汚れを重点的に確認"></textarea>
+        </div>
+        <div>
+          <label for="internalNote">店舗内部メモ</label>
+          <textarea id="internalNote" placeholder="お客様には表示しないメモ"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2><span class="step-number">3</span>品物を登録</h2>
+        <button id="addItemButton" class="button button-secondary" type="button">
+          ＋ 品物を追加
+        </button>
+      </div>
+
+      <div class="notice">
+        同じ品目でも、シミ抜きの有無や単価が異なる場合は別の品物行として追加してください。
+      </div>
+
+      <div id="items" class="items" style="margin-top:15px"></div>
+    </section>
+
+    <section class="panel summary-box">
+      <div>
+        <div class="summary-label">品物点数</div>
+        <div id="summaryQuantity" class="summary-value">0点</div>
+      </div>
+      <div>
+        <div class="summary-label">品物小計</div>
+        <div id="summaryItems" class="summary-value">0円</div>
+      </div>
+      <div>
+        <div class="summary-label">加工料金</div>
+        <div id="summaryOptions" class="summary-value">0円</div>
+      </div>
+      <div>
+        <div class="summary-label">受付合計</div>
+        <div id="summaryTotal" class="summary-value">0円</div>
+      </div>
+      <button id="submitButton" class="button button-primary button-large" type="button">
+        この内容で受付を完了
+      </button>
+    </section>
+
+    <div id="orderMessage" class="message"></div>
+
+    <section id="receipt" class="panel receipt">
+      <div class="small">受付が完了しました</div>
+      <div id="receiptNumber" class="receipt-number"></div>
+      <div id="receiptDetail" style="margin-top:12px;line-height:1.9"></div>
+      <button id="newReceptionButton" class="button button-secondary" type="button" style="margin-top:16px">
+        次の受付を開始
+      </button>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const PAGE_VERSION = "CLEANING-5-RECEPTION-20260712";
+
+    const state = {
+      selectedCustomer: null,
+      itemServices: [],
+      optionServices: [],
+      itemSerial: 0,
+      submitting: false
+    };
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      shopCode: document.getElementById("shopCode"),
+      connectButton: document.getElementById("connectButton"),
+      apiStatus: document.getElementById("apiStatus"),
+      customerSearch: document.getElementById("customerSearch"),
+      searchButton: document.getElementById("searchButton"),
+      customerResults: document.getElementById("customerResults"),
+      selectedCustomer: document.getElementById("selectedCustomer"),
+      selectedCustomerName: document.getElementById("selectedCustomerName"),
+      selectedCustomerMeta: document.getElementById("selectedCustomerMeta"),
+      clearCustomerButton: document.getElementById("clearCustomerButton"),
+      newName: document.getElementById("newName"),
+      newKana: document.getElementById("newKana"),
+      newPhone: document.getElementById("newPhone"),
+      createCustomerButton: document.getElementById("createCustomerButton"),
+      customerMessage: document.getElementById("customerMessage"),
+      promisedDate: document.getElementById("promisedDate"),
+      paymentStatus: document.getElementById("paymentStatus"),
+      discountAmount: document.getElementById("discountAmount"),
+      taxAmount: document.getElementById("taxAmount"),
+      customerNote: document.getElementById("customerNote"),
+      internalNote: document.getElementById("internalNote"),
+      addItemButton: document.getElementById("addItemButton"),
+      items: document.getElementById("items"),
+      summaryQuantity: document.getElementById("summaryQuantity"),
+      summaryItems: document.getElementById("summaryItems"),
+      summaryOptions: document.getElementById("summaryOptions"),
+      summaryTotal: document.getElementById("summaryTotal"),
+      submitButton: document.getElementById("submitButton"),
+      orderMessage: document.getElementById("orderMessage"),
+      receipt: document.getElementById("receipt"),
+      receiptNumber: document.getElementById("receiptNumber"),
+      receiptDetail: document.getElementById("receiptDetail"),
+      newReceptionButton: document.getElementById("newReceptionButton")
+    };
+
+    function getAdminKey() {
+      return elements.adminKey.value.trim();
+    }
+
+    function getShopCode() {
+      return elements.shopCode.value.trim() || "cleaning_demo";
+    }
+
+    function buildAdminUrl(path, params = {}) {
+      const url = new URL(`${API_BASE}${path}`);
+      url.searchParams.set("admin_key", getAdminKey());
+      url.searchParams.set("shop_code", getShopCode());
+
+      for (const [key, value] of Object.entries(params)) {
+        if (value !== null && value !== undefined && value !== "") {
+          url.searchParams.set(key, String(value));
+        }
+      }
+
+      return url.toString();
+    }
+
+    async function apiFetch(url, options = {}) {
+      const response = await fetch(url, options);
+      const contentType = response.headers.get("content-type") || "";
+      let data;
+
+      if (contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        throw new Error(
+          `JSONではない応答です（HTTP ${response.status}）\n${text.slice(0, 200)}`
+        );
+      }
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || `APIエラー（HTTP ${response.status}）`
+        );
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+
+      return data;
+    }
+
+    function setStatus(message, type = "") {
+      elements.apiStatus.textContent = message;
+      elements.apiStatus.className = `status ${type}`.trim();
+    }
+
+    function showMessage(element, message, type) {
+      element.textContent = message;
+      element.className = `message visible ${type}`;
+    }
+
+    function clearMessage(element) {
+      element.textContent = "";
+      element.className = "message";
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function addDays(date, days) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
+    function formatDateInput(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function initializeDate() {
+      const today = new Date();
+      const defaultDate = addDays(today, 3);
+      elements.promisedDate.min = formatDateInput(today);
+      elements.promisedDate.value = formatDateInput(defaultDate);
+    }
+
+    async function checkConnection() {
+      try {
+        setStatus("APIと品目設定を確認しています…");
+        const health = await apiFetch(`${API_BASE}/api/health`);
+        const services = await apiFetch(
+          buildAdminUrl("/api/admin/services")
+        );
+
+        state.itemServices = services.item_services || [];
+        state.optionServices = services.option_services || [];
+
+        setStatus(
+          `接続OK｜${health.shop?.shop_name || getShopCode()}｜品目${state.itemServices.length}件・加工${state.optionServices.length}件`,
+          "ok"
+        );
+
+        if (elements.items.children.length === 0) {
+          addItem();
+        } else {
+          refreshAllServiceSelects();
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus(error.message, "error");
+      }
+    }
+
+    async function searchCustomers() {
+      clearMessage(elements.customerMessage);
+      const query = elements.customerSearch.value.trim();
+
+      if (!query) {
+        showMessage(
+          elements.customerMessage,
+          "氏名・会員番号・電話番号のいずれかを入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      elements.searchButton.disabled = true;
+      elements.searchButton.textContent = "検索中…";
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/customers/search", {
+            q: query,
+            limit: 20
+          })
+        );
+
+        renderCustomerResults(data.customers || []);
+      } catch (error) {
+        console.error(error);
+        showMessage(elements.customerMessage, error.message, "error");
+      } finally {
+        elements.searchButton.disabled = false;
+        elements.searchButton.textContent = "検索";
+      }
+    }
+
+    function renderCustomerResults(customers) {
+      elements.customerResults.innerHTML = "";
+
+      if (customers.length === 0) {
+        elements.customerResults.innerHTML =
+          '<div class="notice">該当するお客様が見つかりません。新しいお客様として登録してください。</div>';
+        return;
+      }
+
+      for (const customer of customers) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "customer-card";
+        button.innerHTML = `
+          <div class="customer-name">${escapeHtml(customer.full_name)}</div>
+          <div class="customer-meta">
+            会員番号：${escapeHtml(customer.customer_number)}<br>
+            電話番号：${escapeHtml(customer.phone_raw || customer.phone_normalized || "-")}<br>
+            利用履歴：${Number(customer.order_count || 0)}件
+          </div>
+        `;
+        button.addEventListener("click", () => selectCustomer(customer));
+        elements.customerResults.appendChild(button);
+      }
+    }
+
+    function selectCustomer(customer) {
+      state.selectedCustomer = customer;
+      elements.selectedCustomerName.textContent = customer.full_name;
+      elements.selectedCustomerMeta.textContent =
+        `会員番号：${customer.customer_number}　電話：${customer.phone_raw || customer.phone_normalized || "-"}`;
+      elements.selectedCustomer.classList.add("visible");
+      elements.customerResults.innerHTML = "";
+      elements.customerSearch.value = "";
+      clearMessage(elements.customerMessage);
+    }
+
+    function clearCustomer() {
+      state.selectedCustomer = null;
+      elements.selectedCustomer.classList.remove("visible");
+      elements.selectedCustomerName.textContent = "";
+      elements.selectedCustomerMeta.textContent = "";
+    }
+
+    async function createCustomer() {
+      clearMessage(elements.customerMessage);
+
+      const fullName = elements.newName.value.trim();
+      const fullNameKana = elements.newKana.value.trim();
+      const phoneRaw = elements.newPhone.value.trim();
+
+      if (!fullName || !phoneRaw) {
+        showMessage(
+          elements.customerMessage,
+          "お名前と電話番号を入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      elements.createCustomerButton.disabled = true;
+      elements.createCustomerButton.textContent = "登録中…";
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/customers"),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              full_name: fullName,
+              full_name_kana: fullNameKana || null,
+              phone_raw: phoneRaw,
+              preferred_contact: "line",
+              customer_note: "店頭受付画面から登録"
+            })
+          }
+        );
+
+        const customer = data.customer;
+        selectCustomer({
+          customer_id: customer.id,
+          customer_number: customer.customer_number,
+          full_name: customer.full_name,
+          full_name_kana: customer.full_name_kana,
+          phone_raw: customer.phone_raw,
+          phone_normalized: customer.phone_normalized,
+          order_count: 0
+        });
+
+        elements.newName.value = "";
+        elements.newKana.value = "";
+        elements.newPhone.value = "";
+
+        showMessage(
+          elements.customerMessage,
+          `${customer.customer_number}として登録しました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+
+        if (
+          error.data?.error === "CUSTOMER_DUPLICATE_FOUND" &&
+          Array.isArray(error.data.matches) &&
+          error.data.matches.length
+        ) {
+          const match = error.data.matches[0];
+          showMessage(
+            elements.customerMessage,
+            `同じ電話番号の顧客が登録されています。\n${match.customer_number} ${match.full_name}`,
+            "error"
+          );
+        } else {
+          showMessage(elements.customerMessage, error.message, "error");
+        }
+      } finally {
+        elements.createCustomerButton.disabled = false;
+        elements.createCustomerButton.textContent =
+          "新規顧客を登録して選択";
+      }
+    }
+
+    function serviceOptionsHtml(selectedId = "") {
+      const options = [
+        '<option value="">品目を選択</option>',
+        ...state.itemServices.map(
+          (service) =>
+            `<option value="${escapeHtml(service.id)}" ${
+              service.id === selectedId ? "selected" : ""
+            }>${escapeHtml(service.service_name)}（${formatYen(service.default_price)}）</option>`
+        )
+      ];
+
+      return options.join("");
+    }
+
+    function optionCardsHtml(serial) {
+      if (state.optionServices.length === 0) {
+        return '<div class="small">加工メニューが登録されていません。</div>';
+      }
+
+      return state.optionServices
+        .map(
+          (service) => `
+            <div class="option-card" data-option-id="${escapeHtml(service.id)}">
+              <label class="option-check">
+                <input type="checkbox" class="option-enabled">
+                <span>${escapeHtml(service.service_name)}（${formatYen(service.default_price)}）</span>
+              </label>
+              <div class="option-controls">
+                <input
+                  class="option-quantity"
+                  type="number"
+                  min="1"
+                  max="999"
+                  value="1"
+                  aria-label="${escapeHtml(service.service_name)}の数量"
+                  disabled
+                >
+                <input
+                  class="option-price"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value="${Number(service.default_price || 0)}"
+                  aria-label="${escapeHtml(service.service_name)}の単価"
+                  disabled
+                >
+              </div>
+            </div>
+          `
+        )
+        .join("");
+    }
+
+    function addItem(initial = {}) {
+      state.itemSerial += 1;
+      const serial = state.itemSerial;
+      const card = document.createElement("article");
+      card.className = "item-card";
+      card.dataset.serial = String(serial);
+
+      card.innerHTML = `
+        <div class="item-head">
+          <div class="item-title">品物 <span class="item-number"></span></div>
+          <button class="button button-danger remove-item" type="button">削除</button>
+        </div>
+
+        <div class="grid grid-4">
+          <div>
+            <label>品目 *</label>
+            <select class="item-service">
+              ${serviceOptionsHtml(initial.service_id || "")}
+            </select>
+          </div>
+          <div>
+            <label>数量 *</label>
+            <input class="item-quantity" type="number" min="1" max="999" value="${Number(initial.quantity || 1)}">
+          </div>
+          <div>
+            <label>単価 *</label>
+            <input class="item-price" type="number" min="0" step="1" value="${Number(initial.unit_price || 0)}">
+          </div>
+          <div>
+            <label>仕上がり予定日</label>
+            <input class="item-date" type="date" value="${escapeHtml(elements.promisedDate.value)}">
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:12px">
+          <div>
+            <label>色</label>
+            <input class="item-color" placeholder="例：紺">
+          </div>
+          <div>
+            <label>ブランド</label>
+            <input class="item-brand" placeholder="任意">
+          </div>
+          <div>
+            <label>素材</label>
+            <input class="item-material" placeholder="任意">
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label>受付時の状態</label>
+          <div class="conditions">
+            <label class="condition"><input type="checkbox" class="condition-stain">シミあり</label>
+            <label class="condition"><input type="checkbox" class="condition-damage">破れ・傷あり</label>
+            <label class="condition"><input type="checkbox" class="condition-button">ボタン欠損</label>
+            <label class="condition"><input type="checkbox" class="item-rush">急ぎ品</label>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:12px">
+          <div>
+            <label>お客様にも見せる注意事項</label>
+            <textarea class="item-customer-note" placeholder="例：襟にシミあり"></textarea>
+          </div>
+          <div>
+            <label>店舗内部メモ</label>
+            <textarea class="item-internal-note" placeholder="例：受付時写真あり"></textarea>
+          </div>
+        </div>
+
+        <div class="option-box">
+          <div class="option-title">加工オプション</div>
+          <div class="option-grid">
+            ${optionCardsHtml(serial)}
+          </div>
+        </div>
+      `;
+
+      elements.items.appendChild(card);
+
+      card.querySelector(".remove-item").addEventListener("click", () => {
+        card.remove();
+
+        if (elements.items.children.length === 0) {
+          addItem();
+        }
+
+        renumberItems();
+        updateSummary();
+      });
+
+      card.querySelector(".item-service").addEventListener("change", () => {
+        applySelectedService(card);
+        updateSummary();
+      });
+
+      card.querySelector(".item-quantity").addEventListener("input", () => {
+        syncOptionQuantities(card);
+        updateSummary();
+      });
+
+      for (const input of card.querySelectorAll(
+        ".item-price,.option-quantity,.option-price"
+      )) {
+        input.addEventListener("input", updateSummary);
+      }
+
+      for (const checkbox of card.querySelectorAll(".option-enabled")) {
+        checkbox.addEventListener("change", () => {
+          const optionCard = checkbox.closest(".option-card");
+          optionCard.querySelector(".option-quantity").disabled =
+            !checkbox.checked;
+          optionCard.querySelector(".option-price").disabled =
+            !checkbox.checked;
+
+          if (checkbox.checked) {
+            const quantity = Math.max(
+              1,
+              Number(card.querySelector(".item-quantity").value || 1)
+            );
+            optionCard.querySelector(".option-quantity").value = quantity;
+          }
+
+          updateSummary();
+        });
+      }
+
+      if (initial.service_id) {
+        applySelectedService(card, false);
+      }
+
+      renumberItems();
+      updateSummary();
+    }
+
+    function refreshAllServiceSelects() {
+      for (const card of elements.items.querySelectorAll(".item-card")) {
+        const select = card.querySelector(".item-service");
+        const selected = select.value;
+        select.innerHTML = serviceOptionsHtml(selected);
+        const optionGrid = card.querySelector(".option-grid");
+        optionGrid.innerHTML = optionCardsHtml(card.dataset.serial);
+
+        for (const checkbox of optionGrid.querySelectorAll(".option-enabled")) {
+          checkbox.addEventListener("change", () => {
+            const optionCard = checkbox.closest(".option-card");
+            optionCard.querySelector(".option-quantity").disabled =
+              !checkbox.checked;
+            optionCard.querySelector(".option-price").disabled =
+              !checkbox.checked;
+            updateSummary();
+          });
+        }
+
+        for (const input of optionGrid.querySelectorAll(
+          ".option-quantity,.option-price"
+        )) {
+          input.addEventListener("input", updateSummary);
+        }
+      }
+
+      updateSummary();
+    }
+
+    function applySelectedService(card, overwritePrice = true) {
+      const serviceId = card.querySelector(".item-service").value;
+      const service = state.itemServices.find(
+        (entry) => entry.id === serviceId
+      );
+
+      if (!service) {
+        if (overwritePrice) {
+          card.querySelector(".item-price").value = "0";
+        }
+        return;
+      }
+
+      if (overwritePrice) {
+        card.querySelector(".item-price").value = String(
+          Number(service.default_price || 0)
+        );
+      }
+    }
+
+    function syncOptionQuantities(card) {
+      const quantity = Math.max(
+        1,
+        Number(card.querySelector(".item-quantity").value || 1)
+      );
+
+      for (const optionCard of card.querySelectorAll(".option-card")) {
+        if (optionCard.querySelector(".option-enabled").checked) {
+          optionCard.querySelector(".option-quantity").value = String(
+            quantity
+          );
+        }
+      }
+    }
+
+    function renumberItems() {
+      [...elements.items.querySelectorAll(".item-card")].forEach(
+        (card, index) => {
+          card.querySelector(".item-number").textContent = index + 1;
+        }
+      );
+    }
+
+    function calculateSummary() {
+      let quantityTotal = 0;
+      let itemTotal = 0;
+      let optionTotal = 0;
+
+      for (const card of elements.items.querySelectorAll(".item-card")) {
+        const quantity = Math.max(
+          0,
+          Number(card.querySelector(".item-quantity").value || 0)
+        );
+        const price = Math.max(
+          0,
+          Number(card.querySelector(".item-price").value || 0)
+        );
+
+        quantityTotal += quantity;
+        itemTotal += quantity * price;
+
+        for (const optionCard of card.querySelectorAll(".option-card")) {
+          if (!optionCard.querySelector(".option-enabled").checked) {
+            continue;
+          }
+
+          const optionQuantity = Math.max(
+            0,
+            Number(
+              optionCard.querySelector(".option-quantity").value || 0
+            )
+          );
+          const optionPrice = Math.max(
+            0,
+            Number(optionCard.querySelector(".option-price").value || 0)
+          );
+
+          optionTotal += optionQuantity * optionPrice;
+        }
+      }
+
+      const discount = Math.max(
+        0,
+        Number(elements.discountAmount.value || 0)
+      );
+      const tax = Math.max(0, Number(elements.taxAmount.value || 0));
+      const total = Math.max(0, itemTotal + optionTotal + tax - discount);
+
+      return {
+        quantityTotal,
+        itemTotal,
+        optionTotal,
+        discount,
+        tax,
+        total
+      };
+    }
+
+    function updateSummary() {
+      const summary = calculateSummary();
+      elements.summaryQuantity.textContent = `${summary.quantityTotal}点`;
+      elements.summaryItems.textContent = formatYen(summary.itemTotal);
+      elements.summaryOptions.textContent = formatYen(
+        summary.optionTotal
+      );
+      elements.summaryTotal.textContent = formatYen(summary.total);
+    }
+
+    function buildOrderPayload() {
+      if (!state.selectedCustomer) {
+        throw new Error("お客様を選択してください。");
+      }
+
+      if (!elements.promisedDate.value) {
+        throw new Error("仕上がり予定日を選択してください。");
+      }
+
+      const cards = [
+        ...elements.items.querySelectorAll(".item-card")
+      ];
+
+      if (cards.length === 0) {
+        throw new Error("品物を1件以上登録してください。");
+      }
+
+      const items = cards.map((card, index) => {
+        const serviceId = card.querySelector(".item-service").value;
+        const service = state.itemServices.find(
+          (entry) => entry.id === serviceId
+        );
+
+        if (!service) {
+          throw new Error(`品物${index + 1}の品目を選択してください。`);
+        }
+
+        const quantity = Number(
+          card.querySelector(".item-quantity").value
+        );
+        const unitPrice = Number(
+          card.querySelector(".item-price").value
+        );
+
+        if (!Number.isInteger(quantity) || quantity < 1) {
+          throw new Error(`品物${index + 1}の数量を確認してください。`);
+        }
+
+        if (!Number.isInteger(unitPrice) || unitPrice < 0) {
+          throw new Error(`品物${index + 1}の単価を確認してください。`);
+        }
+
+        const options = [];
+
+        for (const optionCard of card.querySelectorAll(".option-card")) {
+          if (!optionCard.querySelector(".option-enabled").checked) {
+            continue;
+          }
+
+          const optionService = state.optionServices.find(
+            (entry) => entry.id === optionCard.dataset.optionId
+          );
+
+          if (!optionService) {
+            continue;
+          }
+
+          options.push({
+            service_id: optionService.id,
+            option_name: optionService.service_name,
+            quantity: Number(
+              optionCard.querySelector(".option-quantity").value
+            ),
+            unit_price: Number(
+              optionCard.querySelector(".option-price").value
+            )
+          });
+        }
+
+        return {
+          service_id: service.id,
+          item_name: service.service_name,
+          category: service.category,
+          quantity,
+          unit_price: unitPrice,
+          color: card.querySelector(".item-color").value.trim() || null,
+          brand: card.querySelector(".item-brand").value.trim() || null,
+          material:
+            card.querySelector(".item-material").value.trim() || null,
+          promised_date:
+            card.querySelector(".item-date").value ||
+            elements.promisedDate.value,
+          is_rush: card.querySelector(".item-rush").checked,
+          condition_flags: {
+            stain: card.querySelector(".condition-stain").checked,
+            damage: card.querySelector(".condition-damage").checked,
+            button_missing:
+              card.querySelector(".condition-button").checked
+          },
+          customer_visible_note:
+            card.querySelector(".item-customer-note").value.trim() ||
+            null,
+          internal_note:
+            card.querySelector(".item-internal-note").value.trim() ||
+            null,
+          options
+        };
+      });
+
+      return {
+        customer_id: state.selectedCustomer.customer_id,
+        source: "reception_pc",
+        payment_status: elements.paymentStatus.value,
+        promised_date: elements.promisedDate.value,
+        discount_amount: Number(elements.discountAmount.value || 0),
+        tax_amount: Number(elements.taxAmount.value || 0),
+        customer_note: elements.customerNote.value.trim() || null,
+        internal_note: elements.internalNote.value.trim() || null,
+        metadata: {
+          page_version: PAGE_VERSION
+        },
+        items
+      };
+    }
+
+    async function submitOrder() {
+      if (state.submitting) {
+        return;
+      }
+
+      clearMessage(elements.orderMessage);
+      elements.receipt.classList.remove("visible");
+
+      let payload;
+
+      try {
+        payload = buildOrderPayload();
+      } catch (error) {
+        showMessage(elements.orderMessage, error.message, "error");
+        elements.orderMessage.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+        return;
+      }
+
+      state.submitting = true;
+      elements.submitButton.disabled = true;
+      elements.submitButton.textContent = "受付を保存中…";
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/orders"),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        const result = data.result || {};
+        const order = result.order || {};
+        const customer = result.customer || state.selectedCustomer;
+        const items = result.items || [];
+
+        elements.receiptNumber.textContent =
+          order.order_number || "受付番号取得中";
+        elements.receiptDetail.innerHTML = `
+          お客様：<strong>${escapeHtml(customer.full_name)}</strong><br>
+          品物点数：<strong>${Number(order.item_count || 0)}点</strong><br>
+          仕上がり予定：<strong>${escapeHtml(order.promised_date || "-")}</strong><br>
+          合計：<strong>${formatYen(order.total_amount || 0)}</strong><br>
+          状態：<strong>受付済み</strong>
+        `;
+        elements.receipt.classList.add("visible");
+
+        showMessage(
+          elements.orderMessage,
+          "Worker → Supabaseへの受付保存が完了しました。",
+          "success"
+        );
+
+        elements.receipt.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          elements.orderMessage,
+          error.data?.message || error.message,
+          "error"
+        );
+        elements.orderMessage.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } finally {
+        state.submitting = false;
+        elements.submitButton.disabled = false;
+        elements.submitButton.textContent = "この内容で受付を完了";
+      }
+    }
+
+    function resetReception() {
+      clearCustomer();
+      elements.customerSearch.value = "";
+      elements.customerResults.innerHTML = "";
+      elements.customerNote.value = "";
+      elements.internalNote.value = "";
+      elements.discountAmount.value = "0";
+      elements.taxAmount.value = "0";
+      elements.paymentStatus.value = "pay_on_pickup";
+      elements.items.innerHTML = "";
+      elements.receipt.classList.remove("visible");
+      clearMessage(elements.orderMessage);
+      initializeDate();
+      addItem();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    elements.connectButton.addEventListener("click", checkConnection);
+    elements.searchButton.addEventListener("click", searchCustomers);
+    elements.customerSearch.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        searchCustomers();
+      }
+    });
+    elements.clearCustomerButton.addEventListener("click", clearCustomer);
+    elements.createCustomerButton.addEventListener(
+      "click",
+      createCustomer
+    );
+    elements.addItemButton.addEventListener("click", () => addItem());
+    elements.discountAmount.addEventListener("input", updateSummary);
+    elements.taxAmount.addEventListener("input", updateSummary);
+    elements.promisedDate.addEventListener("change", () => {
+      for (const input of elements.items.querySelectorAll(".item-date")) {
+        input.value = elements.promisedDate.value;
+      }
+    });
+    elements.submitButton.addEventListener("click", submitOrder);
+    elements.newReceptionButton.addEventListener(
+      "click",
+      resetReception
+    );
+
+    initializeDate();
+    checkConnection();
+  </script>
+</body>
+</html>
