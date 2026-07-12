@@ -1,0 +1,1847 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜オーナー管理</title>
+  <style>
+    :root {
+      --bg: #eef5f7;
+      --panel: #ffffff;
+      --line: #d7e4e9;
+      --ink: #173543;
+      --muted: #6a7f89;
+      --primary: #07828e;
+      --primary-dark: #05616a;
+      --success: #18815e;
+      --warning: #a76a00;
+      --danger: #bd3b49;
+      --purple: #6949ad;
+      --blue: #2e6e9b;
+      --shadow: 0 12px 30px rgba(24, 56, 70, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .header {
+      padding: 22px 18px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, #05636d 0%, #07828e 58%, #0ca7a9 100%);
+    }
+
+    .header-inner {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.17);
+      font-size: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+    }
+
+    .version {
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .container {
+      width: min(1440px, calc(100% - 24px));
+      margin: 18px auto 44px;
+    }
+
+    .panel {
+      margin-bottom: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .connection-grid {
+      display: grid;
+      grid-template-columns:
+        minmax(170px, 0.7fr)
+        auto
+        minmax(210px, 0.9fr)
+        auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    input {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #c7d8df;
+      border-radius: 11px;
+      padding: 9px 12px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(7,130,142,0.12);
+    }
+
+    .button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 11px;
+      padding: 9px 14px;
+      font-weight: 900;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .button-secondary {
+      color: var(--primary-dark);
+      background: #e6f5f6;
+    }
+
+    .clear-button {
+      min-width: 66px;
+      color: var(--danger);
+      background: #fff;
+      border: 1px solid #d5e0e5;
+    }
+
+    .status-line {
+      margin-top: 10px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .status-line.success {
+      color: #126847;
+      border-color: #bfe2d3;
+      background: #ebf9f3;
+    }
+
+    .status-line.error {
+      color: #982e3b;
+      border-color: #edc5ca;
+      background: #fff0f2;
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .quick-link {
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: var(--primary-dark);
+      background: #e8f5f6;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .date-toolbar {
+      display: grid;
+      grid-template-columns: auto minmax(145px, 0.5fr) minmax(145px, 0.5fr) auto auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .preset-button {
+      min-height: 40px;
+      border: 1px solid #c4dade;
+      border-radius: 10px;
+      padding: 8px 11px;
+      color: var(--primary-dark);
+      background: #f4fbfb;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .preset-button.active {
+      color: #fff;
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+
+    .auto-refresh {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .auto-refresh input {
+      width: 18px;
+      min-height: auto;
+      height: 18px;
+      margin: 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 11px;
+    }
+
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 14px;
+      background: #fbfdfe;
+    }
+
+    .metric-card.primary {
+      color: #fff;
+      border-color: transparent;
+      background:
+        linear-gradient(135deg, #05636d, #07919b);
+    }
+
+    .metric-card.success {
+      border-color: #bde1d2;
+      background: #edf9f4;
+    }
+
+    .metric-card.warning {
+      border-color: #edd6aa;
+      background: #fff9ed;
+    }
+
+    .metric-card.blue {
+      border-color: #c5d9e8;
+      background: #f0f7fc;
+    }
+
+    .metric-card.purple {
+      border-color: #d9ccef;
+      background: #f6f2ff;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .metric-card.primary .metric-label {
+      color: rgba(255,255,255,0.76);
+    }
+
+    .metric-value {
+      margin-top: 6px;
+      font-size: clamp(23px, 3vw, 32px);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .metric-sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .metric-card.primary .metric-sub {
+      color: rgba(255,255,255,0.75);
+    }
+
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .task-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px;
+      background: #fbfdfe;
+    }
+
+    .task-card.danger {
+      border-color: #edc5ca;
+      background: #fff1f3;
+    }
+
+    .task-card.warning {
+      border-color: #edd6aa;
+      background: #fff9ed;
+    }
+
+    .task-card.success {
+      border-color: #bde1d2;
+      background: #edf9f4;
+    }
+
+    .task-card.purple {
+      border-color: #d9ccef;
+      background: #f6f2ff;
+    }
+
+    .task-label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .task-value {
+      margin-top: 5px;
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(330px, 0.8fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .chart-scroll {
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .chart {
+      min-width: 620px;
+      height: 260px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      padding: 20px 8px 8px;
+      border-left: 1px solid #d8e4e9;
+      border-bottom: 1px solid #d8e4e9;
+      background:
+        repeating-linear-gradient(
+          to top,
+          transparent 0,
+          transparent 51px,
+          #edf2f4 52px
+        );
+    }
+
+    .chart-column {
+      flex: 1;
+      min-width: 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-value {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .chart-bar {
+      width: min(38px, 80%);
+      min-height: 2px;
+      border-radius: 7px 7px 2px 2px;
+      background:
+        linear-gradient(180deg, #0da6aa, #077783);
+    }
+
+    .chart-date {
+      color: var(--muted);
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px;
+      background: #fbfdfe;
+    }
+
+    .status-label {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .status-count {
+      min-width: 31px;
+      min-height: 31px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: #e7f5f6;
+      font-weight: 900;
+    }
+
+    .alert-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .alert-row {
+      display: grid;
+      grid-template-columns: minmax(210px, 1.2fr) minmax(140px, 0.8fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .alert-number {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .alert-customer {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 25px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--danger);
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .badge.due_today { background: #b57a04; }
+    .badge.overdue { background: #bd3b49; }
+    .badge.ready_not_notified { background: #11828b; }
+    .badge.long_storage { background: var(--purple); }
+    .badge.rewash { background: #b55b16; }
+    .badge.delivered_unpaid { background: #596b78; }
+
+    .copy-button {
+      min-height: 34px;
+      border: 1px solid #c5dade;
+      border-radius: 9px;
+      color: var(--primary-dark);
+      background: #eff9fa;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .ranking-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .ranking-row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border-bottom: 1px solid #edf2f4;
+      padding: 9px 0;
+    }
+
+    .ranking-row:last-child {
+      border-bottom: 0;
+    }
+
+    .ranking-number {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .ranking-name {
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .ranking-meta {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .ranking-sales {
+      text-align: right;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 10px 9px;
+      border-bottom: 1px solid #e8eef1;
+      text-align: left;
+      font-size: 11px;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--muted);
+      background: #f7fafb;
+      font-weight: 900;
+    }
+
+    td strong {
+      font-size: 12px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 27px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+      background: #edf2f5;
+      color: #435865;
+    }
+
+    .status-accepted { background: #e8f4ff; color: #23608c; }
+    .status-inspecting { background: #fff4d9; color: #8a5a00; }
+    .status-cleaning { background: #e8f7f8; color: #08707b; }
+    .status-finishing { background: #efeaff; color: #5e45a8; }
+    .status-ready { background: #e7f8ef; color: #13744d; }
+    .status-stored { background: #f2edff; color: #6441a5; }
+    .status-delivered { background: #edf1f3; color: #43515a; }
+    .status-rewash { background: #fff0e6; color: #a84d0b; }
+    .status-cancelled { background: #fff0f2; color: #a52e3c; }
+
+    .empty {
+      padding: 23px 12px;
+      border: 1px dashed #c9d8de;
+      border-radius: 13px;
+      color: var(--muted);
+      text-align: center;
+      background: #fbfdfe;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 24px;
+      width: min(520px, calc(100% - 28px));
+      transform: translate(-50%, 30px);
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 13px;
+      padding: 13px 16px;
+      color: #fff;
+      background: #173543;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.2);
+      transition: 0.22s ease;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .toast.visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #a93240;
+    }
+
+    @media (max-width: 1050px) {
+      .metric-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .task-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .date-toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .preset-buttons {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .version {
+        display: none;
+      }
+
+      .connection-grid,
+      .date-toolbar,
+      .metric-grid,
+      .task-grid,
+      .ranking-grid,
+      .quick-links,
+      .status-grid,
+      .alert-row {
+        grid-template-columns: 1fr;
+      }
+
+      .connection-grid .clear-field {
+        position: absolute;
+        right: 28px;
+        margin-top: 22px;
+      }
+
+      .alert-row {
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">📊</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">オーナー管理・今日やること・売上集計</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-10</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="connection-grid">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input
+            id="adminKey"
+            type="password"
+            value="1234"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="clear-field">
+          <button
+            id="clearAdminKeyButton"
+            class="button clear-button"
+            type="button"
+          >
+            消去
+          </button>
+        </div>
+
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input
+            id="shopCode"
+            value="cleaning_demo"
+            autocomplete="off"
+          >
+        </div>
+
+        <button
+          id="connectButton"
+          class="button button-primary"
+          type="button"
+        >
+          管理画面を開く
+        </button>
+      </div>
+
+      <div id="connectionStatus" class="status-line">
+        管理コードを入力して管理画面を開いてください。
+      </div>
+
+      <div class="quick-links">
+        <a
+          class="quick-link"
+          href="https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/reception.html?v=cleaning-7"
+          target="_blank"
+          rel="noopener"
+        >
+          店頭受付・注文管理
+        </a>
+        <a
+          class="quick-link"
+          href="https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/staff.html?v=cleaning-9"
+          target="_blank"
+          rel="noopener"
+        >
+          スタッフ作業ボード
+        </a>
+        <a
+          class="quick-link"
+          href="https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/member.html?token=demo-cleaning-member-003"
+          target="_blank"
+          rel="noopener"
+        >
+          会員証デモ
+        </a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="date-toolbar">
+        <div class="preset-buttons">
+          <button
+            class="preset-button"
+            data-preset="today"
+            type="button"
+          >
+            今日
+          </button>
+          <button
+            class="preset-button"
+            data-preset="7days"
+            type="button"
+          >
+            直近7日
+          </button>
+          <button
+            class="preset-button active"
+            data-preset="month"
+            type="button"
+          >
+            今月
+          </button>
+          <button
+            class="preset-button"
+            data-preset="lastmonth"
+            type="button"
+          >
+            先月
+          </button>
+        </div>
+
+        <div>
+          <label for="fromDate">開始日</label>
+          <input id="fromDate" type="date">
+        </div>
+
+        <div>
+          <label for="toDate">終了日</label>
+          <input id="toDate" type="date">
+        </div>
+
+        <button
+          id="applyDateButton"
+          class="button button-primary"
+          type="button"
+        >
+          集計を更新
+        </button>
+
+        <label class="auto-refresh">
+          <input id="autoRefreshToggle" type="checkbox" checked>
+          60秒ごとに自動更新
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <div>
+          <h2>売上・受付サマリー</h2>
+          <div id="rangeLabel" class="section-note"></div>
+        </div>
+        <div class="section-note">
+          売上は受け渡し済み注文の合計で集計
+        </div>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card primary">
+          <div class="metric-label">期間の受け渡し売上</div>
+          <div id="periodSales" class="metric-value">0円</div>
+          <div id="periodSalesSub" class="metric-sub"></div>
+        </div>
+
+        <div class="metric-card success">
+          <div class="metric-label">本日の受け渡し売上</div>
+          <div id="todaySales" class="metric-value">0円</div>
+          <div id="todaySalesSub" class="metric-sub"></div>
+        </div>
+
+        <div class="metric-card warning">
+          <div class="metric-label">期間の受付金額</div>
+          <div id="receivedAmount" class="metric-value">0円</div>
+          <div id="receivedAmountSub" class="metric-sub"></div>
+        </div>
+
+        <div class="metric-card blue">
+          <div class="metric-label">平均客単価</div>
+          <div id="averageTicket" class="metric-value">0円</div>
+          <div id="averageTicketSub" class="metric-sub"></div>
+        </div>
+
+        <div class="metric-card purple">
+          <div class="metric-label">新規顧客</div>
+          <div id="newCustomers" class="metric-value">0人</div>
+          <div id="newCustomersSub" class="metric-sub"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>今日やること</h2>
+        <div class="section-note">
+          店舗の対応漏れを先に確認
+        </div>
+      </div>
+
+      <div class="task-grid">
+        <div class="task-card warning">
+          <div class="task-label">本日仕上げ</div>
+          <div id="taskDueToday" class="task-value">0</div>
+        </div>
+        <div class="task-card danger">
+          <div class="task-label">予定日超過</div>
+          <div id="taskOverdue" class="task-value">0</div>
+        </div>
+        <div class="task-card">
+          <div class="task-label">仕上がり未通知</div>
+          <div id="taskNotNotified" class="task-value">0</div>
+        </div>
+        <div class="task-card success">
+          <div class="task-label">受取待ち</div>
+          <div id="taskUncollected" class="task-value">0</div>
+        </div>
+        <div class="task-card purple">
+          <div class="task-label">長期保管</div>
+          <div id="taskLongStorage" class="task-value">0</div>
+        </div>
+        <div class="task-card danger">
+          <div class="task-label">再洗い・未精算</div>
+          <div id="taskExceptions" class="task-value">0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>対応が必要な注文</h2>
+        <div class="section-note">
+          受付番号をコピーして受付画面で検索できます
+        </div>
+      </div>
+      <div id="alertOrders" class="alert-list"></div>
+    </section>
+
+    <div class="two-column">
+      <section class="panel">
+        <div class="section-title">
+          <h2>日別受け渡し売上</h2>
+          <div id="chartTotal" class="section-note"></div>
+        </div>
+        <div class="chart-scroll">
+          <div id="salesChart" class="chart"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>現在の工程別件数</h2>
+          <div id="openOrderTotal" class="section-note"></div>
+        </div>
+        <div id="statusGrid" class="status-grid"></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>売上ランキング</h2>
+        <div class="section-note">
+          選択期間の受け渡し済み注文から集計
+        </div>
+      </div>
+
+      <div class="ranking-grid">
+        <div>
+          <h3 style="margin:0 0 9px;font-size:15px">品目別</h3>
+          <div id="topItems" class="ranking-list"></div>
+        </div>
+        <div>
+          <h3 style="margin:0 0 9px;font-size:15px">加工別</h3>
+          <div id="topOptions" class="ranking-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>支払い状況</h2>
+        <div class="section-note">
+          選択期間の受け渡し済み注文
+        </div>
+      </div>
+      <div id="paymentMetrics" class="metric-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>最近更新された注文</h2>
+        <div class="section-note">最新20件</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>受付番号</th>
+              <th>お客様</th>
+              <th>状態</th>
+              <th>仕上がり予定</th>
+              <th>品物</th>
+              <th>合計</th>
+              <th>最終更新</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrders"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const PAGE_VERSION =
+      "CLEANING-10-OWNER-DASHBOARD-SALES-20260712";
+
+    const STATUS_LABELS = {
+      accepted: "受付済み",
+      inspecting: "検品中",
+      cleaning: "洗浄中",
+      finishing: "仕上げ中",
+      ready: "仕上がり済み",
+      stored: "保管中",
+      delivered: "受け渡し済み",
+      rewash: "再洗い・確認中",
+      cancelled: "キャンセル"
+    };
+
+    const ALERT_LABELS = {
+      due_today: "本日仕上げ",
+      overdue: "予定日超過",
+      ready_not_notified: "未通知",
+      long_storage: "長期保管",
+      rewash: "再洗い",
+      delivered_unpaid: "受け渡し後未精算"
+    };
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      clearAdminKeyButton:
+        document.getElementById("clearAdminKeyButton"),
+      shopCode: document.getElementById("shopCode"),
+      connectButton: document.getElementById("connectButton"),
+      connectionStatus:
+        document.getElementById("connectionStatus"),
+      fromDate: document.getElementById("fromDate"),
+      toDate: document.getElementById("toDate"),
+      applyDateButton:
+        document.getElementById("applyDateButton"),
+      autoRefreshToggle:
+        document.getElementById("autoRefreshToggle"),
+      rangeLabel: document.getElementById("rangeLabel"),
+      periodSales: document.getElementById("periodSales"),
+      periodSalesSub:
+        document.getElementById("periodSalesSub"),
+      todaySales: document.getElementById("todaySales"),
+      todaySalesSub:
+        document.getElementById("todaySalesSub"),
+      receivedAmount:
+        document.getElementById("receivedAmount"),
+      receivedAmountSub:
+        document.getElementById("receivedAmountSub"),
+      averageTicket:
+        document.getElementById("averageTicket"),
+      averageTicketSub:
+        document.getElementById("averageTicketSub"),
+      newCustomers: document.getElementById("newCustomers"),
+      newCustomersSub:
+        document.getElementById("newCustomersSub"),
+      taskDueToday:
+        document.getElementById("taskDueToday"),
+      taskOverdue: document.getElementById("taskOverdue"),
+      taskNotNotified:
+        document.getElementById("taskNotNotified"),
+      taskUncollected:
+        document.getElementById("taskUncollected"),
+      taskLongStorage:
+        document.getElementById("taskLongStorage"),
+      taskExceptions:
+        document.getElementById("taskExceptions"),
+      alertOrders: document.getElementById("alertOrders"),
+      salesChart: document.getElementById("salesChart"),
+      chartTotal: document.getElementById("chartTotal"),
+      statusGrid: document.getElementById("statusGrid"),
+      openOrderTotal:
+        document.getElementById("openOrderTotal"),
+      topItems: document.getElementById("topItems"),
+      topOptions: document.getElementById("topOptions"),
+      paymentMetrics:
+        document.getElementById("paymentMetrics"),
+      recentOrders:
+        document.getElementById("recentOrders"),
+      toast: document.getElementById("toast")
+    };
+
+    const state = {
+      dashboard: null,
+      loading: false,
+      autoRefreshTimer: null
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatNumber(value) {
+      return Number(value || 0).toLocaleString("ja-JP");
+    }
+
+    function formatDateInput(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDateJa(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) {
+        return value || "-";
+      }
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function formatShortDate(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) {
+        return value || "-";
+      }
+
+      return `${Number(match[2])}/${Number(match[3])}`;
+    }
+
+    function formatDateTimeJa(value) {
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "-";
+      }
+
+      return new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function buildAdminUrl(path) {
+      const url = new URL(`${API_BASE}${path}`);
+      url.searchParams.set(
+        "admin_key",
+        elements.adminKey.value.trim()
+      );
+      url.searchParams.set(
+        "shop_code",
+        elements.shopCode.value.trim() || "cleaning_demo"
+      );
+      url.searchParams.set(
+        "from_date",
+        elements.fromDate.value
+      );
+      url.searchParams.set(
+        "to_date",
+        elements.toDate.value
+      );
+      return url.toString();
+    }
+
+    async function apiFetch(url) {
+      const response = await fetch(url, {
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      const contentType =
+        response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `APIからJSON以外の応答が返りました（HTTP ${response.status}）`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || "API処理に失敗しました。"
+        );
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function loadDashboard() {
+      if (state.loading) {
+        return;
+      }
+
+      if (!elements.adminKey.value.trim()) {
+        setConnectionStatus(
+          "管理コードを入力してください。",
+          "error"
+        );
+        return;
+      }
+
+      if (
+        !elements.fromDate.value ||
+        !elements.toDate.value
+      ) {
+        setConnectionStatus(
+          "集計期間を選択してください。",
+          "error"
+        );
+        return;
+      }
+
+      state.loading = true;
+      setBusy(true);
+      setConnectionStatus(
+        "オーナーダッシュボードを読み込んでいます。"
+      );
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/owner-dashboard")
+        );
+
+        state.dashboard = data.dashboard;
+        renderDashboard(data.dashboard);
+        setConnectionStatus(
+          `${data.dashboard.shop?.shop_name || "店舗"}の管理情報を更新しました。最終更新 ${formatDateTimeJa(data.dashboard.generated_at)}`,
+          "success"
+        );
+        startAutoRefresh();
+      } catch (error) {
+        console.error(error);
+        setConnectionStatus(
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        state.loading = false;
+        setBusy(false);
+      }
+    }
+
+    function renderDashboard(dashboard) {
+      const today = dashboard.today_summary || {};
+      const period = dashboard.period_summary || {};
+      const tasks = dashboard.tasks || {};
+      const statusCounts =
+        dashboard.status_counts || {};
+
+      elements.rangeLabel.textContent =
+        `${formatDateJa(dashboard.range?.from_date)} ～ ${formatDateJa(dashboard.range?.to_date)}`;
+
+      elements.periodSales.textContent =
+        formatYen(period.delivered_sales);
+      elements.periodSalesSub.textContent =
+        `${formatNumber(period.delivered_order_count)}件・${formatNumber(period.delivered_item_count)}点`;
+
+      elements.todaySales.textContent =
+        formatYen(today.delivered_sales);
+      elements.todaySalesSub.textContent =
+        `${formatNumber(today.delivered_order_count)}件・${formatNumber(today.delivered_item_count)}点`;
+
+      elements.receivedAmount.textContent =
+        formatYen(period.received_amount);
+      elements.receivedAmountSub.textContent =
+        `${formatNumber(period.received_order_count)}件受付・${formatNumber(period.received_item_count)}点`;
+
+      elements.averageTicket.textContent =
+        formatYen(period.average_ticket);
+      elements.averageTicketSub.textContent =
+        `${formatNumber(period.delivered_customer_count)}人へ受け渡し`;
+
+      elements.newCustomers.textContent =
+        `${formatNumber(period.new_customer_count)}人`;
+      elements.newCustomersSub.textContent =
+        `リピーター ${formatNumber(period.repeat_customer_count)}人／有効顧客 ${formatNumber(period.active_customer_count)}人`;
+
+      elements.taskDueToday.textContent =
+        formatNumber(tasks.due_today_count);
+      elements.taskOverdue.textContent =
+        formatNumber(tasks.overdue_work_count);
+      elements.taskNotNotified.textContent =
+        formatNumber(tasks.ready_not_notified_count);
+      elements.taskUncollected.textContent =
+        formatNumber(tasks.uncollected_count);
+      elements.taskLongStorage.textContent =
+        formatNumber(tasks.long_storage_count);
+      elements.taskExceptions.textContent =
+        formatNumber(
+          Number(tasks.rewash_count || 0) +
+          Number(tasks.delivered_unpaid_count || 0)
+        );
+
+      renderAlerts(dashboard.alert_orders || []);
+      renderSalesChart(dashboard.daily_sales || []);
+      renderStatusCounts(statusCounts);
+      renderRanking(
+        elements.topItems,
+        dashboard.top_items || [],
+        "item"
+      );
+      renderRanking(
+        elements.topOptions,
+        dashboard.top_options || [],
+        "option"
+      );
+      renderPayment(dashboard.payment_summary || {});
+      renderRecentOrders(dashboard.recent_orders || []);
+    }
+
+    function renderAlerts(orders) {
+      elements.alertOrders.innerHTML = "";
+
+      if (!orders.length) {
+        elements.alertOrders.innerHTML =
+          '<div class="empty">現在、優先対応が必要な注文はありません。</div>';
+        return;
+      }
+
+      for (const order of orders) {
+        const row = document.createElement("div");
+        row.className = "alert-row";
+
+        const badges = (order.alert_codes || [])
+          .map((code) => `
+            <span class="badge ${escapeHtml(code)}">
+              ${escapeHtml(ALERT_LABELS[code] || code)}
+            </span>
+          `)
+          .join("");
+
+        row.innerHTML = `
+          <div>
+            <div class="alert-number">
+              ${escapeHtml(order.order_number)}
+            </div>
+            <div class="alert-customer">
+              ${escapeHtml(order.full_name)}　
+              ${escapeHtml(order.customer_number)}
+            </div>
+          </div>
+
+          <div>
+            <div class="badge-list">${badges}</div>
+            <div class="alert-customer">
+              予定：${escapeHtml(formatDateJa(order.promised_date))}
+            </div>
+          </div>
+
+          <div style="text-align:right">
+            <span class="status-badge status-${escapeHtml(order.status)}">
+              ${escapeHtml(STATUS_LABELS[order.status] || order.status)}
+            </span>
+            <div class="alert-customer">
+              ${Number(order.item_count || 0)}点・${formatYen(order.total_amount)}
+            </div>
+          </div>
+
+          <button
+            class="copy-button"
+            type="button"
+            data-order-number="${escapeHtml(order.order_number)}"
+          >
+            受付番号をコピー
+          </button>
+        `;
+
+        row.querySelector(".copy-button")
+          .addEventListener("click", async (event) => {
+            const orderNumber =
+              event.currentTarget.dataset.orderNumber;
+
+            try {
+              await navigator.clipboard.writeText(
+                orderNumber
+              );
+              showToast(
+                `${orderNumber}をコピーしました。`
+              );
+            } catch (error) {
+              console.error(error);
+              showToast(
+                "受付番号をコピーできませんでした。",
+                true
+              );
+            }
+          });
+
+        elements.alertOrders.appendChild(row);
+      }
+    }
+
+    function renderSalesChart(rows) {
+      elements.salesChart.innerHTML = "";
+
+      const maxSales = Math.max(
+        1,
+        ...rows.map((row) => Number(row.sales || 0))
+      );
+      const totalSales = rows.reduce(
+        (sum, row) => sum + Number(row.sales || 0),
+        0
+      );
+
+      elements.chartTotal.textContent =
+        `合計 ${formatYen(totalSales)}`;
+
+      if (!rows.length) {
+        elements.salesChart.innerHTML =
+          '<div class="empty" style="width:100%">売上データがありません。</div>';
+        return;
+      }
+
+      for (const row of rows) {
+        const column = document.createElement("div");
+        column.className = "chart-column";
+        const height = Math.max(
+          2,
+          Math.round(
+            Number(row.sales || 0) / maxSales * 190
+          )
+        );
+
+        column.innerHTML = `
+          <div class="chart-value">
+            ${Number(row.sales || 0) > 0
+              ? escapeHtml(formatYen(row.sales))
+              : ""}
+          </div>
+          <div
+            class="chart-bar"
+            style="height:${height}px"
+            title="${escapeHtml(formatDateJa(row.date))} ${escapeHtml(formatYen(row.sales))}"
+          ></div>
+          <div class="chart-date">
+            ${escapeHtml(formatShortDate(row.date))}
+          </div>
+        `;
+
+        elements.salesChart.appendChild(column);
+      }
+    }
+
+    function renderStatusCounts(counts) {
+      const statuses = [
+        "accepted",
+        "inspecting",
+        "cleaning",
+        "finishing",
+        "ready",
+        "stored",
+        "rewash"
+      ];
+
+      elements.statusGrid.innerHTML = "";
+
+      for (const status of statuses) {
+        const row = document.createElement("div");
+        row.className = "status-row";
+        row.innerHTML = `
+          <div>
+            <span class="status-badge status-${status}">
+              ${escapeHtml(STATUS_LABELS[status])}
+            </span>
+          </div>
+          <div class="status-count">
+            ${formatNumber(counts[status])}
+          </div>
+        `;
+        elements.statusGrid.appendChild(row);
+      }
+
+      elements.openOrderTotal.textContent =
+        `進行中 ${formatNumber(counts.open_total)}件`;
+    }
+
+    function renderRanking(container, rows, type) {
+      container.innerHTML = "";
+
+      if (!rows.length) {
+        container.innerHTML =
+          '<div class="empty">集計対象がありません。</div>';
+        return;
+      }
+
+      rows.forEach((row, index) => {
+        const item = document.createElement("div");
+        item.className = "ranking-row";
+        const name =
+          type === "item"
+            ? row.item_name
+            : row.option_name;
+        const meta =
+          type === "item"
+            ? `${row.category || "未分類"}・${formatNumber(row.quantity)}点`
+            : `${formatNumber(row.quantity)}件`;
+
+        item.innerHTML = `
+          <div class="ranking-number">${index + 1}</div>
+          <div>
+            <div class="ranking-name">
+              ${escapeHtml(name)}
+            </div>
+            <div class="ranking-meta">
+              ${escapeHtml(meta)}
+            </div>
+          </div>
+          <div class="ranking-sales">
+            ${formatYen(row.sales)}
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderPayment(payment) {
+      const definitions = [
+        {
+          label: "支払い済み",
+          count: payment.paid_count,
+          amount: payment.paid_amount,
+          className: "success"
+        },
+        {
+          label: "受取時支払い",
+          count: payment.pay_on_pickup_count,
+          amount: payment.pay_on_pickup_amount,
+          className: "warning"
+        },
+        {
+          label: "未払い",
+          count: payment.unpaid_count,
+          amount: payment.unpaid_amount,
+          className: ""
+        },
+        {
+          label: "返金済み",
+          count: payment.refunded_count,
+          amount: payment.refunded_amount,
+          className: "purple"
+        }
+      ];
+
+      elements.paymentMetrics.innerHTML = "";
+
+      for (const definition of definitions) {
+        const card = document.createElement("div");
+        card.className =
+          `metric-card ${definition.className}`.trim();
+        card.innerHTML = `
+          <div class="metric-label">
+            ${escapeHtml(definition.label)}
+          </div>
+          <div class="metric-value">
+            ${formatYen(definition.amount)}
+          </div>
+          <div class="metric-sub">
+            ${formatNumber(definition.count)}件
+          </div>
+        `;
+        elements.paymentMetrics.appendChild(card);
+      }
+    }
+
+    function renderRecentOrders(orders) {
+      elements.recentOrders.innerHTML = "";
+
+      if (!orders.length) {
+        elements.recentOrders.innerHTML = `
+          <tr>
+            <td colspan="7">
+              <div class="empty">注文がありません。</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      for (const order of orders) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><strong>${escapeHtml(order.order_number)}</strong></td>
+          <td>
+            ${escapeHtml(order.full_name)}
+            <div class="section-note">
+              ${escapeHtml(order.customer_number)}
+            </div>
+          </td>
+          <td>
+            <span class="status-badge status-${escapeHtml(order.status)}">
+              ${escapeHtml(STATUS_LABELS[order.status] || order.status)}
+            </span>
+          </td>
+          <td>${escapeHtml(formatDateJa(order.promised_date))}</td>
+          <td>${formatNumber(order.item_count)}点</td>
+          <td><strong>${formatYen(order.total_amount)}</strong></td>
+          <td>${escapeHtml(formatDateTimeJa(order.updated_at))}</td>
+        `;
+        elements.recentOrders.appendChild(row);
+      }
+    }
+
+    function setPreset(preset) {
+      const now = new Date();
+      let from;
+      let to;
+
+      if (preset === "today") {
+        from = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+        to = new Date(from);
+      } else if (preset === "7days") {
+        to = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+        from = new Date(to);
+        from.setDate(from.getDate() - 6);
+      } else if (preset === "lastmonth") {
+        from = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          1
+        );
+        to = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          0
+        );
+      } else {
+        from = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          1
+        );
+        to = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+      }
+
+      elements.fromDate.value = formatDateInput(from);
+      elements.toDate.value = formatDateInput(to);
+
+      document.querySelectorAll(".preset-button")
+        .forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.preset === preset
+          );
+        });
+    }
+
+    function setBusy(disabled) {
+      elements.connectButton.disabled = disabled;
+      elements.applyDateButton.disabled = disabled;
+
+      for (const button of document.querySelectorAll(
+        ".preset-button"
+      )) {
+        button.disabled = disabled;
+      }
+    }
+
+    function setConnectionStatus(message, type = "") {
+      elements.connectionStatus.textContent = message;
+      elements.connectionStatus.className =
+        `status-line ${type}`.trim();
+    }
+
+    let toastTimer = null;
+
+    function showToast(message, isError = false) {
+      elements.toast.textContent = message;
+      elements.toast.className =
+        `toast visible${isError ? " error" : ""}`;
+
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        elements.toast.className = "toast";
+      }, 3500);
+    }
+
+    function startAutoRefresh() {
+      window.clearInterval(state.autoRefreshTimer);
+
+      if (!elements.autoRefreshToggle.checked) {
+        return;
+      }
+
+      state.autoRefreshTimer = window.setInterval(() => {
+        if (!document.hidden && !state.loading) {
+          loadDashboard();
+        }
+      }, 60000);
+    }
+
+    elements.clearAdminKeyButton.addEventListener(
+      "click",
+      () => {
+        elements.adminKey.value = "";
+        elements.adminKey.focus();
+        setConnectionStatus(
+          "管理コードを消去しました。再入力してください。"
+        );
+      }
+    );
+
+    elements.connectButton.addEventListener(
+      "click",
+      loadDashboard
+    );
+
+    elements.applyDateButton.addEventListener(
+      "click",
+      () => {
+        document.querySelectorAll(".preset-button")
+          .forEach((button) =>
+            button.classList.remove("active")
+          );
+        loadDashboard();
+      }
+    );
+
+    document.querySelectorAll(".preset-button")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          setPreset(button.dataset.preset);
+          loadDashboard();
+        });
+      });
+
+    elements.autoRefreshToggle.addEventListener(
+      "change",
+      startAutoRefresh
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      () => window.clearInterval(state.autoRefreshTimer)
+    );
+
+    setPreset("month");
+    loadDashboard();
+  </script>
+</body>
+</html>
