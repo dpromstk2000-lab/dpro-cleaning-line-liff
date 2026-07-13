@@ -969,7 +969,7 @@
       }
     }
   
-    /* STEP CLEANING-17 共通内部ナビ */
+    /* STEP CLEANING-17-R2 共通内部ナビ */
     .final-nav-shell {
       position: sticky;
       top: 0;
@@ -1043,7 +1043,7 @@
           <div class="subtitle">店頭受付・注文状況・受取案内</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-17</div>
+      <div class="version">STEP CLEANING-17-R2</div>
     </div>
   </header>
 
@@ -1474,7 +1474,7 @@
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
     const PAGE_VERSION =
-      "CLEANING-17-FINAL-POLISH-DEMO-ROUTING-20260713";
+      "CLEANING-17-R2-SYSTEM-CHECK-SALES-DEMO-CASES-20260713";
 
     const state = {
       selectedCustomer: null,
@@ -2415,7 +2415,10 @@
       refunded: "返金済み"
     };
 
-    function switchMode(mode) {
+    async function switchMode(
+      mode,
+      requestedOrderId = ""
+    ) {
       state.activeMode = mode;
       const receptionActive = mode === "reception";
 
@@ -2437,7 +2440,11 @@
       );
 
       if (!receptionActive) {
-        loadManagementOrders();
+        await loadManagementOrders();
+
+        if (requestedOrderId) {
+          await loadOrderDetail(requestedOrderId);
+        }
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -3157,7 +3164,7 @@
               message_body:
                 elements.notificationMessage.value.trim(),
               operator_label:
-                "受付PC STEP CLEANING-17"
+                "受付PC STEP CLEANING-17-R2"
             })
           }
         );
@@ -3536,8 +3543,31 @@
       resetReception
     );
 
-    initializeDate();
-    checkConnection();
+    async function initializePage() {
+      initializeDate();
+
+      const params =
+        new URL(location.href).searchParams;
+      const requestedOrderId =
+        params.get("order_id") || "";
+      const requestedMode =
+        params.get("mode") || "";
+
+      if (
+        requestedOrderId ||
+        requestedMode === "management"
+      ) {
+        await switchMode(
+          "management",
+          requestedOrderId
+        );
+        return;
+      }
+
+      await checkConnection();
+    }
+
+    initializePage();
   </script>
 </body>
 </html>

@@ -588,7 +588,7 @@
       }
     }
   
-    /* STEP CLEANING-17 共通内部ナビ */
+    /* STEP CLEANING-17-R2 共通内部ナビ */
     .final-nav-shell {
       position: sticky;
       top: 0;
@@ -662,7 +662,7 @@
           <div class="subtitle">店舗タブレット・受け渡し受付</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-17</div>
+      <div class="version">STEP CLEANING-17-R2</div>
     </div>
   </header>
 
@@ -800,6 +800,9 @@
 
   <script>
     "use strict";
+
+    const PAGE_VERSION =
+      "CLEANING-17-R2-SYSTEM-CHECK-SALES-DEMO-CASES-20260713";
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
@@ -1440,7 +1443,7 @@
                 document.getElementById("pickupNote")
                   ?.value.trim() || "",
               changed_by_label:
-                "店舗タブレット STEP CLEANING-17"
+                "店舗タブレット STEP CLEANING-17-R2"
             })
           }
         );
@@ -1589,7 +1592,25 @@
       }
     );
 
-    loadBoard();
+    const initialParams =
+      new URL(location.href).searchParams;
+    const initialOrderId =
+      initialParams.get("order_id") || "";
+    const initialQuery =
+      initialParams.get("q") || "";
+
+    if (initialQuery) {
+      elements.searchInput.value = initialQuery;
+    }
+
+    if (initialOrderId) {
+      state.selectedOrderId = initialOrderId;
+    }
+
+    loadBoard({
+      force:true,
+      keepSelection:Boolean(initialOrderId)
+    });
   </script>
 </body>
 </html>
