@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087f8c">
+<title>DPRO クリーニング LINE｜フォロー管理</title>
+<style>
+:root{
+  --bg:#eef5f7;--panel:#fff;--line:#d7e4e9;--ink:#173543;
+  --muted:#6a7f89;--primary:#07828e;--danger:#bd3b49;
+  --warning:#a76a00;--success:#18815e;--purple:#6949ad;
+  --shadow:0 12px 30px rgba(24,56,70,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",Meiryo,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.header{padding:22px 18px;color:#fff;background:linear-gradient(135deg,#05636d,#07828e 58%,#0ca7a9)}
+.header-inner{width:min(1350px,100%);margin:auto;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.17);font-size:24px}
+h1{margin:0;font-size:clamp(22px,3vw,32px)}
+.subtitle{margin-top:4px;color:rgba(255,255,255,.8);font-size:12px}
+.version{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.16);font-size:10px}
+.container{width:min(1350px,calc(100% - 24px));margin:18px auto 44px}
+.panel{margin-bottom:16px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--panel);box-shadow:var(--shadow)}
+.connection{display:grid;grid-template-columns:minmax(170px,.7fr) auto minmax(220px,.9fr) auto;gap:10px;align-items:end}
+label{display:block;margin-bottom:6px;color:var(--muted);font-size:12px;font-weight:800}
+input,select,textarea{width:100%;border:1px solid #c7d8df;border-radius:11px;padding:9px 12px;background:#fff;color:var(--ink)}
+input,select{min-height:44px}
+textarea{min-height:160px;resize:vertical}
+.button{min-height:44px;border:0;border-radius:11px;padding:9px 14px;font-weight:900}
+.primary{color:#fff;background:var(--primary)}
+.secondary{color:#05616a;background:#e6f5f6}
+.clear{color:var(--danger);background:#fff;border:1px solid #d5e0e5}
+.status{margin-top:10px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;color:var(--muted);background:#f9fbfc;font-size:12px}
+.status.success{color:#126847;border-color:#bfe2d3;background:#ebf9f3}
+.status.error{color:#982e3b;border-color:#edc5ca;background:#fff0f2}
+.filters{display:grid;grid-template-columns:1fr 220px auto auto;gap:10px;align-items:end}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.summary-card{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdfe}
+.summary-label{color:var(--muted);font-size:11px;font-weight:800}
+.summary-value{margin-top:5px;font-size:28px;font-weight:900}
+.followup-list{display:grid;gap:10px}
+.card{display:grid;grid-template-columns:minmax(250px,1.2fr) minmax(180px,.8fr) minmax(200px,.9fr) auto;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.order-number{font-size:15px;font-weight:900}
+.meta{margin-top:4px;color:var(--muted);font-size:11px;line-height:1.5}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.badge{padding:5px 8px;border-radius:999px;color:#fff;font-size:10px;font-weight:900}
+.b-ready{background:#07828e}.b-uncollected{background:#18815e}.b-long{background:#6949ad}.b-unpaid{background:#596b78}
+.action{display:flex;flex-wrap:wrap;gap:6px}
+.small{min-height:36px;border-radius:9px;padding:7px 10px;font-size:10px;font-weight:900;border:1px solid #c4dade;color:#05616a;background:#eff9fa}
+.detail{margin-top:14px;padding:14px;border:1px solid #bcdadd;border-radius:14px;background:#f5fbfb}
+.detail-grid{display:grid;grid-template-columns:1fr 260px;gap:12px;align-items:start}
+.empty{padding:24px;border:1px dashed #c9d8de;border-radius:13px;text-align:center;color:var(--muted);background:#fbfdfe}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;pointer-events:none;width:min(520px,calc(100% - 28px));padding:13px 16px;border-radius:13px;color:#fff;background:#173543;text-align:center;font-weight:800;transition:.2s}
+.toast.visible{transform:translate(-50%,0);opacity:1}
+@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr)}.card{grid-template-columns:1fr 1fr}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.connection,.filters,.summary,.card{grid-template-columns:1fr}.version{display:none}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">📣</div>
+      <div>
+        <h1>DPRO クリーニング LINE</h1>
+        <div class="subtitle">未受取・長期保管・未通知フォロー管理</div>
+      </div>
+    </div>
+    <div class="version">STEP CLEANING-12</div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="panel">
+    <div class="connection">
+      <div><label>管理コード</label><input id="adminKey" type="password" value="1234"></div>
+      <button id="clearButton" class="button clear" type="button">消去</button>
+      <div><label>店舗コード</label><input id="shopCode" value="cleaning_demo"></div>
+      <button id="openButton" class="button primary" type="button">フォロー一覧を開く</button>
+    </div>
+    <div id="status" class="status">管理コードを入力して一覧を開いてください。</div>
+  </section>
+
+  <section class="panel">
+    <div class="filters">
+      <div><label>受付番号・氏名・会員番号・電話番号</label><input id="query" placeholder="例：CL-20260712-D003"></div>
+      <div><label>フォロー種別</label>
+        <select id="type">
+          <option value="all">すべて</option>
+          <option value="ready_not_notified">仕上がり未通知</option>
+          <option value="uncollected">受取待ち</option>
+          <option value="long_storage">長期保管</option>
+          <option value="delivered_unpaid">受け渡し後未精算</option>
+        </select>
+      </div>
+      <button id="searchButton" class="button primary" type="button">検索</button>
+      <button id="refreshButton" class="button secondary" type="button">最新情報へ更新</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="summary">
+      <div class="summary-card"><div class="summary-label">仕上がり未通知</div><div id="sumReady" class="summary-value">0</div></div>
+      <div class="summary-card"><div class="summary-label">受取待ち</div><div id="sumUncollected" class="summary-value">0</div></div>
+      <div class="summary-card"><div class="summary-label">長期保管</div><div id="sumLong" class="summary-value">0</div></div>
+      <div class="summary-card"><div class="summary-label">受け渡し後未精算</div><div id="sumUnpaid" class="summary-value">0</div></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div id="list" class="followup-list"></div>
+    <div id="detail" class="detail" hidden>
+      <div class="detail-grid">
+        <div>
+          <label>案内文面</label>
+          <textarea id="message"></textarea>
+        </div>
+        <div>
+          <label>案内方法</label>
+          <select id="channel">
+            <option value="line">LINE</option>
+            <option value="phone">電話</option>
+            <option value="sms">SMS</option>
+            <option value="copy">コピーのみ</option>
+            <option value="other">その他</option>
+          </select>
+          <div class="action" style="margin-top:10px">
+            <button id="copyMessageButton" class="button primary" type="button">文面をコピー</button>
+            <button id="recordSentButton" class="button secondary" type="button">送信済みに記録</button>
+          </div>
+          <div id="selectedInfo" class="meta" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+"use strict";
+const API_BASE="https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+const LABELS={
+  ready_not_notified:"仕上がり未通知",
+  uncollected:"受取待ち",
+  long_storage:"長期保管",
+  delivered_unpaid:"受け渡し後未精算"
+};
+const els={
+  adminKey:document.getElementById("adminKey"),shopCode:document.getElementById("shopCode"),
+  clearButton:document.getElementById("clearButton"),openButton:document.getElementById("openButton"),
+  query:document.getElementById("query"),type:document.getElementById("type"),
+  searchButton:document.getElementById("searchButton"),refreshButton:document.getElementById("refreshButton"),
+  status:document.getElementById("status"),list:document.getElementById("list"),
+  sumReady:document.getElementById("sumReady"),sumUncollected:document.getElementById("sumUncollected"),
+  sumLong:document.getElementById("sumLong"),sumUnpaid:document.getElementById("sumUnpaid"),
+  detail:document.getElementById("detail"),message:document.getElementById("message"),
+  channel:document.getElementById("channel"),copyMessageButton:document.getElementById("copyMessageButton"),
+  recordSentButton:document.getElementById("recordSentButton"),selectedInfo:document.getElementById("selectedInfo"),
+  toast:document.getElementById("toast")
+};
+const state={data:null,selected:null};
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+const yen=v=>`${Number(v||0).toLocaleString("ja-JP")}円`;
+const dateJa=v=>{const m=String(v||"").match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${Number(m[1])}年${Number(m[2])}月${Number(m[3])}日`:"-"};
+function url(path){const u=new URL(API_BASE+path);u.searchParams.set("admin_key",els.adminKey.value.trim());u.searchParams.set("shop_code",els.shopCode.value.trim()||"cleaning_demo");return u}
+async function api(u,opt={}){const r=await fetch(u,opt);const d=await r.json();if(!r.ok||d.ok===false){const e=new Error(d.message||"APIエラー");e.data=d;throw e}return d}
+function status(msg,type=""){els.status.textContent=msg;els.status.className=`status ${type}`.trim()}
+function toast(msg){els.toast.textContent=msg;els.toast.className="toast visible";setTimeout(()=>els.toast.className="toast",2600)}
+function buildMessage(order,type,shop){
+  const shopName=shop.shop_name_short||shop.shop_name||"DPROクリーニング";
+  const itemText=`${Number(order.item_count||0)}点`;
+  if(type==="ready"){
+    return `${order.full_name}様\n\n${shopName}です。\nお預かりしているクリーニング品が仕上がりました。\n\n受付番号：${order.order_number}\nお預かり品：${itemText}\n合計金額：${yen(order.total_amount)}\n仕上がり予定日：${dateJa(order.promised_date)}\n\n営業時間内にご来店ください。\n${shop.receipt_note||""}\nお問い合わせ：${shop.phone||""}`;
+  }
+  if(type==="long_storage"){
+    return `${order.full_name}様\n\n${shopName}です。\nクリーニング品を長期間お預かりしているため、ご連絡いたしました。\n\n受付番号：${order.order_number}\nお預かり品：${itemText}\n合計金額：${yen(order.total_amount)}\n\n受取予定について、店舗までご連絡をお願いいたします。\nお問い合わせ：${shop.phone||""}`;
+  }
+  return `${order.full_name}様\n\n${shopName}です。\n先日ご案内したクリーニング品を、現在も店舗でお預かりしております。\n\n受付番号：${order.order_number}\nお預かり品：${itemText}\n合計金額：${yen(order.total_amount)}\n\nご都合のよい営業時間内にお受け取りをお願いいたします。\n${shop.receipt_note||""}\nお問い合わせ：${shop.phone||""}`;
+}
+async function load(){
+  if(!els.adminKey.value.trim()){status("管理コードを入力してください。","error");return}
+  status("フォロー対象を読み込んでいます。");
+  try{
+    const u=url("/api/admin/followups");
+    u.searchParams.set("type",els.type.value);
+    if(els.query.value.trim())u.searchParams.set("q",els.query.value.trim());
+    u.searchParams.set("limit","200");
+    const d=await api(u);
+    state.data=d;
+    els.sumReady.textContent=d.summary.ready_not_notified;
+    els.sumUncollected.textContent=d.summary.uncollected;
+    els.sumLong.textContent=d.summary.long_storage;
+    els.sumUnpaid.textContent=d.summary.delivered_unpaid;
+    render(d.followups);
+    status(`${d.shop.shop_name}のフォロー対象を更新しました。${d.count}件`,"success");
+  }catch(e){console.error(e);status(e.data?.message||e.message,"error")}
+}
+function render(rows){
+  els.list.innerHTML="";
+  if(!rows.length){els.list.innerHTML='<div class="empty">現在、該当するフォロー対象はありません。</div>';return}
+  for(const o of rows){
+    const card=document.createElement("div");card.className="card";
+    const badges=(o.followup_codes||[]).map(c=>`<span class="badge ${c==="ready_not_notified"?"b-ready":c==="uncollected"?"b-uncollected":c==="long_storage"?"b-long":"b-unpaid"}">${esc(LABELS[c])}</span>`).join("");
+    card.innerHTML=`<div><div class="order-number">${esc(o.order_number)}</div><div class="meta">${esc(o.full_name)}　${esc(o.customer_number)}<br>${esc(o.phone_normalized||"")}</div></div><div><div class="badges">${badges}</div><div class="meta">仕上がり予定：${esc(dateJa(o.promised_date))}<br>経過：${Number(o.days_waiting||0)}日</div></div><div><strong>${Number(o.item_count||0)}点・${yen(o.total_amount)}</strong><div class="meta">前回フォロー：${esc(o.last_followup_notification_at||"なし")}</div></div><div class="action"><button class="small select" type="button">文面を作成</button><button class="small copy-number" type="button">受付番号コピー</button></div>`;
+    card.querySelector(".select").addEventListener("click",()=>selectOrder(o));
+    card.querySelector(".copy-number").addEventListener("click",async()=>{await navigator.clipboard.writeText(o.order_number);toast(`${o.order_number}をコピーしました。`)});
+    els.list.appendChild(card);
+  }
+}
+function selectOrder(o){
+  state.selected=o;els.detail.hidden=false;
+  const type=o.suggested_notification_type;
+  els.message.value=buildMessage(o,type,state.data.shop);
+  els.selectedInfo.textContent=`${o.order_number}／${o.full_name}／${LABELS[o.followup_codes[0]]||""}`;
+  els.detail.scrollIntoView({behavior:"smooth",block:"start"});
+}
+async function record(sendStatus){
+  if(!state.selected)return;
+  const type=state.selected.suggested_notification_type;
+  await api(url(`/api/admin/orders/${state.selected.order_id}/notifications`),{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      notification_type:type,
+      channel:els.channel.value,
+      send_status:sendStatus,
+      message_body:els.message.value,
+      destination:state.selected.line_user_id||state.selected.phone_normalized||null,
+      operator_label:"フォロー管理 STEP CLEANING-12"
+    })
+  });
+}
+els.clearButton.addEventListener("click",()=>{els.adminKey.value="";els.adminKey.focus();status("管理コードを消去しました。")});
+els.openButton.addEventListener("click",load);
+els.searchButton.addEventListener("click",load);
+els.refreshButton.addEventListener("click",load);
+els.copyMessageButton.addEventListener("click",async()=>{if(!state.selected)return;await navigator.clipboard.writeText(els.message.value);await record("copied");toast("文面をコピーし、履歴へ記録しました。")});
+els.recordSentButton.addEventListener("click",async()=>{if(!state.selected)return;await record("sent");toast("送信済みとして記録しました。");await load()});
+load();
+</script>
+</body>
+</html>
