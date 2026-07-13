@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜品物写真管理</title>
+  <style>
+    :root {
+      --bg:#edf5f7;
+      --panel:#fff;
+      --line:#d3e3e8;
+      --ink:#163644;
+      --muted:#687f89;
+      --primary:#07828e;
+      --primary-dark:#05616a;
+      --success:#16825d;
+      --danger:#bd3b49;
+      --warning:#b16d00;
+      --shadow:0 12px 32px rgba(23,55,69,.09);
+    }
+
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:
+        -apple-system,BlinkMacSystemFont,"Segoe UI",
+        "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    }
+
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+
+    .header {
+      padding:20px 18px;
+      color:#fff;
+      background:linear-gradient(135deg,#05636d,#07828e 58%,#0ca7a9);
+    }
+
+    .header-inner {
+      width:min(1450px,100%);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-mark {
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:rgba(255,255,255,.17);
+      font-size:25px;
+    }
+
+    h1 { margin:0; font-size:clamp(22px,3vw,34px); }
+    .subtitle { margin-top:4px; color:rgba(255,255,255,.82); font-size:12px; }
+    .version {
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      font-size:10px;
+    }
+
+    .container {
+      width:min(1450px,calc(100% - 22px));
+      margin:16px auto 44px;
+    }
+
+    .panel {
+      margin-bottom:14px;
+      padding:15px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+    }
+
+    label {
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+    }
+
+    input,select,textarea {
+      width:100%;
+      border:1px solid #c6d8df;
+      border-radius:11px;
+      padding:9px 12px;
+      color:var(--ink);
+      background:#fff;
+      outline:none;
+    }
+
+    input,select { min-height:46px; }
+    textarea { min-height:84px; resize:vertical; }
+
+    input:focus,select:focus,textarea:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(7,130,142,.12);
+    }
+
+    .button {
+      min-height:46px;
+      border:0;
+      border-radius:11px;
+      padding:9px 15px;
+      font-weight:900;
+    }
+
+    .primary { color:#fff; background:var(--primary); }
+    .secondary { color:var(--primary-dark); background:#e7f5f6; }
+    .danger { color:var(--danger); background:#fff0f2; border:1px solid #edc5ca; }
+    .clear { color:var(--danger); background:#fff; border:1px solid #d5e0e5; }
+
+    .connection {
+      display:grid;
+      grid-template-columns:minmax(170px,.65fr) auto minmax(220px,.8fr) auto;
+      gap:9px;
+      align-items:end;
+    }
+
+    .status {
+      margin-top:9px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      color:var(--muted);
+      background:#f9fbfc;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .status.success {
+      color:#126847;
+      border-color:#bfe2d3;
+      background:#ebf9f3;
+    }
+
+    .status.error {
+      color:#982e3b;
+      border-color:#edc5ca;
+      background:#fff0f2;
+    }
+
+    .search-grid {
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      gap:9px;
+      align-items:end;
+    }
+
+    .workspace {
+      display:grid;
+      grid-template-columns:390px minmax(0,1fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .sidebar {
+      position:sticky;
+      top:12px;
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .section-title h2 {
+      margin:0;
+      font-size:18px;
+    }
+
+    .small { color:var(--muted); font-size:10px; line-height:1.6; }
+
+    .order-list,
+    .item-list {
+      display:grid;
+      gap:8px;
+    }
+
+    .order-button,
+    .item-button {
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:12px;
+      color:var(--ink);
+      background:#fff;
+      text-align:left;
+    }
+
+    .order-button:hover,
+    .item-button:hover {
+      border-color:#9dcfd3;
+    }
+
+    .order-button.active,
+    .item-button.active {
+      border:2px solid var(--primary);
+      background:#f1fbfb;
+    }
+
+    .order-number,
+    .item-name {
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .item-code {
+      display:inline-grid;
+      place-items:center;
+      min-width:31px;
+      height:31px;
+      margin-right:7px;
+      border-radius:9px;
+      color:var(--primary-dark);
+      background:#e7f5f6;
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .main-placeholder {
+      min-height:520px;
+      display:grid;
+      place-items:center;
+      border:1px dashed #c7d8de;
+      border-radius:15px;
+      color:var(--muted);
+      background:#fbfdfe;
+      text-align:center;
+      padding:24px;
+    }
+
+    .item-header {
+      padding:14px;
+      border:1px solid #bcdadd;
+      border-radius:14px;
+      background:linear-gradient(135deg,#f2fbfb,#fff);
+    }
+
+    .item-header h2 { margin:0; font-size:22px; }
+
+    .upload-grid {
+      display:grid;
+      grid-template-columns:minmax(250px,1.2fr) minmax(260px,.8fr);
+      gap:14px;
+      margin-top:13px;
+    }
+
+    .upload-card,
+    .preview-card {
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fbfdfe;
+    }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+    }
+
+    .file-input {
+      padding:7px;
+      background:#fff;
+    }
+
+    .preview {
+      min-height:270px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px dashed #bdd1d7;
+      border-radius:13px;
+      color:var(--muted);
+      background:#fff;
+      text-align:center;
+    }
+
+    .preview img {
+      width:100%;
+      max-height:420px;
+      object-fit:contain;
+      display:block;
+    }
+
+    .upload-progress {
+      margin-top:9px;
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .gallery {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .photo-card {
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#fff;
+    }
+
+    .photo-image {
+      aspect-ratio:4 / 3;
+      background:#edf3f5;
+    }
+
+    .photo-image img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .photo-body { padding:10px; }
+    .photo-type {
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .photo-actions {
+      display:flex;
+      justify-content:space-between;
+      gap:7px;
+      margin-top:8px;
+    }
+
+    .mini-button {
+      min-height:34px;
+      border:0;
+      border-radius:9px;
+      padding:6px 9px;
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .empty {
+      padding:26px 12px;
+      border:1px dashed #c9d8de;
+      border-radius:13px;
+      color:var(--muted);
+      background:#fbfdfe;
+      text-align:center;
+      font-size:12px;
+    }
+
+    .toast {
+      position:fixed;
+      z-index:1000;
+      left:50%;
+      bottom:24px;
+      width:min(560px,calc(100% - 28px));
+      transform:translate(-50%,30px);
+      opacity:0;
+      pointer-events:none;
+      border-radius:13px;
+      padding:14px 16px;
+      color:#fff;
+      background:#173543;
+      box-shadow:0 12px 34px rgba(0,0,0,.2);
+      transition:.22s ease;
+      font-size:13px;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .toast.visible { transform:translate(-50%,0); opacity:1; }
+    .toast.error { background:#a93240; }
+
+    @media (max-width:980px) {
+      .workspace { grid-template-columns:1fr; }
+      .sidebar { position:static; }
+      .upload-grid { grid-template-columns:1fr; }
+    }
+
+    @media (max-width:700px) {
+      .version { display:none; }
+      .connection,
+      .search-grid,
+      .form-grid,
+      .gallery {
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">📷</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">受付時の品物写真登録・確認</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-14</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="connection">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input id="adminKey" type="password" value="1234" autocomplete="off">
+        </div>
+        <button id="clearButton" class="button clear" type="button">消去</button>
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input id="shopCode" value="cleaning_demo" autocomplete="off">
+        </div>
+        <button id="openButton" class="button primary" type="button">写真管理を開く</button>
+      </div>
+      <div id="status" class="status">
+        受付番号などで注文を検索してください。
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="search-grid">
+        <div>
+          <label for="searchInput">受付番号・氏名・会員番号・電話番号</label>
+          <input id="searchInput" placeholder="例：CL-20260712-D002">
+        </div>
+        <button id="searchButton" class="button primary" type="button">注文を検索</button>
+        <button id="refreshButton" class="button secondary" type="button">最新情報へ更新</button>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <section class="panel">
+          <div class="section-title">
+            <h2>注文</h2>
+            <div id="orderCount" class="small">0件</div>
+          </div>
+          <div id="orderList" class="order-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <h2>品物</h2>
+            <div id="itemCount" class="small">0件</div>
+          </div>
+          <div id="itemList" class="item-list"></div>
+        </section>
+      </aside>
+
+      <section class="panel">
+        <div id="placeholder" class="main-placeholder">
+          左側から注文と品物を選択してください。
+        </div>
+
+        <div id="photoContent" hidden>
+          <div class="item-header">
+            <h2 id="selectedItemName"></h2>
+            <div id="selectedItemMeta" class="small" style="margin-top:6px"></div>
+          </div>
+
+          <div class="upload-grid">
+            <div class="upload-card">
+              <div class="section-title">
+                <h2>写真を追加</h2>
+                <div class="small">1品物につき最大8枚</div>
+              </div>
+
+              <label for="photoFile">カメラ撮影・画像選択 *</label>
+              <input
+                id="photoFile"
+                class="file-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                capture="environment"
+              >
+
+              <div class="form-grid" style="margin-top:10px">
+                <div>
+                  <label for="photoType">写真の種類</label>
+                  <select id="photoType">
+                    <option value="whole">品物全体</option>
+                    <option value="condition">受付時の状態</option>
+                    <option value="stain">シミ</option>
+                    <option value="damage">破れ・傷</option>
+                    <option value="button">ボタン・部品</option>
+                    <option value="tag">タグ・表示</option>
+                    <option value="accessory">付属品</option>
+                    <option value="other">その他</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="caption">メモ</label>
+                  <input id="caption" placeholder="例：右袖にシミあり">
+                </div>
+              </div>
+
+              <button id="uploadButton" class="button primary" type="button" style="width:100%;margin-top:11px">
+                この写真を登録
+              </button>
+
+              <div id="uploadProgress" class="upload-progress">
+                登録前に自動で画像サイズを調整します。
+              </div>
+            </div>
+
+            <div class="preview-card">
+              <div class="section-title">
+                <h2>登録前プレビュー</h2>
+              </div>
+              <div id="preview" class="preview">
+                写真を選択してください。
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top:18px">
+            <h2>登録済み写真</h2>
+            <div id="photoCount" class="small">0 / 8枚</div>
+          </div>
+
+          <div id="gallery" class="gallery"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+
+    const PHOTO_TYPE_LABELS = {
+      condition: "受付時の状態",
+      stain: "シミ",
+      damage: "破れ・傷",
+      button: "ボタン・部品",
+      tag: "タグ・表示",
+      accessory: "付属品",
+      whole: "品物全体",
+      other: "その他"
+    };
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      clearButton: document.getElementById("clearButton"),
+      shopCode: document.getElementById("shopCode"),
+      openButton: document.getElementById("openButton"),
+      status: document.getElementById("status"),
+      searchInput: document.getElementById("searchInput"),
+      searchButton: document.getElementById("searchButton"),
+      refreshButton: document.getElementById("refreshButton"),
+      orderCount: document.getElementById("orderCount"),
+      orderList: document.getElementById("orderList"),
+      itemCount: document.getElementById("itemCount"),
+      itemList: document.getElementById("itemList"),
+      placeholder: document.getElementById("placeholder"),
+      photoContent: document.getElementById("photoContent"),
+      selectedItemName: document.getElementById("selectedItemName"),
+      selectedItemMeta: document.getElementById("selectedItemMeta"),
+      photoFile: document.getElementById("photoFile"),
+      photoType: document.getElementById("photoType"),
+      caption: document.getElementById("caption"),
+      uploadButton: document.getElementById("uploadButton"),
+      uploadProgress: document.getElementById("uploadProgress"),
+      preview: document.getElementById("preview"),
+      photoCount: document.getElementById("photoCount"),
+      gallery: document.getElementById("gallery"),
+      toast: document.getElementById("toast")
+    };
+
+    const state = {
+      orders: [],
+      selectedOrder: null,
+      selectedDetail: null,
+      selectedItem: null,
+      photos: [],
+      preparedPhoto: null,
+      busy: false
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatDateJa(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) return "-";
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function buildAdminUrl(path, params = {}) {
+      const url = new URL(`${API_BASE}${path}`);
+
+      url.searchParams.set(
+        "admin_key",
+        elements.adminKey.value.trim()
+      );
+
+      url.searchParams.set(
+        "shop_code",
+        elements.shopCode.value.trim() || "cleaning_demo"
+      );
+
+      for (const [key, value] of Object.entries(params)) {
+        if (
+          value !== undefined &&
+          value !== null &&
+          value !== ""
+        ) {
+          url.searchParams.set(key, value);
+        }
+      }
+
+      return url;
+    }
+
+    async function apiFetch(url, options = {}) {
+      const response = await fetch(url, options);
+      const contentType =
+        response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `APIからJSON以外の応答が返りました（HTTP ${response.status}）`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || "API処理に失敗しました。"
+        );
+        error.data = data;
+        error.status = response.status;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function searchOrders() {
+      if (state.busy) return;
+
+      if (!elements.adminKey.value.trim()) {
+        setStatus("管理コードを入力してください。", "error");
+        return;
+      }
+
+      state.busy = true;
+      setBusy(true);
+      setStatus("注文を検索しています。");
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/orders", {
+            q: elements.searchInput.value.trim(),
+            limit: 100
+          })
+        );
+
+        state.orders = data.orders || [];
+        renderOrders();
+
+        setStatus(
+          `${state.orders.length}件の注文を表示しました。`,
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        setStatus(
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    function renderOrders() {
+      elements.orderList.innerHTML = "";
+      elements.orderCount.textContent =
+        `${state.orders.length}件`;
+
+      if (!state.orders.length) {
+        elements.orderList.innerHTML =
+          '<div class="empty">該当する注文がありません。</div>';
+        return;
+      }
+
+      for (const order of state.orders) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          `order-button${
+            state.selectedOrder?.order_id === order.order_id
+              ? " active"
+              : ""
+          }`;
+
+        button.innerHTML = `
+          <div class="order-number">
+            ${escapeHtml(order.order_number)}
+          </div>
+          <div style="margin-top:4px;font-weight:900">
+            ${escapeHtml(order.full_name)}
+          </div>
+          <div class="small">
+            ${escapeHtml(order.customer_number)}
+            ／ ${Number(order.item_count || 0)}点
+            ／ ${escapeHtml(formatYen(order.total_amount))}
+            <br>
+            仕上がり予定：${escapeHtml(formatDateJa(order.promised_date))}
+          </div>
+        `;
+
+        button.addEventListener("click", () => {
+          loadOrderDetail(order.order_id);
+        });
+
+        elements.orderList.appendChild(button);
+      }
+    }
+
+    async function loadOrderDetail(orderId) {
+      if (state.busy) return;
+
+      state.busy = true;
+      setBusy(true);
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(`/api/admin/orders/${orderId}`)
+        );
+
+        state.selectedOrder = {
+          order_id: data.order?.id,
+          order_number: data.order?.order_number
+        };
+        state.selectedDetail = data;
+        state.selectedItem = null;
+        state.photos = [];
+        state.preparedPhoto = null;
+
+        renderOrders();
+        renderItems(data.items || []);
+        clearPhotoContent();
+
+        const requestedItemId =
+          new URL(location.href).searchParams.get("item_id");
+
+        if (requestedItemId) {
+          const requestedItem = (data.items || []).find(
+            (item) => item.id === requestedItemId
+          );
+
+          if (requestedItem) {
+            await selectItem(requestedItem);
+          }
+        } else if ((data.items || []).length === 1) {
+          await selectItem(data.items[0]);
+        }
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    function renderItems(items) {
+      elements.itemList.innerHTML = "";
+      elements.itemCount.textContent = `${items.length}件`;
+
+      if (!items.length) {
+        elements.itemList.innerHTML =
+          '<div class="empty">品物明細がありません。</div>';
+        return;
+      }
+
+      for (const item of items) {
+        const photoCount = Array.isArray(
+          item.cleaning_item_photos
+        )
+          ? item.cleaning_item_photos.length
+          : 0;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          `item-button${
+            state.selectedItem?.id === item.id
+              ? " active"
+              : ""
+          }`;
+
+        button.innerHTML = `
+          <div>
+            <span class="item-code">
+              ${escapeHtml(item.item_code)}
+            </span>
+            <span class="item-name">
+              ${escapeHtml(item.item_name)}
+              × ${Number(item.quantity || 0)}
+            </span>
+          </div>
+          <div class="small" style="margin-top:5px">
+            写真：${photoCount}枚
+            ${
+              item.customer_visible_note
+                ? `／注意：${escapeHtml(item.customer_visible_note)}`
+                : ""
+            }
+          </div>
+        `;
+
+        button.addEventListener("click", () => {
+          selectItem(item);
+        });
+
+        elements.itemList.appendChild(button);
+      }
+    }
+
+    async function selectItem(item) {
+      state.selectedItem = item;
+      state.preparedPhoto = null;
+      elements.photoFile.value = "";
+      elements.caption.value = "";
+      elements.preview.textContent =
+        "写真を選択してください。";
+
+      renderItems(state.selectedDetail?.items || []);
+
+      elements.placeholder.hidden = true;
+      elements.photoContent.hidden = false;
+      elements.selectedItemName.textContent =
+        `${item.item_code}　${item.item_name} × ${Number(item.quantity || 0)}`;
+      elements.selectedItemMeta.textContent =
+        `${state.selectedDetail?.order?.order_number || ""}／` +
+        `${state.selectedDetail?.customer?.full_name || ""} 様／` +
+        `状態：${item.status || "-"}`;
+
+      await loadPhotos();
+    }
+
+    async function loadPhotos() {
+      if (!state.selectedItem) return;
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(
+            `/api/admin/order-items/${state.selectedItem.id}/photos`
+          )
+        );
+
+        state.photos = data.photos || [];
+        renderGallery(data.max_photos || 8);
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      }
+    }
+
+    function renderGallery(maxPhotos) {
+      elements.gallery.innerHTML = "";
+      elements.photoCount.textContent =
+        `${state.photos.length} / ${maxPhotos}枚`;
+
+      elements.uploadButton.disabled =
+        state.photos.length >= maxPhotos;
+
+      if (!state.photos.length) {
+        elements.gallery.innerHTML =
+          '<div class="empty" style="grid-column:1 / -1">登録済み写真はありません。</div>';
+        return;
+      }
+
+      for (const photo of state.photos) {
+        const card = document.createElement("article");
+        card.className = "photo-card";
+
+        const fileUrl = buildAdminUrl(
+          `/api/admin/item-photos/${photo.id}/file`,
+          {
+            t: photo.created_at || Date.now()
+          }
+        ).toString();
+
+        card.innerHTML = `
+          <div class="photo-image">
+            <img
+              src="${escapeHtml(fileUrl)}"
+              alt="${escapeHtml(PHOTO_TYPE_LABELS[photo.photo_type] || "品物写真")}"
+              loading="lazy"
+            >
+          </div>
+          <div class="photo-body">
+            <div class="photo-type">
+              ${escapeHtml(PHOTO_TYPE_LABELS[photo.photo_type] || photo.photo_type)}
+            </div>
+            <div class="small">
+              ${escapeHtml(photo.caption || "メモなし")}
+              <br>
+              ${Math.round(Number(photo.size_bytes || 0) / 1024)}KB
+            </div>
+            <div class="photo-actions">
+              <a
+                class="mini-button secondary"
+                href="${escapeHtml(fileUrl)}"
+                target="_blank"
+                rel="noopener"
+                style="text-decoration:none;display:inline-grid;place-items:center"
+              >
+                拡大
+              </a>
+              <button
+                class="mini-button danger delete-photo"
+                type="button"
+              >
+                削除
+              </button>
+            </div>
+          </div>
+        `;
+
+        card.querySelector(".delete-photo")
+          .addEventListener("click", () => {
+            deletePhoto(photo);
+          });
+
+        elements.gallery.appendChild(card);
+      }
+    }
+
+    async function prepareSelectedFile() {
+      const file = elements.photoFile.files?.[0];
+
+      if (!file) {
+        state.preparedPhoto = null;
+        elements.preview.textContent =
+          "写真を選択してください。";
+        return;
+      }
+
+      if (
+        !["image/jpeg", "image/png", "image/webp"].includes(
+          file.type
+        )
+      ) {
+        elements.photoFile.value = "";
+        showToast(
+          "JPEG・PNG・WEBP形式を選択してください。",
+          true
+        );
+        return;
+      }
+
+      elements.uploadProgress.textContent =
+        "画像サイズを調整しています。";
+
+      try {
+        const prepared = await compressImage(file);
+        state.preparedPhoto = prepared;
+
+        const objectUrl = URL.createObjectURL(prepared.blob);
+        elements.preview.innerHTML =
+          `<img src="${objectUrl}" alt="登録前プレビュー">`;
+
+        elements.preview.querySelector("img")
+          .addEventListener("load", () => {
+            URL.revokeObjectURL(objectUrl);
+          }, { once:true });
+
+        elements.uploadProgress.textContent =
+          `登録準備完了：${Math.round(prepared.blob.size / 1024)}KB`;
+      } catch (error) {
+        console.error(error);
+        state.preparedPhoto = null;
+        elements.photoFile.value = "";
+        elements.preview.textContent =
+          "画像を準備できませんでした。";
+        showToast(error.message, true);
+      }
+    }
+
+    async function compressImage(file) {
+      const bitmap = await createImageBitmap(file);
+      const maxDimension = 1600;
+      const scale = Math.min(
+        1,
+        maxDimension / Math.max(bitmap.width, bitmap.height)
+      );
+
+      const width = Math.max(
+        1,
+        Math.round(bitmap.width * scale)
+      );
+      const height = Math.max(
+        1,
+        Math.round(bitmap.height * scale)
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const context = canvas.getContext("2d", {
+        alpha: false
+      });
+
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, width, height);
+      context.drawImage(bitmap, 0, 0, width, height);
+      bitmap.close();
+
+      let quality = 0.84;
+      let blob = await canvasToBlob(canvas, quality);
+
+      while (
+        blob.size > 1800000 &&
+        quality > 0.56
+      ) {
+        quality -= 0.08;
+        blob = await canvasToBlob(canvas, quality);
+      }
+
+      if (blob.size > 2200000) {
+        throw new Error(
+          "画像サイズを小さくして、もう一度選択してください。"
+        );
+      }
+
+      const base64Data = await blobToBase64(blob);
+
+      return {
+        blob,
+        base64Data,
+        mimeType: "image/jpeg",
+        originalFilename:
+          file.name.replace(/\.[^.]+$/, "") + ".jpg"
+      };
+    }
+
+    function canvasToBlob(canvas, quality) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(
+                new Error("画像変換に失敗しました。")
+              );
+            }
+          },
+          "image/jpeg",
+          quality
+        );
+      });
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const value = String(reader.result || "");
+          resolve(value.includes(",")
+            ? value.slice(value.indexOf(",") + 1)
+            : value);
+        };
+
+        reader.onerror = () => {
+          reject(
+            new Error("画像を読み込めませんでした。")
+          );
+        };
+
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function uploadPhoto() {
+      if (!state.selectedItem) {
+        showToast("品物を選択してください。", true);
+        return;
+      }
+
+      if (!state.preparedPhoto) {
+        showToast("写真を選択してください。", true);
+        return;
+      }
+
+      if (state.busy) return;
+
+      state.busy = true;
+      setBusy(true);
+      elements.uploadProgress.textContent =
+        "写真を保存しています。";
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(
+            `/api/admin/order-items/${state.selectedItem.id}/photos`
+          ),
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              original_filename:
+                state.preparedPhoto.originalFilename,
+              mime_type:
+                state.preparedPhoto.mimeType,
+              base64_data:
+                state.preparedPhoto.base64Data,
+              photo_type:
+                elements.photoType.value,
+              caption:
+                elements.caption.value.trim() || null,
+              customer_visible: false
+            })
+          }
+        );
+
+        state.preparedPhoto = null;
+        elements.photoFile.value = "";
+        elements.caption.value = "";
+        elements.preview.textContent =
+          "写真を選択してください。";
+        elements.uploadProgress.textContent =
+          "写真を登録しました。";
+
+        showToast("品物写真を登録しました。");
+        await loadPhotos();
+
+        if (state.selectedDetail) {
+          await loadOrderDetail(
+            state.selectedDetail.order.id
+          );
+          const refreshedItem =
+            (state.selectedDetail.items || []).find(
+              (item) =>
+                item.id === state.selectedItem?.id
+            );
+
+          if (refreshedItem) {
+            await selectItem(refreshedItem);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        elements.uploadProgress.textContent =
+          "写真を保存できませんでした。";
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    async function deletePhoto(photo) {
+      if (
+        !window.confirm(
+          "この写真を削除しますか？\n削除後は元に戻せません。"
+        )
+      ) {
+        return;
+      }
+
+      try {
+        await apiFetch(
+          buildAdminUrl(
+            `/api/admin/item-photos/${photo.id}`
+          ),
+          {
+            method: "DELETE"
+          }
+        );
+
+        showToast("写真を削除しました。");
+        await loadPhotos();
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      }
+    }
+
+    function clearPhotoContent() {
+      elements.placeholder.hidden = false;
+      elements.photoContent.hidden = true;
+      elements.selectedItemName.textContent = "";
+      elements.selectedItemMeta.textContent = "";
+      elements.gallery.innerHTML = "";
+      elements.photoCount.textContent = "0 / 8枚";
+    }
+
+    function setBusy(disabled) {
+      elements.openButton.disabled = disabled;
+      elements.searchButton.disabled = disabled;
+      elements.refreshButton.disabled = disabled;
+      elements.uploadButton.disabled =
+        disabled || state.photos.length >= 8;
+    }
+
+    function setStatus(message, type = "") {
+      elements.status.textContent = message;
+      elements.status.className =
+        `status ${type}`.trim();
+    }
+
+    let toastTimer = null;
+
+    function showToast(message, isError = false) {
+      elements.toast.textContent = message;
+      elements.toast.className =
+        `toast visible${isError ? " error" : ""}`;
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        elements.toast.className = "toast";
+      }, 3400);
+    }
+
+    async function openInitialOrder() {
+      const params = new URL(location.href).searchParams;
+      const orderId = params.get("order_id");
+
+      if (!orderId) {
+        await searchOrders();
+        return;
+      }
+
+      try {
+        await loadOrderDetail(orderId);
+        setStatus(
+          "指定された注文の写真管理を開きました。",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+        await searchOrders();
+      }
+    }
+
+    elements.clearButton.addEventListener(
+      "click",
+      () => {
+        elements.adminKey.value = "";
+        elements.adminKey.focus();
+        setStatus(
+          "管理コードを消去しました。再入力してください。"
+        );
+      }
+    );
+
+    elements.openButton.addEventListener(
+      "click",
+      openInitialOrder
+    );
+
+    elements.searchButton.addEventListener(
+      "click",
+      searchOrders
+    );
+
+    elements.refreshButton.addEventListener(
+      "click",
+      async () => {
+        if (state.selectedDetail?.order?.id) {
+          await loadOrderDetail(
+            state.selectedDetail.order.id
+          );
+        } else {
+          await searchOrders();
+        }
+      }
+    );
+
+    elements.searchInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Enter") {
+          searchOrders();
+        }
+      }
+    );
+
+    elements.photoFile.addEventListener(
+      "change",
+      prepareSelectedFile
+    );
+
+    elements.uploadButton.addEventListener(
+      "click",
+      uploadPhoto
+    );
+
+    openInitialOrder();
+  </script>
+</body>
+</html>
