@@ -599,7 +599,7 @@
           <div class="subtitle">店舗タブレット・受け渡し受付</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-13-R1</div>
+      <div class="version">STEP CLEANING-13-R2</div>
     </div>
   </header>
 
@@ -844,7 +844,7 @@
     }
 
     async function loadBoard(options = {}) {
-      if (state.busy) return;
+      if (state.busy && options.force !== true) return;
 
       if (!elements.adminKey.value.trim()) {
         setStatus(
@@ -1359,7 +1359,7 @@
                 document.getElementById("pickupNote")
                   ?.value.trim() || "",
               changed_by_label:
-                "店舗タブレット STEP CLEANING-13-R1"
+                "店舗タブレット STEP CLEANING-13-R2"
             })
           }
         );
@@ -1374,7 +1374,9 @@
         );
 
         state.selectedOrderId = null;
-        await loadBoard();
+        await loadBoard({
+          force: true
+        });
       } catch (error) {
         console.error(error);
         showToast(
