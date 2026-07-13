@@ -206,7 +206,7 @@
 
     .quick-links {
       display: grid;
-      grid-template-columns: repeat(8, minmax(105px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
       gap: 10px;
       margin-top: 12px;
     }
@@ -772,7 +772,7 @@
           <div class="subtitle">オーナー管理・今日やること・売上集計</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-14A</div>
+      <div class="version">STEP CLEANING-15</div>
     </div>
   </header>
 
@@ -885,6 +885,14 @@
           rel="noopener"
         >
           会員証デモ
+        </a>
+        <a
+          class="quick-link"
+          href="https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/system-check.html?v=cleaning-15"
+          target="_blank"
+          rel="noopener"
+        >
+          営業前システムチェック
         </a>
       </div>
     </section>
@@ -1119,7 +1127,7 @@
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
     const PAGE_VERSION =
-      "CLEANING-14A-TABLET-CAMERA-MODE-20260713";
+      "CLEANING-15-SYSTEM-CHECK-DEMO-PREPARE-20260713";
 
     const STATUS_LABELS = {
       accepted: "受付済み",
