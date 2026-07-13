@@ -116,11 +116,11 @@
           </div>
         </div>
         <div class="top-actions">
-          <span class="version-chip">STEP CLEANING-17-R2</span>
+          <span class="version-chip">STEP CLEANING-18</span>
           <span id="readyDot" class="ready-dot"></span>
           <span id="readyText" class="ready-text">未確認</span>
           <button id="checkButton" class="button secondary" type="button">一括チェック</button>
-          <a class="button secondary" href="demo-guide.html?v=cleaning-17-r1">デモガイド</a>
+          <a class="button secondary" href="demo-guide.html?v=cleaning-18">デモガイド</a>
         </div>
       </div>
 
@@ -241,7 +241,7 @@
     "use strict";
     const API_BASE = "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
     const EXPECTED_WORKER_VERSION = "CLEANING-15-SYSTEM-CHECK-DEMO-PREPARE-20260713";
-    const FRONT_VERSION = "CLEANING-17-R2-SYSTEM-CHECK-SALES-DEMO-CASES-20260713";
+    const FRONT_VERSION = "CLEANING-18-FINAL-COMPLETE-PACKAGE-20260713";
 
     const STATUS_LABELS = {
       accepted:"受付済み", inspecting:"検品中", cleaning:"クリーニング中",
@@ -259,18 +259,18 @@
     ];
 
     const SCREENS = [
-      {key:"member",name:"お客様の会員証",description:"会員証と現在のお預かり状況",url:"member.html?token=demo-cleaning-member-003&v=cleaning-17-r2"},
-      {key:"reception",name:"店頭受付・PC管理",description:"新規受付と注文状況更新",url:"reception.html?v=cleaning-17-r2"},
-      {key:"staff",name:"スタッフ作業ボード",description:"工程別の作業状況",url:"staff.html?v=cleaning-17-r2"},
-      {key:"photo",name:"受付iPad・写真撮影",description:"品物単位のタブレット撮影",url:"item-photo-ipad.html?v=cleaning-17-r2"},
-      {key:"settings",name:"オーナー簡単設定",description:"店舗情報・営業時間・料金",url:"owner-settings.html?v=cleaning-17-r2"},
+      {key:"member",name:"お客様の会員証",description:"会員証と現在のお預かり状況",url:"member.html?token=demo-cleaning-member-003&v=cleaning-18"},
+      {key:"reception",name:"店頭受付・PC管理",description:"新規受付と注文状況更新",url:"reception.html?v=cleaning-18"},
+      {key:"staff",name:"スタッフ作業ボード",description:"工程別の作業状況",url:"staff.html?v=cleaning-18"},
+      {key:"photo",name:"受付iPad・写真撮影",description:"品物単位のタブレット撮影",url:"item-photo-ipad.html?v=cleaning-18"},
+      {key:"settings",name:"オーナー簡単設定",description:"店舗情報・営業時間・料金",url:"owner-settings.html?v=cleaning-18"},
       {key:"health",name:"Workerヘルス",description:"APIバージョンとDB接続",url:"https://dpro-cleaning-line-api.dpromstk2000.workers.dev/api/health",external:true},
-      {key:"pickup",name:"タブレット受け渡し",description:"支払いと品物確認",url:"owner-ipad.html?v=cleaning-17-r2"},
-      {key:"followup",name:"未受取フォロー",description:"未通知・長期保管・未精算",url:"owner-followup.html?v=cleaning-17-r2"},
-      {key:"print",name:"受付票・品物タグ",description:"控えと数量分タグの印刷",url:"print.html?v=cleaning-17-r2"},
-      {key:"photoPc",name:"PC写真管理",description:"登録写真の検索・確認",url:"item-photo.html?v=cleaning-17-r2"},
-      {key:"owner",name:"オーナー管理",description:"売上・今日やること・工程件数",url:"owner.html?v=cleaning-17-r2"},
-      {key:"guide",name:"営業デモガイド",description:"5分で見せる順番",url:"demo-guide.html?v=cleaning-17-r1"}
+      {key:"pickup",name:"タブレット受け渡し",description:"支払いと品物確認",url:"owner-ipad.html?v=cleaning-18"},
+      {key:"followup",name:"未受取フォロー",description:"未通知・長期保管・未精算",url:"owner-followup.html?v=cleaning-18"},
+      {key:"print",name:"受付票・品物タグ",description:"控えと数量分タグの印刷",url:"print.html?v=cleaning-18"},
+      {key:"photoPc",name:"PC写真管理",description:"登録写真の検索・確認",url:"item-photo.html?v=cleaning-18"},
+      {key:"owner",name:"オーナー管理",description:"売上・今日やること・工程件数",url:"owner.html?v=cleaning-18"},
+      {key:"guide",name:"営業デモガイド",description:"5分で見せる順番",url:"demo-guide.html?v=cleaning-18"}
     ];
 
     const el = {
@@ -421,12 +421,12 @@
           ?items.map(item=>`${escapeHtml(item.item_name)} × ${Number(item.quantity||0)}`).join("<br>")
           :`${Number(order.item_count||0)}点`;
 
-        const receptionUrl=`reception.html?mode=management&order_id=${encodeURIComponent(order.order_id)}&v=cleaning-17-r2`;
-        const staffUrl=`staff.html?q=${encodeURIComponent(order.order_number)}&v=cleaning-17-r2`;
-        const photoUrl=`item-photo-ipad.html?order_id=${encodeURIComponent(order.order_id)}&v=cleaning-17-r2`;
-        const printUrl=`print.html?order_id=${encodeURIComponent(order.order_id)}&v=cleaning-17-r2`;
-        const memberUrl=`member.html?token=${encodeURIComponent(token)}&v=cleaning-17-r2`;
-        const pickupUrl=`owner-ipad.html?order_id=${encodeURIComponent(order.order_id)}&q=${encodeURIComponent(order.order_number)}&v=cleaning-17-r2`;
+        const receptionUrl=`reception.html?mode=management&order_id=${encodeURIComponent(order.order_id)}&v=cleaning-18`;
+        const staffUrl=`staff.html?q=${encodeURIComponent(order.order_number)}&v=cleaning-18`;
+        const photoUrl=`item-photo-ipad.html?order_id=${encodeURIComponent(order.order_id)}&v=cleaning-18`;
+        const printUrl=`print.html?order_id=${encodeURIComponent(order.order_id)}&v=cleaning-18`;
+        const memberUrl=`member.html?token=${encodeURIComponent(token)}&v=cleaning-18`;
+        const pickupUrl=`owner-ipad.html?order_id=${encodeURIComponent(order.order_id)}&q=${encodeURIComponent(order.order_number)}&v=cleaning-18`;
         const canPickup=["ready","stored"].includes(order.status);
         const pickupAction=canPickup
           ?`<a class="case-action pickup" href="${pickupUrl}" target="_blank" rel="noopener">受け渡し</a>`
