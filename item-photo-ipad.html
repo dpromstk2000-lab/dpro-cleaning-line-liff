@@ -1,0 +1,1872 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087f8c">
+  <meta name="color-scheme" content="light">
+  <title>DPRO クリーニング LINE｜店舗タブレット写真撮影</title>
+  <style>
+    :root {
+      --bg:#edf5f7;
+      --panel:#ffffff;
+      --line:#d3e3e8;
+      --ink:#163644;
+      --muted:#687f89;
+      --primary:#07828e;
+      --primary-dark:#05616a;
+      --success:#16825d;
+      --danger:#bd3b49;
+      --warning:#b16d00;
+      --purple:#6949ad;
+      --shadow:0 12px 32px rgba(23,55,69,.09);
+      --radius:18px;
+    }
+
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:
+        -apple-system,BlinkMacSystemFont,"Segoe UI",
+        "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    }
+
+    button,input,select,textarea { font:inherit; }
+    button { cursor:pointer; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+
+    .header {
+      padding:19px 18px;
+      color:#fff;
+      background:linear-gradient(135deg,#05636d,#07828e 58%,#0ca7a9);
+    }
+
+    .header-inner {
+      width:min(1450px,100%);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-mark {
+      width:50px;
+      height:50px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:rgba(255,255,255,.17);
+      font-size:27px;
+    }
+
+    h1 {
+      margin:0;
+      font-size:clamp(22px,3vw,34px);
+    }
+
+    .subtitle {
+      margin-top:4px;
+      color:rgba(255,255,255,.84);
+      font-size:12px;
+    }
+
+    .version {
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      font-size:10px;
+    }
+
+    .container {
+      width:min(1450px,calc(100% - 22px));
+      margin:15px auto 42px;
+    }
+
+    .panel {
+      margin-bottom:13px;
+      padding:15px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+      box-shadow:var(--shadow);
+    }
+
+    .connection-grid {
+      display:grid;
+      grid-template-columns:minmax(170px,.65fr) auto minmax(220px,.85fr) auto;
+      gap:9px;
+      align-items:end;
+    }
+
+    label {
+      display:block;
+      margin-bottom:6px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+    }
+
+    input,select,textarea {
+      width:100%;
+      border:1px solid #c6d8df;
+      border-radius:11px;
+      padding:10px 12px;
+      color:var(--ink);
+      background:#fff;
+      outline:none;
+    }
+
+    input,select { min-height:48px; }
+    textarea { min-height:82px; resize:vertical; }
+
+    input:focus,select:focus,textarea:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(7,130,142,.12);
+    }
+
+    .button {
+      min-height:48px;
+      border:0;
+      border-radius:11px;
+      padding:10px 15px;
+      font-weight:900;
+    }
+
+    .primary { color:#fff; background:var(--primary); }
+    .secondary { color:var(--primary-dark); background:#e7f5f6; }
+    .success { color:#fff; background:var(--success); }
+    .danger {
+      color:var(--danger);
+      background:#fff0f2;
+      border:1px solid #edc5ca;
+    }
+    .clear {
+      color:var(--danger);
+      background:#fff;
+      border:1px solid #d5e0e5;
+    }
+
+    .status {
+      margin-top:9px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      color:var(--muted);
+      background:#f9fbfc;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .status.success {
+      color:#126847;
+      border-color:#bfe2d3;
+      background:#ebf9f3;
+    }
+
+    .status.error {
+      color:#982e3b;
+      border-color:#edc5ca;
+      background:#fff0f2;
+    }
+
+    .search-grid {
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      gap:9px;
+      align-items:end;
+    }
+
+    .section-title {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:11px;
+    }
+
+    .section-title h2 {
+      margin:0;
+      font-size:19px;
+    }
+
+    .step-label {
+      display:inline-grid;
+      place-items:center;
+      width:30px;
+      height:30px;
+      margin-right:8px;
+      border-radius:10px;
+      color:var(--primary-dark);
+      background:#e6f5f6;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .small {
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.6;
+    }
+
+    .orders-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px;
+    }
+
+    .order-card {
+      min-height:132px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      color:var(--ink);
+      background:#fff;
+      text-align:left;
+    }
+
+    .order-card:hover {
+      border-color:#9dcfd3;
+    }
+
+    .order-card.active {
+      border:2px solid var(--primary);
+      background:#f1fbfb;
+      box-shadow:0 8px 18px rgba(7,130,142,.12);
+    }
+
+    .order-card.locked {
+      opacity:.65;
+      background:#f4f6f7;
+    }
+
+    .order-top {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:8px;
+    }
+
+    .order-number {
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .customer-name {
+      margin-top:4px;
+      font-size:16px;
+      font-weight:900;
+    }
+
+    .badges {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:5px;
+    }
+
+    .badge {
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .badge-active {
+      color:#08764f;
+      background:#e6f7ef;
+    }
+
+    .badge-rewash {
+      color:#a45f00;
+      background:#fff0d8;
+    }
+
+    .order-meta {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      margin-top:11px;
+    }
+
+    .mini {
+      padding:8px;
+      border:1px solid #dce8ec;
+      border-radius:10px;
+      background:#f9fbfc;
+    }
+
+    .mini-label {
+      color:var(--muted);
+      font-size:8px;
+      font-weight:900;
+    }
+
+    .mini-value {
+      margin-top:2px;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .selected-order {
+      padding:14px;
+      border:1px solid #bcdadd;
+      border-radius:14px;
+      background:linear-gradient(135deg,#f2fbfb,#fff);
+    }
+
+    .selected-order-name {
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .items-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px;
+      margin-top:11px;
+    }
+
+    .item-button {
+      min-height:100px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:11px;
+      color:var(--ink);
+      background:#fff;
+      text-align:left;
+    }
+
+    .item-button.active {
+      border:2px solid var(--primary);
+      background:#f1fbfb;
+    }
+
+    .item-code {
+      display:inline-grid;
+      place-items:center;
+      min-width:34px;
+      height:34px;
+      margin-right:7px;
+      border-radius:10px;
+      color:var(--primary-dark);
+      background:#e7f5f6;
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .item-name {
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .capture-layout {
+      display:grid;
+      grid-template-columns:minmax(430px,1.05fr) minmax(360px,.95fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .capture-card,
+    .settings-card {
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#fbfdfe;
+    }
+
+    .selected-item-banner {
+      margin-bottom:12px;
+      padding:12px;
+      border-radius:12px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+    }
+
+    .selected-item-title {
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .camera-buttons {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .camera-button {
+      min-height:94px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      border:0;
+      border-radius:16px;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .camera-button .icon {
+      font-size:34px;
+    }
+
+    .camera-main {
+      color:#fff;
+      background:linear-gradient(135deg,#087f8c,#0aa8a6);
+    }
+
+    .camera-library {
+      color:var(--primary-dark);
+      border:1px solid #bcdadd;
+      background:#eaf6f7;
+    }
+
+    .preview {
+      min-height:360px;
+      margin-top:11px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:2px dashed #bdd1d7;
+      border-radius:15px;
+      color:var(--muted);
+      background:#fff;
+      text-align:center;
+    }
+
+    .preview img {
+      width:100%;
+      max-height:520px;
+      object-fit:contain;
+      display:block;
+    }
+
+    .type-grid {
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px;
+    }
+
+    .type-button {
+      min-height:58px;
+      border:1px solid #c8dbe0;
+      border-radius:12px;
+      color:var(--ink);
+      background:#fff;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .type-button.active {
+      color:#fff;
+      border-color:var(--primary);
+      background:var(--primary);
+    }
+
+    .register-button {
+      width:100%;
+      min-height:64px;
+      margin-top:12px;
+      font-size:18px;
+    }
+
+    .progress {
+      margin-top:9px;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.6;
+    }
+
+    .after-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:11px;
+    }
+
+    .gallery {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px;
+      margin-top:11px;
+    }
+
+    .photo-card {
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#fff;
+    }
+
+    .photo-image {
+      aspect-ratio:4 / 3;
+      background:#edf3f5;
+    }
+
+    .photo-image img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .photo-body {
+      padding:8px;
+    }
+
+    .photo-type {
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .empty {
+      padding:28px 12px;
+      border:1px dashed #c7d8de;
+      border-radius:14px;
+      color:var(--muted);
+      background:#fbfdfe;
+      text-align:center;
+      font-size:12px;
+    }
+
+    .toast {
+      position:fixed;
+      z-index:1000;
+      left:50%;
+      bottom:24px;
+      width:min(600px,calc(100% - 28px));
+      transform:translate(-50%,30px);
+      opacity:0;
+      pointer-events:none;
+      border-radius:13px;
+      padding:14px 16px;
+      color:#fff;
+      background:#173543;
+      box-shadow:0 12px 34px rgba(0,0,0,.2);
+      transition:.22s ease;
+      font-size:13px;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .toast.visible {
+      transform:translate(-50%,0);
+      opacity:1;
+    }
+
+    .toast.error {
+      background:#a93240;
+    }
+
+    @media (max-width:1080px) {
+      .orders-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .items-grid {
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      .capture-layout {
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:720px) {
+      .version { display:none; }
+
+      .connection-grid,
+      .search-grid,
+      .orders-grid,
+      .items-grid,
+      .camera-buttons,
+      .type-grid,
+      .gallery {
+        grid-template-columns:1fr;
+      }
+
+      .preview {
+        min-height:260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">📸</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">店舗タブレット・品物写真撮影モード</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-14A</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="connection-grid">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input id="adminKey" type="password" value="1234" autocomplete="off">
+        </div>
+
+        <button id="clearButton" class="button clear" type="button">
+          消去
+        </button>
+
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input id="shopCode" value="cleaning_demo" autocomplete="off">
+        </div>
+
+        <button id="openButton" class="button primary" type="button">
+          撮影受付を開く
+        </button>
+      </div>
+
+      <div id="status" class="status">
+        撮影する注文を選択してください。
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="search-grid">
+        <div>
+          <label for="searchInput">受付番号・氏名・会員番号・電話番号</label>
+          <input id="searchInput" placeholder="例：CL-20260712-D002">
+        </div>
+
+        <button id="searchButton" class="button primary" type="button">
+          注文を検索
+        </button>
+
+        <button id="pcModeButton" class="button secondary" type="button">
+          PC写真管理を開く
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2><span class="step-label">1</span>撮影する注文を選択</h2>
+        <div id="orderCount" class="small">0件</div>
+      </div>
+      <div id="ordersGrid" class="orders-grid"></div>
+    </section>
+
+    <section id="itemPanel" class="panel" hidden>
+      <div class="selected-order">
+        <div id="selectedOrderTitle" class="selected-order-name"></div>
+        <div id="selectedOrderMeta" class="small" style="margin-top:5px"></div>
+      </div>
+
+      <div class="section-title" style="margin-top:14px">
+        <h2><span class="step-label">2</span>撮影する品物を選択</h2>
+        <div id="itemCount" class="small">0件</div>
+      </div>
+
+      <div id="itemsGrid" class="items-grid"></div>
+    </section>
+
+    <section id="capturePanel" class="panel" hidden>
+      <div class="section-title">
+        <h2><span class="step-label">3</span>写真を撮影・登録</h2>
+        <div id="photoLimit" class="small">0 / 8枚</div>
+      </div>
+
+      <div class="capture-layout">
+        <div class="capture-card">
+          <div class="selected-item-banner">
+            <div id="selectedItemTitle" class="selected-item-title"></div>
+            <div id="selectedItemMeta" class="small" style="color:rgba(255,255,255,.84);margin-top:4px"></div>
+          </div>
+
+          <div class="camera-buttons">
+            <button id="cameraButton" class="camera-button camera-main" type="button">
+              <span class="icon">📷</span>
+              カメラで撮影
+            </button>
+
+            <button id="libraryButton" class="camera-button camera-library" type="button">
+              <span class="icon">🖼️</span>
+              写真ライブラリから選ぶ
+            </button>
+          </div>
+
+          <input
+            id="cameraInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            hidden
+          >
+
+          <input
+            id="libraryInput"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+          >
+
+          <div id="preview" class="preview">
+            「カメラで撮影」または「写真ライブラリから選ぶ」を押してください。
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <label>写真の種類</label>
+          <div id="typeGrid" class="type-grid">
+            <button class="type-button active" data-type="whole" type="button">品物全体</button>
+            <button class="type-button" data-type="condition" type="button">受付時の状態</button>
+            <button class="type-button" data-type="stain" type="button">シミ</button>
+            <button class="type-button" data-type="damage" type="button">破れ・傷</button>
+            <button class="type-button" data-type="button" type="button">ボタン・部品</button>
+            <button class="type-button" data-type="tag" type="button">タグ・表示</button>
+            <button class="type-button" data-type="accessory" type="button">付属品</button>
+            <button class="type-button" data-type="other" type="button">その他</button>
+          </div>
+
+          <div style="margin-top:11px">
+            <label for="caption">写真メモ</label>
+            <textarea id="caption" placeholder="例：右袖にシミあり"></textarea>
+          </div>
+
+          <button id="registerButton" class="button success register-button" type="button" disabled>
+            この写真を登録
+          </button>
+
+          <div id="progress" class="progress">
+            撮影した写真は、登録前に自動でサイズを調整します。
+          </div>
+
+          <div id="afterActions" class="after-actions" hidden>
+            <button id="sameItemButton" class="button secondary" type="button">
+              同じ品物をもう1枚撮影
+            </button>
+            <button id="nextItemButton" class="button primary" type="button">
+              次の品物へ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:17px">
+        <h2>この品物の登録済み写真</h2>
+        <div class="small">タップすると拡大表示</div>
+      </div>
+
+      <div id="gallery" class="gallery"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+
+    const API_BASE =
+      "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+
+    const ACTIVE_STATUSES = new Set([
+      "accepted",
+      "inspecting",
+      "cleaning",
+      "finishing",
+      "ready",
+      "stored",
+      "rewash"
+    ]);
+
+    const STATUS_LABELS = {
+      accepted: "受付済み",
+      inspecting: "検品中",
+      cleaning: "洗浄中",
+      finishing: "仕上げ中",
+      ready: "仕上がり済み",
+      stored: "保管中",
+      rewash: "再洗い・確認中"
+    };
+
+    const PHOTO_TYPE_LABELS = {
+      whole: "品物全体",
+      condition: "受付時の状態",
+      stain: "シミ",
+      damage: "破れ・傷",
+      button: "ボタン・部品",
+      tag: "タグ・表示",
+      accessory: "付属品",
+      other: "その他"
+    };
+
+    const elements = {
+      adminKey: document.getElementById("adminKey"),
+      clearButton: document.getElementById("clearButton"),
+      shopCode: document.getElementById("shopCode"),
+      openButton: document.getElementById("openButton"),
+      status: document.getElementById("status"),
+      searchInput: document.getElementById("searchInput"),
+      searchButton: document.getElementById("searchButton"),
+      pcModeButton: document.getElementById("pcModeButton"),
+      orderCount: document.getElementById("orderCount"),
+      ordersGrid: document.getElementById("ordersGrid"),
+      itemPanel: document.getElementById("itemPanel"),
+      selectedOrderTitle:
+        document.getElementById("selectedOrderTitle"),
+      selectedOrderMeta:
+        document.getElementById("selectedOrderMeta"),
+      itemCount: document.getElementById("itemCount"),
+      itemsGrid: document.getElementById("itemsGrid"),
+      capturePanel: document.getElementById("capturePanel"),
+      photoLimit: document.getElementById("photoLimit"),
+      selectedItemTitle:
+        document.getElementById("selectedItemTitle"),
+      selectedItemMeta:
+        document.getElementById("selectedItemMeta"),
+      cameraButton: document.getElementById("cameraButton"),
+      libraryButton: document.getElementById("libraryButton"),
+      cameraInput: document.getElementById("cameraInput"),
+      libraryInput: document.getElementById("libraryInput"),
+      preview: document.getElementById("preview"),
+      typeGrid: document.getElementById("typeGrid"),
+      caption: document.getElementById("caption"),
+      registerButton:
+        document.getElementById("registerButton"),
+      progress: document.getElementById("progress"),
+      afterActions: document.getElementById("afterActions"),
+      sameItemButton:
+        document.getElementById("sameItemButton"),
+      nextItemButton:
+        document.getElementById("nextItemButton"),
+      gallery: document.getElementById("gallery"),
+      toast: document.getElementById("toast")
+    };
+
+    const state = {
+      orders: [],
+      selectedOrderSummary: null,
+      selectedDetail: null,
+      selectedItem: null,
+      photos: [],
+      selectedPhotoType: "whole",
+      preparedPhoto: null,
+      busy: false
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function formatDateJa(value) {
+      const match = String(value || "").match(
+        /^(\d{4})-(\d{2})-(\d{2})/
+      );
+
+      if (!match) return "-";
+
+      return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+    }
+
+    function buildAdminUrl(path, params = {}) {
+      const url = new URL(`${API_BASE}${path}`);
+
+      url.searchParams.set(
+        "admin_key",
+        elements.adminKey.value.trim()
+      );
+
+      url.searchParams.set(
+        "shop_code",
+        elements.shopCode.value.trim() || "cleaning_demo"
+      );
+
+      for (const [key, value] of Object.entries(params)) {
+        if (
+          value !== undefined &&
+          value !== null &&
+          value !== ""
+        ) {
+          url.searchParams.set(key, value);
+        }
+      }
+
+      return url;
+    }
+
+    async function apiFetch(url, options = {}) {
+      const response = await fetch(url, options);
+      const contentType =
+        response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `APIからJSON以外の応答が返りました（HTTP ${response.status}）`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        const error = new Error(
+          data.message || "API処理に失敗しました。"
+        );
+        error.data = data;
+        error.status = response.status;
+        throw error;
+      }
+
+      return data;
+    }
+
+    async function loadOrders(options = {}) {
+      if (state.busy && options.force !== true) return;
+
+      if (!elements.adminKey.value.trim()) {
+        setStatus("管理コードを入力してください。", "error");
+        return;
+      }
+
+      state.busy = true;
+      setBusy(true);
+      setStatus("撮影可能な注文を読み込んでいます。");
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl("/api/admin/orders", {
+            q: elements.searchInput.value.trim(),
+            limit: 100
+          })
+        );
+
+        state.orders = (data.orders || [])
+          .filter((order) =>
+            ACTIVE_STATUSES.has(order.status)
+          )
+          .sort((a, b) => {
+            const statusPriority = {
+              accepted: 1,
+              inspecting: 2,
+              rewash: 3,
+              cleaning: 4,
+              finishing: 5,
+              ready: 6,
+              stored: 7
+            };
+
+            return (
+              (statusPriority[a.status] || 99) -
+              (statusPriority[b.status] || 99)
+            );
+          });
+
+        renderOrders();
+
+        setStatus(
+          `${state.orders.length}件の撮影可能な注文を表示しました。`,
+          "success"
+        );
+
+        const params = new URL(location.href).searchParams;
+        const requestedOrderId = params.get("order_id");
+
+        if (
+          requestedOrderId &&
+          options.openRequested !== false
+        ) {
+          const requested = state.orders.find(
+            (order) => order.order_id === requestedOrderId
+          );
+
+          if (requested) {
+            await selectOrder(requested);
+          } else {
+            await loadDirectOrder(requestedOrderId);
+          }
+        } else if (
+          state.orders.length === 1 &&
+          !state.selectedDetail
+        ) {
+          await selectOrder(state.orders[0]);
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus(
+          error.data?.message || error.message,
+          "error"
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    async function loadDirectOrder(orderId) {
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(`/api/admin/orders/${orderId}`)
+        );
+
+        if (!ACTIVE_STATUSES.has(data.order?.status)) {
+          setStatus(
+            "この注文は受け渡し済みまたはキャンセル済みのため、写真を追加できません。",
+            "error"
+          );
+          return;
+        }
+
+        state.selectedOrderSummary = {
+          order_id: data.order.id,
+          order_number: data.order.order_number,
+          full_name: data.customer?.full_name,
+          customer_number: data.customer?.customer_number,
+          status: data.order.status,
+          item_count: data.order.item_count,
+          total_amount: data.order.total_amount,
+          promised_date: data.order.promised_date
+        };
+
+        state.selectedDetail = data;
+        renderSelectedOrder();
+
+        const requestedItemId =
+          new URL(location.href).searchParams.get("item_id");
+
+        const targetItem = requestedItemId
+          ? (data.items || []).find(
+              (item) => item.id === requestedItemId
+            )
+          : (data.items || [])[0];
+
+        if (targetItem) {
+          await selectItem(targetItem);
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus(
+          error.data?.message || error.message,
+          "error"
+        );
+      }
+    }
+
+    function renderOrders() {
+      elements.ordersGrid.innerHTML = "";
+      elements.orderCount.textContent =
+        `${state.orders.length}件`;
+
+      if (!state.orders.length) {
+        elements.ordersGrid.innerHTML =
+          '<div class="empty" style="grid-column:1 / -1">撮影可能な注文はありません。</div>';
+        return;
+      }
+
+      for (const order of state.orders) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          `order-card${
+            state.selectedOrderSummary?.order_id ===
+            order.order_id
+              ? " active"
+              : ""
+          }`;
+
+        const statusClass =
+          order.status === "rewash"
+            ? "badge badge-rewash"
+            : "badge badge-active";
+
+        button.innerHTML = `
+          <div class="order-top">
+            <div>
+              <div class="order-number">
+                ${escapeHtml(order.order_number)}
+              </div>
+              <div class="customer-name">
+                ${escapeHtml(order.full_name)}
+              </div>
+              <div class="small">
+                ${escapeHtml(order.customer_number)}
+              </div>
+            </div>
+
+            <div class="badges">
+              <span class="${statusClass}">
+                ${escapeHtml(
+                  STATUS_LABELS[order.status] || order.status
+                )}
+              </span>
+            </div>
+          </div>
+
+          <div class="order-meta">
+            <div class="mini">
+              <div class="mini-label">品物</div>
+              <div class="mini-value">
+                ${Number(order.item_count || 0)}点
+              </div>
+            </div>
+
+            <div class="mini">
+              <div class="mini-label">合計</div>
+              <div class="mini-value">
+                ${escapeHtml(formatYen(order.total_amount))}
+              </div>
+            </div>
+
+            <div class="mini">
+              <div class="mini-label">予定日</div>
+              <div class="mini-value">
+                ${escapeHtml(formatDateJa(order.promised_date))}
+              </div>
+            </div>
+          </div>
+        `;
+
+        button.addEventListener("click", () => {
+          selectOrder(order);
+        });
+
+        elements.ordersGrid.appendChild(button);
+      }
+    }
+
+    async function selectOrder(order) {
+      if (state.busy) return;
+
+      state.selectedOrderSummary = order;
+      state.selectedDetail = null;
+      state.selectedItem = null;
+      state.photos = [];
+      state.preparedPhoto = null;
+
+      renderOrders();
+      clearCapture();
+
+      state.busy = true;
+      setBusy(true);
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(
+            `/api/admin/orders/${order.order_id}`
+          )
+        );
+
+        if (!ACTIVE_STATUSES.has(data.order?.status)) {
+          throw new Error(
+            "この注文は現在、写真を追加できる状態ではありません。"
+          );
+        }
+
+        state.selectedDetail = data;
+        renderSelectedOrder();
+
+        const requestedItemId =
+          new URL(location.href).searchParams.get("item_id");
+
+        const targetItem = requestedItemId
+          ? (data.items || []).find(
+              (item) => item.id === requestedItemId
+            )
+          : (data.items || [])[0];
+
+        if (targetItem) {
+          await selectItem(targetItem);
+        }
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    function renderSelectedOrder() {
+      const data = state.selectedDetail;
+      const order = data?.order;
+      const customer = data?.customer;
+      const items = data?.items || [];
+
+      if (!order) return;
+
+      elements.itemPanel.hidden = false;
+      elements.selectedOrderTitle.textContent =
+        `${order.order_number}　${customer?.full_name || ""} 様`;
+      elements.selectedOrderMeta.textContent =
+        `会員番号：${customer?.customer_number || "-"}／` +
+        `状態：${STATUS_LABELS[order.status] || order.status}／` +
+        `${Number(order.item_count || 0)}点・${formatYen(order.total_amount)}`;
+
+      elements.itemCount.textContent =
+        `${items.length}件`;
+      elements.itemsGrid.innerHTML = "";
+
+      for (const item of items) {
+        const photoCount = Array.isArray(
+          item.cleaning_item_photos
+        )
+          ? item.cleaning_item_photos.length
+          : 0;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className =
+          `item-button${
+            state.selectedItem?.id === item.id
+              ? " active"
+              : ""
+          }`;
+
+        button.innerHTML = `
+          <div>
+            <span class="item-code">
+              ${escapeHtml(item.item_code)}
+            </span>
+            <span class="item-name">
+              ${escapeHtml(item.item_name)}
+              × ${Number(item.quantity || 0)}
+            </span>
+          </div>
+          <div class="small" style="margin-top:7px">
+            登録済み写真：${photoCount}枚
+            ${
+              item.customer_visible_note
+                ? `<br>注意：${escapeHtml(item.customer_visible_note)}`
+                : ""
+            }
+          </div>
+        `;
+
+        button.addEventListener("click", () => {
+          selectItem(item);
+        });
+
+        elements.itemsGrid.appendChild(button);
+      }
+    }
+
+    async function selectItem(item) {
+      state.selectedItem = item;
+      state.preparedPhoto = null;
+      state.selectedPhotoType = "whole";
+
+      resetPhotoForm();
+      renderSelectedOrder();
+      renderTypeButtons();
+
+      elements.capturePanel.hidden = false;
+      elements.selectedItemTitle.textContent =
+        `${item.item_code}　${item.item_name} × ${Number(item.quantity || 0)}`;
+      elements.selectedItemMeta.textContent =
+        `${state.selectedDetail?.order?.order_number || ""}／` +
+        `${state.selectedDetail?.customer?.full_name || ""} 様`;
+
+      await loadPhotos();
+
+      elements.capturePanel.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    async function loadPhotos() {
+      if (!state.selectedItem) return;
+
+      try {
+        const data = await apiFetch(
+          buildAdminUrl(
+            `/api/admin/order-items/${state.selectedItem.id}/photos`
+          )
+        );
+
+        state.photos = data.photos || [];
+        renderGallery(data.max_photos || 8);
+      } catch (error) {
+        console.error(error);
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      }
+    }
+
+    function renderTypeButtons() {
+      for (const button of elements.typeGrid.querySelectorAll(
+        ".type-button"
+      )) {
+        button.classList.toggle(
+          "active",
+          button.dataset.type === state.selectedPhotoType
+        );
+      }
+    }
+
+    function renderGallery(maxPhotos) {
+      elements.photoLimit.textContent =
+        `${state.photos.length} / ${maxPhotos}枚`;
+      elements.gallery.innerHTML = "";
+
+      elements.registerButton.disabled =
+        !state.preparedPhoto ||
+        state.photos.length >= maxPhotos ||
+        state.busy;
+
+      if (!state.photos.length) {
+        elements.gallery.innerHTML =
+          '<div class="empty" style="grid-column:1 / -1">この品物の登録済み写真はありません。</div>';
+        return;
+      }
+
+      for (const photo of state.photos) {
+        const fileUrl = buildAdminUrl(
+          `/api/admin/item-photos/${photo.id}/file`,
+          {
+            t: photo.created_at || Date.now()
+          }
+        ).toString();
+
+        const card = document.createElement("article");
+        card.className = "photo-card";
+        card.innerHTML = `
+          <a
+            class="photo-image"
+            href="${escapeHtml(fileUrl)}"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="${escapeHtml(fileUrl)}"
+              alt="${escapeHtml(
+                PHOTO_TYPE_LABELS[photo.photo_type] ||
+                "品物写真"
+              )}"
+              loading="lazy"
+            >
+          </a>
+          <div class="photo-body">
+            <div class="photo-type">
+              ${escapeHtml(
+                PHOTO_TYPE_LABELS[photo.photo_type] ||
+                photo.photo_type
+              )}
+            </div>
+            <div class="small">
+              ${escapeHtml(photo.caption || "メモなし")}
+            </div>
+          </div>
+        `;
+
+        elements.gallery.appendChild(card);
+      }
+    }
+
+    function choosePhotoInput(input) {
+      if (!state.selectedItem) {
+        showToast("先に品物を選択してください。", true);
+        return;
+      }
+
+      input.value = "";
+      input.click();
+    }
+
+    async function handleSelectedFile(file) {
+      if (!file) return;
+
+      if (
+        !["image/jpeg", "image/png", "image/webp"].includes(
+          file.type
+        )
+      ) {
+        showToast(
+          "JPEG・PNG・WEBP形式の写真を選択してください。",
+          true
+        );
+        return;
+      }
+
+      elements.progress.textContent =
+        "写真を読み込み、サイズを調整しています。";
+      elements.registerButton.disabled = true;
+      elements.afterActions.hidden = true;
+
+      try {
+        const prepared = await compressImage(file);
+        state.preparedPhoto = prepared;
+
+        const objectUrl = URL.createObjectURL(
+          prepared.blob
+        );
+
+        elements.preview.innerHTML =
+          `<img src="${objectUrl}" alt="登録前プレビュー">`;
+
+        elements.preview.querySelector("img")
+          .addEventListener(
+            "load",
+            () => URL.revokeObjectURL(objectUrl),
+            { once:true }
+          );
+
+        elements.progress.textContent =
+          `登録準備完了：${Math.round(prepared.blob.size / 1024)}KB`;
+
+        elements.registerButton.disabled =
+          state.photos.length >= 8;
+      } catch (error) {
+        console.error(error);
+        state.preparedPhoto = null;
+        elements.preview.textContent =
+          "写真を準備できませんでした。";
+        elements.progress.textContent =
+          "もう一度撮影または選択してください。";
+        showToast(error.message, true);
+      }
+    }
+
+    async function compressImage(file) {
+      const source = await loadImageSource(file);
+      const maxDimension = 1600;
+      const scale = Math.min(
+        1,
+        maxDimension /
+          Math.max(source.width, source.height)
+      );
+
+      const width = Math.max(
+        1,
+        Math.round(source.width * scale)
+      );
+      const height = Math.max(
+        1,
+        Math.round(source.height * scale)
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const context = canvas.getContext("2d", {
+        alpha:false
+      });
+
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, width, height);
+      context.drawImage(
+        source.image,
+        0,
+        0,
+        width,
+        height
+      );
+
+      source.cleanup();
+
+      let quality = 0.84;
+      let blob = await canvasToBlob(
+        canvas,
+        quality
+      );
+
+      while (
+        blob.size > 1800000 &&
+        quality > 0.56
+      ) {
+        quality -= 0.08;
+        blob = await canvasToBlob(
+          canvas,
+          quality
+        );
+      }
+
+      if (blob.size > 2200000) {
+        throw new Error(
+          "画像サイズを小さくして、もう一度選択してください。"
+        );
+      }
+
+      return {
+        blob,
+        base64Data: await blobToBase64(blob),
+        mimeType: "image/jpeg",
+        originalFilename:
+          file.name.replace(/\.[^.]+$/, "") + ".jpg"
+      };
+    }
+
+    async function loadImageSource(file) {
+      if ("createImageBitmap" in window) {
+        const bitmap = await createImageBitmap(file);
+
+        return {
+          image: bitmap,
+          width: bitmap.width,
+          height: bitmap.height,
+          cleanup() {
+            bitmap.close();
+          }
+        };
+      }
+
+      const objectUrl = URL.createObjectURL(file);
+      const image = new Image();
+
+      await new Promise((resolve, reject) => {
+        image.onload = resolve;
+        image.onerror = () => reject(
+          new Error("写真を読み込めませんでした。")
+        );
+        image.src = objectUrl;
+      });
+
+      return {
+        image,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        cleanup() {
+          URL.revokeObjectURL(objectUrl);
+        }
+      };
+    }
+
+    function canvasToBlob(canvas, quality) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(
+                new Error("画像変換に失敗しました。")
+              );
+            }
+          },
+          "image/jpeg",
+          quality
+        );
+      });
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const value = String(
+            reader.result || ""
+          );
+
+          resolve(
+            value.includes(",")
+              ? value.slice(value.indexOf(",") + 1)
+              : value
+          );
+        };
+
+        reader.onerror = () => {
+          reject(
+            new Error("写真を読み込めませんでした。")
+          );
+        };
+
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function registerPhoto() {
+      if (!state.selectedItem) {
+        showToast("品物を選択してください。", true);
+        return;
+      }
+
+      if (!state.preparedPhoto) {
+        showToast("写真を撮影または選択してください。", true);
+        return;
+      }
+
+      if (state.busy) return;
+
+      state.busy = true;
+      setBusy(true);
+      elements.progress.textContent =
+        "写真を保存しています。";
+
+      try {
+        await apiFetch(
+          buildAdminUrl(
+            `/api/admin/order-items/${state.selectedItem.id}/photos`
+          ),
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+              original_filename:
+                state.preparedPhoto.originalFilename,
+              mime_type:
+                state.preparedPhoto.mimeType,
+              base64_data:
+                state.preparedPhoto.base64Data,
+              photo_type:
+                state.selectedPhotoType,
+              caption:
+                elements.caption.value.trim() || null,
+              customer_visible:false
+            })
+          }
+        );
+
+        state.preparedPhoto = null;
+        elements.caption.value = "";
+        elements.preview.textContent =
+          "写真を登録しました。続けて撮影できます。";
+        elements.progress.textContent =
+          "写真を登録しました。";
+        elements.afterActions.hidden = false;
+
+        showToast("品物写真を登録しました。");
+        await loadPhotos();
+      } catch (error) {
+        console.error(error);
+        elements.progress.textContent =
+          "写真を保存できませんでした。";
+        showToast(
+          error.data?.message || error.message,
+          true
+        );
+      } finally {
+        state.busy = false;
+        setBusy(false);
+      }
+    }
+
+    function moveToNextItem() {
+      const items = state.selectedDetail?.items || [];
+
+      if (!state.selectedItem || !items.length) {
+        return;
+      }
+
+      const currentIndex = items.findIndex(
+        (item) => item.id === state.selectedItem.id
+      );
+
+      const nextItem =
+        items[currentIndex + 1] ||
+        items[0];
+
+      selectItem(nextItem);
+    }
+
+    function resetPhotoForm() {
+      state.preparedPhoto = null;
+      elements.cameraInput.value = "";
+      elements.libraryInput.value = "";
+      elements.caption.value = "";
+      elements.preview.textContent =
+        "「カメラで撮影」または「写真ライブラリから選ぶ」を押してください。";
+      elements.progress.textContent =
+        "撮影した写真は、登録前に自動でサイズを調整します。";
+      elements.afterActions.hidden = true;
+      elements.registerButton.disabled = true;
+    }
+
+    function clearCapture() {
+      elements.itemPanel.hidden = true;
+      elements.capturePanel.hidden = true;
+      elements.itemsGrid.innerHTML = "";
+      elements.gallery.innerHTML = "";
+      resetPhotoForm();
+    }
+
+    function setBusy(disabled) {
+      elements.openButton.disabled = disabled;
+      elements.searchButton.disabled = disabled;
+      elements.pcModeButton.disabled = disabled;
+      elements.cameraButton.disabled = disabled;
+      elements.libraryButton.disabled = disabled;
+      elements.registerButton.disabled =
+        disabled ||
+        !state.preparedPhoto ||
+        state.photos.length >= 8;
+    }
+
+    function setStatus(message, type = "") {
+      elements.status.textContent = message;
+      elements.status.className =
+        `status ${type}`.trim();
+    }
+
+    let toastTimer = null;
+
+    function showToast(message, isError = false) {
+      elements.toast.textContent = message;
+      elements.toast.className =
+        `toast visible${isError ? " error" : ""}`;
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        elements.toast.className = "toast";
+      }, 3400);
+    }
+
+    elements.clearButton.addEventListener(
+      "click",
+      () => {
+        elements.adminKey.value = "";
+        elements.adminKey.focus();
+        setStatus(
+          "管理コードを消去しました。再入力してください。"
+        );
+      }
+    );
+
+    elements.openButton.addEventListener(
+      "click",
+      () => loadOrders({ force:true })
+    );
+
+    elements.searchButton.addEventListener(
+      "click",
+      () => loadOrders({
+        force:true,
+        openRequested:false
+      })
+    );
+
+    elements.searchInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Enter") {
+          loadOrders({
+            force:true,
+            openRequested:false
+          });
+        }
+      }
+    );
+
+    elements.pcModeButton.addEventListener(
+      "click",
+      () => {
+        const url = new URL(
+          "https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/item-photo.html"
+        );
+
+        if (state.selectedDetail?.order?.id) {
+          url.searchParams.set(
+            "order_id",
+            state.selectedDetail.order.id
+          );
+        }
+
+        if (state.selectedItem?.id) {
+          url.searchParams.set(
+            "item_id",
+            state.selectedItem.id
+          );
+        }
+
+        url.searchParams.set("v", "cleaning-14a");
+
+        window.open(
+          url.toString(),
+          "_blank",
+          "noopener"
+        );
+      }
+    );
+
+    elements.cameraButton.addEventListener(
+      "click",
+      () => choosePhotoInput(
+        elements.cameraInput
+      )
+    );
+
+    elements.libraryButton.addEventListener(
+      "click",
+      () => choosePhotoInput(
+        elements.libraryInput
+      )
+    );
+
+    elements.cameraInput.addEventListener(
+      "change",
+      () => handleSelectedFile(
+        elements.cameraInput.files?.[0]
+      )
+    );
+
+    elements.libraryInput.addEventListener(
+      "change",
+      () => handleSelectedFile(
+        elements.libraryInput.files?.[0]
+      )
+    );
+
+    elements.typeGrid.addEventListener(
+      "click",
+      (event) => {
+        const button = event.target.closest(
+          ".type-button"
+        );
+
+        if (!button) return;
+
+        state.selectedPhotoType =
+          button.dataset.type;
+        renderTypeButtons();
+      }
+    );
+
+    elements.registerButton.addEventListener(
+      "click",
+      registerPhoto
+    );
+
+    elements.sameItemButton.addEventListener(
+      "click",
+      resetPhotoForm
+    );
+
+    elements.nextItemButton.addEventListener(
+      "click",
+      moveToNextItem
+    );
+
+    loadOrders({
+      force:true,
+      openRequested:true
+    });
+  </script>
+</body>
+</html>

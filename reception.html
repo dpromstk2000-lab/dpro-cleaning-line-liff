@@ -980,7 +980,7 @@
           <div class="subtitle">店頭受付・注文状況・受取案内</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-14</div>
+      <div class="version">STEP CLEANING-14A</div>
     </div>
   </header>
 
@@ -1169,7 +1169,7 @@
       <div id="receiptDetail" style="margin-top:12px;line-height:1.9"></div>
       <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:16px">
         <button id="receiptPhotoButton" class="button button-primary" type="button" disabled>
-          品物写真を登録・確認
+          タブレットで品物写真を撮影
         </button>
         <button id="newReceptionButton" class="button button-secondary" type="button">
           次の受付を開始
@@ -1381,7 +1381,7 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-14-ITEM-PHOTO-UPLOAD-MANAGEMENT-20260713";
+    const PAGE_VERSION = "CLEANING-14A-TABLET-CAMERA-MODE-20260713";
 
     const state = {
       selectedCustomer: null,
@@ -3053,7 +3053,7 @@
               message_body:
                 elements.notificationMessage.value.trim(),
               operator_label:
-                "受付PC STEP CLEANING-14"
+                "受付PC STEP CLEANING-14A"
             })
           }
         );
@@ -3261,7 +3261,10 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function openPhotoManager(orderId) {
+    function openPhotoManager(
+      orderId,
+      mode = "pc"
+    ) {
       if (!orderId) {
         showMessage(
           elements.orderMessage,
@@ -3271,12 +3274,17 @@
         return;
       }
 
+      const filename =
+        mode === "tablet"
+          ? "item-photo-ipad.html"
+          : "item-photo.html";
+
       const photoUrl = new URL(
-        "https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/item-photo.html"
+        `https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/${filename}`
       );
 
       photoUrl.searchParams.set("order_id", orderId);
-      photoUrl.searchParams.set("v", "cleaning-14");
+      photoUrl.searchParams.set("v", "cleaning-14a");
 
       window.open(
         photoUrl.toString(),
@@ -3288,7 +3296,10 @@
     elements.receiptPhotoButton.addEventListener(
       "click",
       () => {
-        openPhotoManager(state.createdOrderId);
+        openPhotoManager(
+          state.createdOrderId,
+          "tablet"
+        );
       }
     );
 
@@ -3296,7 +3307,8 @@
       "click",
       () => {
         openPhotoManager(
-          elements.detailPhotoButton.dataset.orderId
+          elements.detailPhotoButton.dataset.orderId,
+          "pc"
         );
       }
     );

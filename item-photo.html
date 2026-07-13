@@ -126,7 +126,7 @@
 
     .connection {
       display:grid;
-      grid-template-columns:minmax(170px,.65fr) auto minmax(220px,.8fr) auto;
+      grid-template-columns:minmax(170px,.65fr) auto minmax(220px,.8fr) auto auto;
       gap:9px;
       align-items:end;
     }
@@ -412,10 +412,10 @@
         <div class="brand-mark">📷</div>
         <div>
           <h1>DPRO クリーニング LINE</h1>
-          <div class="subtitle">受付時の品物写真登録・確認</div>
+          <div class="subtitle">PC・管理用　品物写真登録・確認</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-14</div>
+      <div class="version">STEP CLEANING-14A</div>
     </div>
   </header>
 
@@ -432,6 +432,9 @@
           <input id="shopCode" value="cleaning_demo" autocomplete="off">
         </div>
         <button id="openButton" class="button primary" type="button">写真管理を開く</button>
+        <button id="tabletModeButton" class="button secondary" type="button">
+          タブレット撮影モード
+        </button>
       </div>
       <div id="status" class="status">
         受付番号などで注文を検索してください。
@@ -569,6 +572,8 @@
       clearButton: document.getElementById("clearButton"),
       shopCode: document.getElementById("shopCode"),
       openButton: document.getElementById("openButton"),
+      tabletModeButton:
+        document.getElementById("tabletModeButton"),
       status: document.getElementById("status"),
       searchInput: document.getElementById("searchInput"),
       searchButton: document.getElementById("searchButton"),
@@ -1295,6 +1300,37 @@
         await searchOrders();
       }
     }
+
+    elements.tabletModeButton.addEventListener(
+      "click",
+      () => {
+        const url = new URL(
+          "https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/item-photo-ipad.html"
+        );
+
+        if (state.selectedDetail?.order?.id) {
+          url.searchParams.set(
+            "order_id",
+            state.selectedDetail.order.id
+          );
+        }
+
+        if (state.selectedItem?.id) {
+          url.searchParams.set(
+            "item_id",
+            state.selectedItem.id
+          );
+        }
+
+        url.searchParams.set("v", "cleaning-14a");
+
+        window.open(
+          url.toString(),
+          "_blank",
+          "noopener"
+        );
+      }
+    );
 
     elements.clearButton.addEventListener(
       "click",
