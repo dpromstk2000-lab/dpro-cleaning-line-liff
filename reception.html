@@ -968,6 +968,69 @@
         flex-direction: column;
       }
     }
+  
+    /* STEP CLEANING-17 共通内部ナビ */
+    .final-nav-shell {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid #d5e4e9;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 7px 20px rgba(21,55,70,.08);
+      backdrop-filter: blur(10px);
+    }
+    .final-nav {
+      width: min(1500px, calc(100% - 22px));
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 9px 0;
+    }
+    .final-nav a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d4e4e8;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #315865;
+      background: #f7fbfc;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .final-nav a:hover {
+      border-color: #7fc1c7;
+      background: #eef9fa;
+    }
+    .final-nav a.active {
+      border-color: #07828e;
+      color: #fff;
+      background: #07828e;
+      box-shadow: 0 5px 12px rgba(7,130,142,.18);
+    }
+    .final-nav a.nav-home {
+      border-color: #b8dfe2;
+      color: #05616a;
+      background: #e8f6f7;
+    }
+    @media (max-width: 760px) {
+      .final-nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 8px 11px;
+        scrollbar-width: thin;
+      }
+    }
+    @media print {
+      .final-nav-shell { display: none !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -980,9 +1043,27 @@
           <div class="subtitle">店頭受付・注文状況・受取案内</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-16</div>
+      <div class="version">STEP CLEANING-17</div>
     </div>
   </header>
+
+  <nav class="final-nav-shell no-print" aria-label="DPROクリーニング内部画面">
+    <div class="final-nav">
+      <a href="demo-guide.html?v=cleaning-17" class="nav-home">デモガイド</a>
+      <a href="reception.html?v=cleaning-17" class="active" aria-current="page">店頭受付</a>
+      <a href="staff.html?v=cleaning-17">作業ボード</a>
+      <a href="owner-ipad.html?v=cleaning-17">受け渡し</a>
+      <a href="owner-followup.html?v=cleaning-17">未受取</a>
+      <a href="print.html?v=cleaning-17">受付票・タグ</a>
+      <a href="item-photo.html?v=cleaning-17">写真管理</a>
+      <a href="item-photo-ipad.html?v=cleaning-17">撮影</a>
+      <a href="owner-settings.html?v=cleaning-17">店舗設定</a>
+      <a href="owner.html?v=cleaning-17">オーナー</a>
+      <a href="member.html?token=demo-cleaning-member-003&v=cleaning-17">会員証デモ</a>
+      <a href="system-check.html?v=cleaning-17">システム確認</a>
+    </div>
+  </nav>
+
 
   <main class="container">
     <section class="system-strip">
@@ -1392,7 +1473,8 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-16-PRINT-RECEIPT-TAGS-20260713";
+    const PAGE_VERSION =
+      "CLEANING-17-FINAL-POLISH-DEMO-ROUTING-20260713";
 
     const state = {
       selectedCustomer: null,
@@ -3075,7 +3157,7 @@
               message_body:
                 elements.notificationMessage.value.trim(),
               operator_label:
-                "受付PC STEP CLEANING-16"
+                "受付PC STEP CLEANING-17"
             })
           }
         );

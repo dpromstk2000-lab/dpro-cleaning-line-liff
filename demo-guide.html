@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087f8c">
+  <title>DPRO クリーニング LINE｜営業デモガイド</title>
+  <style>
+    :root {
+      --bg:#edf5f7; --panel:#fff; --line:#d3e3e8; --ink:#163644;
+      --muted:#687f89; --primary:#07828e; --success:#16825d;
+      --danger:#bd3b49; --shadow:0 12px 32px rgba(23,55,69,.09);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; color:var(--ink);
+      background:linear-gradient(180deg,#e6f5f6 0,var(--bg) 340px);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",
+      "Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    }
+    a { color:inherit; text-decoration:none; }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    .header {
+      padding:22px 18px; color:#fff;
+      background:linear-gradient(135deg,#05636d,#07828e 58%,#0ca7a9);
+    }
+    .header-inner {
+      width:min(1450px,100%); margin:auto; display:flex;
+      align-items:center; justify-content:space-between; gap:16px;
+    }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-mark {
+      width:50px; height:50px; display:grid; place-items:center;
+      border-radius:15px; background:rgba(255,255,255,.17); font-size:27px;
+    }
+    h1 { margin:0; font-size:clamp(22px,3vw,34px); }
+    .subtitle { margin-top:4px; color:rgba(255,255,255,.84); font-size:12px; }
+    .version {
+      padding:7px 11px; border-radius:999px;
+      background:rgba(255,255,255,.16); font-size:10px;
+    }
+    .container { width:min(1450px,calc(100% - 22px)); margin:15px auto 44px; }
+    .panel {
+      margin-bottom:14px; padding:15px; border:1px solid var(--line);
+      border-radius:18px; background:var(--panel); box-shadow:var(--shadow);
+    }
+    .internal {
+      padding:11px 14px; border:1px solid #d7c7ef; border-radius:13px;
+      color:#50358c; background:#f4effd; font-size:11px; font-weight:900;
+    }
+    .connection {
+      display:grid; grid-template-columns:minmax(170px,.65fr) auto minmax(220px,.85fr) auto auto;
+      gap:9px; align-items:end; margin-top:12px;
+    }
+    label {
+      display:block; margin-bottom:6px; color:var(--muted);
+      font-size:11px; font-weight:900;
+    }
+    input {
+      width:100%; min-height:46px; border:1px solid #c6d8df;
+      border-radius:11px; padding:9px 12px;
+    }
+    .button {
+      min-height:46px; border:0; border-radius:11px; padding:9px 14px;
+      display:grid; place-items:center; font-weight:900;
+    }
+    .primary { color:#fff; background:var(--primary); }
+    .success { color:#fff; background:var(--success); }
+    .secondary { color:#05616a; background:#e7f5f6; }
+    .message {
+      margin-top:9px; padding:10px 12px; border:1px solid var(--line);
+      border-radius:11px; color:var(--muted); background:#f9fbfc; font-size:12px;
+    }
+    .message.success { color:#126847; border-color:#bfe2d3; background:#ebf9f3; }
+    .message.error { color:#982e3b; border-color:#edc5ca; background:#fff0f2; }
+    .status-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+    .status-card {
+      min-height:105px; padding:14px; border:1px solid var(--line);
+      border-radius:15px; background:#fbfdfe;
+    }
+    .status-label { color:var(--muted); font-size:10px; font-weight:900; }
+    .status-value { margin-top:8px; font-size:23px; font-weight:900; }
+    .status-note { margin-top:5px; color:var(--muted); font-size:10px; line-height:1.5; }
+    .title-row {
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px; margin-bottom:12px;
+    }
+    .title-row h2 { margin:0; font-size:20px; }
+    .flow-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .flow-card {
+      min-height:195px; padding:15px; border:1px solid var(--line);
+      border-radius:15px; background:#fbfdfe;
+    }
+    .flow-top { display:flex; justify-content:space-between; gap:8px; }
+    .step {
+      width:34px; height:34px; display:grid; place-items:center;
+      border-radius:11px; color:#fff; background:var(--primary); font-weight:900;
+    }
+    .time {
+      padding:5px 8px; border-radius:999px; color:#765000;
+      background:#fff1d5; font-size:9px; font-weight:900;
+    }
+    .flow-title { margin-top:10px; font-size:17px; font-weight:900; }
+    .flow-note { margin-top:7px; color:var(--muted); font-size:11px; line-height:1.65; }
+    .open {
+      min-height:38px; display:inline-grid; place-items:center;
+      margin-top:11px; border-radius:10px; padding:7px 11px;
+      color:#fff; background:var(--primary); font-size:10px; font-weight:900;
+    }
+    .screen-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+    .screen {
+      min-height:130px; display:flex; flex-direction:column; padding:12px;
+      border:1px solid var(--line); border-radius:14px; background:#fbfdfe;
+    }
+    .screen-title { margin-top:6px; font-size:13px; font-weight:900; }
+    .screen-note { flex:1; margin-top:5px; color:var(--muted); font-size:9px; }
+    .screen a {
+      min-height:34px; display:grid; place-items:center; margin-top:8px;
+      border-radius:9px; color:#05616a; background:#e7f5f6;
+      font-size:9px; font-weight:900;
+    }
+    .talk-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .talk {
+      padding:14px; border:1px solid var(--line);
+      border-radius:14px; background:#fbfdfe;
+    }
+    .talk-text {
+      margin-top:8px; padding:11px; border-radius:11px; color:#244956;
+      background:#eef7f8; font-size:11px; line-height:1.75; white-space:pre-wrap;
+    }
+    .copy {
+      min-height:36px; margin-top:8px; border:0; border-radius:9px;
+      padding:7px 11px; color:#05616a; background:#dff1f2;
+      font-size:9px; font-weight:900;
+    }
+    .manual {
+      display:flex; gap:10px; padding:11px; margin-top:8px;
+      border:1px solid var(--line); border-radius:12px; background:#fbfdfe;
+    }
+    .manual strong { font-size:12px; }
+    .manual span { color:var(--muted); font-size:10px; line-height:1.5; }
+    .toast {
+      position:fixed; left:50%; bottom:24px; z-index:1000;
+      transform:translate(-50%,30px); opacity:0; pointer-events:none;
+      padding:14px 16px; border-radius:13px; color:#fff; background:#173543;
+      transition:.2s; font-size:13px; font-weight:900;
+    }
+    .toast.visible { transform:translate(-50%,0); opacity:1; }
+    
+    /* STEP CLEANING-17 共通内部ナビ */
+    .final-nav-shell {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid #d5e4e9;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 7px 20px rgba(21,55,70,.08);
+      backdrop-filter: blur(10px);
+    }
+    .final-nav {
+      width: min(1500px, calc(100% - 22px));
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 9px 0;
+    }
+    .final-nav a {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d4e4e8;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #315865;
+      background: #f7fbfc;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .final-nav a:hover {
+      border-color: #7fc1c7;
+      background: #eef9fa;
+    }
+    .final-nav a.active {
+      border-color: #07828e;
+      color: #fff;
+      background: #07828e;
+      box-shadow: 0 5px 12px rgba(7,130,142,.18);
+    }
+    .final-nav a.nav-home {
+      border-color: #b8dfe2;
+      color: #05616a;
+      background: #e8f6f7;
+    }
+    @media (max-width: 760px) {
+      .final-nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 8px 11px;
+        scrollbar-width: thin;
+      }
+    }
+    @media print {
+      .final-nav-shell { display: none !important; }
+    }
+
+    @media (max-width:950px) {
+      .status-grid,.flow-grid,.screen-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:680px) {
+      .connection,.status-grid,.flow-grid,.screen-grid,.talk-grid { grid-template-columns:1fr; }
+      .version { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">🧭</div>
+        <div>
+          <h1>DPRO クリーニング LINE</h1>
+          <div class="subtitle">営業担当用・5分デモガイド</div>
+        </div>
+      </div>
+      <div class="version">STEP CLEANING-17</div>
+    </div>
+  </header>
+
+  <nav class="final-nav-shell no-print" aria-label="DPROクリーニング内部画面">
+    <div class="final-nav">
+      <a href="demo-guide.html?v=cleaning-17" class="nav-home active" aria-current="page">デモガイド</a>
+      <a href="reception.html?v=cleaning-17">店頭受付</a>
+      <a href="staff.html?v=cleaning-17">作業ボード</a>
+      <a href="owner-ipad.html?v=cleaning-17">受け渡し</a>
+      <a href="owner-followup.html?v=cleaning-17">未受取</a>
+      <a href="print.html?v=cleaning-17">受付票・タグ</a>
+      <a href="item-photo.html?v=cleaning-17">写真管理</a>
+      <a href="item-photo-ipad.html?v=cleaning-17">撮影</a>
+      <a href="owner-settings.html?v=cleaning-17">店舗設定</a>
+      <a href="owner.html?v=cleaning-17">オーナー</a>
+      <a href="member.html?token=demo-cleaning-member-003&v=cleaning-17">会員証デモ</a>
+      <a href="system-check.html?v=cleaning-17">システム確認</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="panel">
+      <div class="internal">
+        営業担当・店舗責任者向けの内部画面です。商談先へ渡す資料ではなく、営業前確認とデモ進行に使用します。
+      </div>
+      <div class="connection">
+        <div>
+          <label for="adminKey">管理コード</label>
+          <input id="adminKey" type="password" value="1234">
+        </div>
+        <button id="copyAdmin" class="button secondary" type="button">1234をコピー</button>
+        <div>
+          <label for="shopCode">店舗コード</label>
+          <input id="shopCode" value="cleaning_demo">
+        </div>
+        <button id="checkButton" class="button primary" type="button">営業前チェック</button>
+        <a class="button success" href="system-check.html?v=cleaning-17">詳細チェック</a>
+      </div>
+      <div id="message" class="message">営業開始前に「営業前チェック」を押してください。</div>
+    </section>
+
+    <section class="panel">
+      <div class="status-grid">
+        <div class="status-card"><div class="status-label">Worker</div><div id="worker" class="status-value">未確認</div><div id="workerNote" class="status-note">API稼働状況</div></div>
+        <div class="status-card"><div class="status-label">Supabase</div><div id="db" class="status-value">未確認</div><div id="dbNote" class="status-note">データベース接続</div></div>
+        <div class="status-card"><div class="status-label">デモデータ</div><div id="demo" class="status-value">未確認</div><div id="demoNote" class="status-note">顧客4・注文4・品物5</div></div>
+        <div class="status-card"><div class="status-label">主要画面</div><div class="status-value">12画面</div><div class="status-note">用途別に分離済み</div></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="title-row"><h2>5分で見せる順番</h2><span class="status-note">店舗側の業務改善を中心に説明</span></div>
+      <div class="flow-grid">
+        <article class="flow-card"><div class="flow-top"><div class="step">1</div><div class="time">45秒</div></div><div class="flow-title">店頭受付</div><div class="flow-note">顧客検索、複数品物、加工、注意事項、合計金額までを1画面で登録します。</div><a class="open" href="reception.html?v=cleaning-17">受付画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">2</div><div class="time">35秒</div></div><div class="flow-title">受付票・品物タグ</div><div class="flow-note">お客様控え、店舗控え、数量分の品物タグを同じ注文から印刷できます。</div><a class="open" href="print.html?v=cleaning-17">印刷画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">3</div><div class="time">35秒</div></div><div class="flow-title">品物写真</div><div class="flow-note">シミ・傷・タグなどを品物単位で撮影し、受付時の状態を残します。</div><a class="open" href="item-photo-ipad.html?v=cleaning-17">撮影画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">4</div><div class="time">55秒</div></div><div class="flow-title">スタッフ作業ボード</div><div class="flow-note">受付、洗浄、仕上げ、受取待ち、再洗いを工程別に並べ、ボタンで進めます。</div><a class="open" href="staff.html?v=cleaning-17">作業画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">5</div><div class="time">45秒</div></div><div class="flow-title">会員証・進捗確認</div><div class="flow-note">お客様はLINE会員証で、受付番号・仕上がり・受取可能状態を確認できます。</div><a class="open" href="member.html?token=demo-cleaning-member-003&v=cleaning-17">会員証を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">6</div><div class="time">45秒</div></div><div class="flow-title">受け渡し受付</div><div class="flow-note">品物・支払い・お客様確認を行い、誤渡しを防いで受け渡しを完了します。</div><a class="open" href="owner-ipad.html?v=cleaning-17">受け渡しを開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">7</div><div class="time">40秒</div></div><div class="flow-title">未受取フォロー</div><div class="flow-note">未通知・受取待ち・長期保管・未精算を集約し、案内文をすぐ作れます。</div><a class="open" href="owner-followup.html?v=cleaning-17">フォローを開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">8</div><div class="time">40秒</div></div><div class="flow-title">オーナー管理</div><div class="flow-note">売上、今日やること、工程件数、支払い状況、ランキングを確認します。</div><a class="open" href="owner.html?v=cleaning-17">オーナー画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">9</div><div class="time">20秒</div></div><div class="flow-title">店舗設定</div><div class="flow-note">営業時間、仕上がり日数、通知、料金メニューを店舗側で変更できます。</div><a class="open" href="owner-settings.html?v=cleaning-17">店舗設定を開く</a></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="title-row"><h2>全画面を用途別に開く</h2><span class="status-note">画面を詰め込まず業務ごとに分離</span></div>
+      <div class="screen-grid">
+        <article class="screen"><div>🧾</div><div class="screen-title">店頭受付</div><div class="screen-note">顧客・品物・加工・注文登録</div><a href="reception.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>🧺</div><div class="screen-title">作業ボード</div><div class="screen-note">工程別の本日作業</div><a href="staff.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>📱</div><div class="screen-title">受け渡し</div><div class="screen-note">店舗タブレットで誤渡し防止</div><a href="owner-ipad.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>📣</div><div class="screen-title">未受取</div><div class="screen-note">未通知・長期保管・未精算</div><a href="owner-followup.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>🖨️</div><div class="screen-title">受付票・タグ</div><div class="screen-note">お客様控え・店舗控え・タグ</div><a href="print.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>📷</div><div class="screen-title">PC写真管理</div><div class="screen-note">写真検索・確認・管理</div><a href="item-photo.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>📸</div><div class="screen-title">撮影モード</div><div class="screen-note">大きな撮影ボタン</div><a href="item-photo-ipad.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>⚙️</div><div class="screen-title">店舗設定</div><div class="screen-note">基本設定・料金・履歴</div><a href="owner-settings.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>📊</div><div class="screen-title">オーナー</div><div class="screen-note">売上・業務・支払い</div><a href="owner.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>💳</div><div class="screen-title">会員証デモ</div><div class="screen-note">山田一郎様のデモ</div><a href="member.html?token=demo-cleaning-member-003&v=cleaning-17">開く</a></article>
+        <article class="screen"><div>✅</div><div class="screen-title">システム確認</div><div class="screen-note">API・DB・画面確認</div><a href="system-check.html?v=cleaning-17">開く</a></article>
+        <article class="screen"><div>🧭</div><div class="screen-title">デモガイド</div><div class="screen-note">営業前確認と進行</div><a href="demo-guide.html?v=cleaning-17">再読込</a></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="title-row"><h2>そのまま使える営業トーク</h2><span class="status-note">機能ではなく経営効果を伝える</span></div>
+      <div class="talk-grid">
+        <article class="talk"><strong>30秒版</strong><div id="talk30" class="talk-text">このシステムは、受付だけをデジタル化するものではありません。
+お預かりした後の工程管理、仕上がり案内、未受取フォロー、受け渡しまでをLINEと店舗画面でつなぎます。
+紙や記憶に頼る作業を減らしながら、お客様にも今の状況が分かる仕組みです。</div><button class="copy" data-copy="talk30" type="button">トークをコピー</button></article>
+        <article class="talk"><strong>オーナー向け</strong><div id="talkOwner" class="talk-text">オーナー画面では売上だけでなく、今日仕上がる注文、未通知、受取待ち、長期保管、再洗いまで確認できます。
+現場画面と同じデータを使うため、店内の状況を聞き回らなくても把握でき、対応漏れを見つけやすくなります。</div><button class="copy" data-copy="talkOwner" type="button">トークをコピー</button></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="title-row"><h2>最終確認として残す2項目</h2><span class="status-note">自動確認できない実機操作だけ</span></div>
+      <label class="manual"><input type="checkbox"><div><strong>タブレット実機で背面カメラが開く</strong><br><span>タブレットを用意できた最終段階で1枚撮影して確認します。</span></div></label>
+      <label class="manual"><input type="checkbox"><div><strong>本番LINE公式アカウントから実際に1通送信</strong><br><span>文面生成・コピー・送信履歴保存までは確認済みです。</span></div></label>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script>
+    "use strict";
+    const API_BASE = "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
+    const EXPECTED = "CLEANING-15-SYSTEM-CHECK-DEMO-PREPARE-20260713";
+    const el = {
+      adminKey:document.getElementById("adminKey"),
+      shopCode:document.getElementById("shopCode"),
+      copyAdmin:document.getElementById("copyAdmin"),
+      checkButton:document.getElementById("checkButton"),
+      message:document.getElementById("message"),
+      worker:document.getElementById("worker"),
+      workerNote:document.getElementById("workerNote"),
+      db:document.getElementById("db"),
+      dbNote:document.getElementById("dbNote"),
+      demo:document.getElementById("demo"),
+      demoNote:document.getElementById("demoNote"),
+      toast:document.getElementById("toast")
+    };
+    function adminUrl(path) {
+      const url = new URL(`${API_BASE}${path}`);
+      url.searchParams.set("admin_key",el.adminKey.value.trim());
+      url.searchParams.set("shop_code",el.shopCode.value.trim() || "cleaning_demo");
+      return url;
+    }
+    async function json(url) {
+      const res = await fetch(url,{cache:"no-store"});
+      const data = await res.json();
+      if (!res.ok || data.ok === false) throw Object.assign(new Error(data.message || `HTTP ${res.status}`),{data});
+      return data;
+    }
+    function message(text,type="") {
+      el.message.textContent = text;
+      el.message.className = `message ${type}`.trim();
+    }
+    async function check() {
+      if (!el.adminKey.value.trim()) return message("管理コードを入力してください。","error");
+      el.checkButton.disabled = true;
+      message("営業前チェックを実行しています。");
+      el.worker.textContent = el.db.textContent = el.demo.textContent = "確認中";
+      try {
+        const [health,system] = await Promise.all([
+          json(`${API_BASE}/api/health`),
+          json(adminUrl("/api/admin/system-check"))
+        ]);
+        const workerOk = health.version === EXPECTED;
+        el.worker.textContent = workerOk ? "OK" : "要確認";
+        el.workerNote.textContent = health.version || "不明";
+        el.db.textContent = health.supabase === "ok" ? "OK" : "要確認";
+        el.dbNote.textContent = `Supabase：${health.supabase || "不明"}`;
+        const c = system.counts || {};
+        const demoOk = system.checks?.demo_customers && system.checks?.demo_orders && system.checks?.demo_items && system.checks?.member_tokens;
+        el.demo.textContent = demoOk ? "準備OK" : "要準備";
+        el.demoNote.textContent = `顧客${c.demo_customers || 0}・注文${c.demo_orders || 0}・品物${c.demo_items || 0}`;
+        message(workerOk && health.supabase === "ok" && system.ok
+          ? "営業前チェックOKです。上から順番にデモを開始できます。"
+          : "未完了項目があります。詳細チェックを開いてください。",
+          workerOk && health.supabase === "ok" && system.ok ? "success" : "error");
+      } catch(error) {
+        console.error(error);
+        el.worker.textContent = el.db.textContent = el.demo.textContent = "要確認";
+        message(error.data?.message || error.message,"error");
+      } finally {
+        el.checkButton.disabled = false;
+      }
+    }
+    let timer;
+    function toast(text) {
+      el.toast.textContent = text;
+      el.toast.className = "toast visible";
+      clearTimeout(timer);
+      timer = setTimeout(() => el.toast.className = "toast",2500);
+    }
+    async function copy(text) {
+      try { await navigator.clipboard.writeText(text); toast("コピーしました。"); }
+      catch { toast("コピーできませんでした。"); }
+    }
+    el.copyAdmin.addEventListener("click",() => copy("1234"));
+    el.checkButton.addEventListener("click",check);
+    document.addEventListener("click",event => {
+      const button = event.target.closest("[data-copy]");
+      if (!button) return;
+      const target = document.getElementById(button.dataset.copy);
+      if (target) copy(target.textContent.trim());
+    });
+  </script>
+</body>
+</html>
