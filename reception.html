@@ -980,7 +980,7 @@
           <div class="subtitle">店頭受付・注文状況・受取案内</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-14A</div>
+      <div class="version">STEP CLEANING-16</div>
     </div>
   </header>
 
@@ -1168,6 +1168,9 @@
       <div id="receiptNumber" class="receipt-number"></div>
       <div id="receiptDetail" style="margin-top:12px;line-height:1.9"></div>
       <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:16px">
+        <button id="receiptPrintButton" class="button button-secondary" type="button" disabled>
+          受付票・タグを印刷
+        </button>
         <button id="receiptPhotoButton" class="button button-primary" type="button" disabled>
           タブレットで品物写真を撮影
         </button>
@@ -1236,6 +1239,14 @@
             <h2 id="detailOrderNumber" style="margin-top:4px"></h2>
           </div>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+            <button
+              id="detailPrintButton"
+              class="button button-secondary"
+              type="button"
+              disabled
+            >
+              受付票・タグを印刷
+            </button>
             <button
               id="detailPhotoButton"
               class="button button-secondary"
@@ -1381,7 +1392,7 @@
 
     const API_BASE =
       "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const PAGE_VERSION = "CLEANING-14A-TABLET-CAMERA-MODE-20260713";
+    const PAGE_VERSION = "CLEANING-16-PRINT-RECEIPT-TAGS-20260713";
 
     const state = {
       selectedCustomer: null,
@@ -1433,6 +1444,8 @@
       receipt: document.getElementById("receipt"),
       receiptNumber: document.getElementById("receiptNumber"),
       receiptDetail: document.getElementById("receiptDetail"),
+      receiptPrintButton:
+        document.getElementById("receiptPrintButton"),
       receiptPhotoButton:
         document.getElementById("receiptPhotoButton"),
       newReceptionButton: document.getElementById("newReceptionButton"),
@@ -1448,6 +1461,8 @@
       orderList: document.getElementById("orderList"),
       orderDetailPanel: document.getElementById("orderDetailPanel"),
       detailOrderNumber: document.getElementById("detailOrderNumber"),
+      detailPrintButton:
+        document.getElementById("detailPrintButton"),
       detailPhotoButton:
         document.getElementById("detailPhotoButton"),
       detailStatusBadge: document.getElementById("detailStatusBadge"),
@@ -2255,6 +2270,8 @@
         const items = result.items || [];
 
         state.createdOrderId = order.id || null;
+        elements.receiptPrintButton.disabled =
+          !state.createdOrderId;
         elements.receiptPhotoButton.disabled =
           !state.createdOrderId;
 
@@ -2492,6 +2509,11 @@
       const order = data.order || {};
       const customer = data.customer || {};
       const items = data.items || [];
+
+      elements.detailPrintButton.disabled =
+        !order.id;
+      elements.detailPrintButton.dataset.orderId =
+        order.id || "";
 
       elements.detailPhotoButton.disabled =
         !order.id;
@@ -3053,7 +3075,7 @@
               message_body:
                 elements.notificationMessage.value.trim(),
               operator_label:
-                "受付PC STEP CLEANING-14A"
+                "受付PC STEP CLEANING-16"
             })
           }
         );
@@ -3254,6 +3276,7 @@
       elements.items.innerHTML = "";
       elements.receipt.classList.remove("visible");
       state.createdOrderId = null;
+      elements.receiptPrintButton.disabled = true;
       elements.receiptPhotoButton.disabled = true;
       clearMessage(elements.orderMessage);
       initializeDate();
@@ -3292,6 +3315,46 @@
         "noopener"
       );
     }
+
+    function openPrintCenter(orderId) {
+      if (!orderId) {
+        showMessage(
+          elements.orderMessage,
+          "注文を選択してください。",
+          "error"
+        );
+        return;
+      }
+
+      const printUrl = new URL(
+        "https://dpromstk2000-lab.github.io/dpro-cleaning-line-liff/print.html"
+      );
+
+      printUrl.searchParams.set("order_id",orderId);
+      printUrl.searchParams.set("v","cleaning-16");
+
+      window.open(
+        printUrl.toString(),
+        "_blank",
+        "noopener"
+      );
+    }
+
+    elements.receiptPrintButton.addEventListener(
+      "click",
+      () => {
+        openPrintCenter(state.createdOrderId);
+      }
+    );
+
+    elements.detailPrintButton.addEventListener(
+      "click",
+      () => {
+        openPrintCenter(
+          elements.detailPrintButton.dataset.orderId
+        );
+      }
+    );
 
     elements.receiptPhotoButton.addEventListener(
       "click",
