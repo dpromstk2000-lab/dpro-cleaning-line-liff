@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#087f8c">
-  <title>DPRO クリーニング LINE｜営業デモガイド</title>
+  <title>DPRO クリーニング LINE｜営業デモガイド｜公開操作デモ</title>
   <style>
     :root {
       --bg:#edf5f7; --panel:#fff; --line:#d3e3e8; --ink:#163644;
@@ -222,25 +222,164 @@
       .connection,.status-grid,.flow-grid,.screen-grid,.talk-grid { grid-template-columns:1fr; }
       .version { display:none; }
     }
-  </style>
+  
+/* DPRO-SYSTEMS-7 CLEANING OPERATION DEMO */
+body.operation-demo-page{
+  padding-bottom:0;
+}
+.operation-demo-banner{
+  width:min(1450px,calc(100% - 24px));
+  margin:15px auto 0;
+  padding:15px 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  border:1px solid #b9dde0;
+  border-radius:17px;
+  background:linear-gradient(135deg,#f7fcfc,#e7f6f7);
+  box-shadow:0 11px 28px rgba(18,76,83,.08);
+}
+.operation-demo-banner>div{
+  display:flex;
+  flex-direction:column;
+}
+.operation-demo-banner small{
+  color:#087f8c;
+  font-size:10px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+.operation-demo-banner strong{
+  margin-top:3px;
+  font-size:16px;
+  line-height:1.45;
+}
+.operation-demo-banner span{
+  margin-top:4px;
+  color:#61777f;
+  font-size:11px;
+  font-weight:750;
+  line-height:1.65;
+}
+.operation-demo-banner a,
+.final-nav a.official-demo-link,
+.public-demo-official{
+  flex:0 0 auto;
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 13px;
+  border-radius:999px;
+  color:#fff!important;
+  background:#087f8c!important;
+  border-color:#087f8c!important;
+  text-decoration:none!important;
+  font-size:10px;
+  font-weight:950;
+  box-shadow:0 8px 19px rgba(8,127,140,.18);
+}
+.public-demo-intro{
+  padding:22px!important;
+  border:1px solid #b9dde0!important;
+  background:
+    radial-gradient(circle at 90% 12%,rgba(8,127,140,.12),transparent 30%),
+    linear-gradient(135deg,#fff,#f2fbfb)!important;
+}
+.public-demo-intro-copy small{
+  color:#087f8c;
+  font-size:10px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+.public-demo-intro-copy h2{
+  margin:7px 0 0;
+  font-size:clamp(21px,3vw,31px);
+  line-height:1.4;
+}
+.public-demo-intro-copy p{
+  max-width:880px;
+  margin:9px 0 0;
+  color:#5e747d;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.85;
+}
+.public-demo-notes{
+  margin:17px 0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+}
+.public-demo-notes span{
+  padding:12px;
+  border:1px solid #d2e5e8;
+  border-radius:12px;
+  background:#fff;
+  color:#60757d;
+  font-size:11px;
+  line-height:1.65;
+}
+.public-demo-notes b{
+  display:block;
+  color:#075f69;
+  font-size:9px;
+  letter-spacing:.07em;
+}
+.public-demo-official{
+  border-radius:11px;
+}
+body.operation-demo-page .version{
+  letter-spacing:.06em;
+}
+@media(max-width:700px){
+  .operation-demo-banner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .operation-demo-banner a{
+    width:100%;
+  }
+  .public-demo-notes{
+    grid-template-columns:1fr;
+  }
+  .public-demo-official{
+    width:100%;
+  }
+}
+@media print{
+  .operation-demo-banner{
+    display:none!important;
+  }
+}
+</style>
 </head>
-<body>
+<body class="operation-demo-page">
   <header class="header">
     <div class="header-inner">
       <div class="brand">
         <div class="brand-mark">🧭</div>
         <div>
           <h1>DPRO クリーニング LINE</h1>
-          <div class="subtitle">営業担当用・5分デモガイド</div>
+          <div class="subtitle">公開操作デモ・画面選択</div>
         </div>
       </div>
-      <div class="version">STEP CLEANING-18</div>
+      <div class="version">PUBLIC OPERATION DEMO</div>
     </div>
   </header>
+<section class="operation-demo-banner" aria-label="公開操作デモの案内">
+  <div>
+    <small>PUBLIC OPERATION DEMO</small>
+    <strong>これはDPRO クリーニング LINEの公開操作デモです</strong>
+    <span>架空データで実際の業務画面を体験できます。実在する氏名・電話番号・会員情報は入力しないでください。</span>
+  </div>
+  <a href="https://dpro-shop.com/systems/cleaning">公式の機能説明を見る</a>
+</section>
 
-  <nav class="final-nav-shell no-print" aria-label="DPROクリーニング内部画面">
+  <nav class="final-nav-shell no-print" aria-label="DPROクリーニング公開操作デモ画面">
     <div class="final-nav">
-      <a href="demo-guide.html?v=cleaning-18" class="nav-home active" aria-current="page">デモガイド</a>
+      <a href="demo-guide.html?v=cleaning-18" class="nav-home active" aria-current="page">画面一覧</a>
       <a href="reception.html?v=cleaning-18">店頭受付</a>
       <a href="staff.html?v=cleaning-18">作業ボード</a>
       <a href="owner-ipad.html?v=cleaning-18">受け渡し</a>
@@ -251,52 +390,37 @@
       <a href="owner-settings.html?v=cleaning-18">店舗設定</a>
       <a href="owner.html?v=cleaning-18">オーナー</a>
       <a href="member.html?token=demo-cleaning-member-003&v=cleaning-18">会員証デモ</a>
-      <a href="system-check.html?v=cleaning-18">システム確認</a>
+      <a class="official-demo-link" href="https://dpro-shop.com/systems/cleaning">公式の機能説明</a>
     </div>
   </nav>
 
   <main class="container">
-    <section class="panel">
-      <div class="internal">
-        営業担当・店舗責任者向けの内部画面です。商談先へ渡す資料ではなく、営業前確認とデモ進行に使用します。
-      </div>
-      <div class="connection">
-        <div>
-          <label for="adminKey">管理コード</label>
-          <input id="adminKey" type="password" value="1234">
-        </div>
-        <button id="clearAdmin" class="button clear" type="button">消去</button>
-        <div>
-          <label for="shopCode">店舗コード</label>
-          <input id="shopCode" value="cleaning_demo">
-        </div>
-        <button id="checkButton" class="button primary" type="button">営業前チェック</button>
-        <a class="button success" href="system-check.html?v=cleaning-18">詳細チェック</a>
-      </div>
-      <div id="message" class="message">営業開始前に「営業前チェック」を押してください。</div>
-    </section>
+    <section class="panel public-demo-intro">
+  <div class="public-demo-intro-copy">
+    <small>START HERE</small>
+    <h2>クリーニング業務を、実際の画面で体験できます。</h2>
+    <p>店頭受付から、受付票・品物写真・工程管理・LINE会員証・受け渡し・未受取フォローまで、確認したい画面を選んでください。</p>
+  </div>
+  <div class="public-demo-notes">
+    <span><b>デモ管理コード</b>1234</span>
+    <span><b>使用データ</b>すべて架空情報</span>
+    <span><b>ご注意</b>実在する個人情報は入力しないでください</span>
+  </div>
+  <a class="public-demo-official" href="https://dpro-shop.com/systems/cleaning">機能・料金・導入効果を公式ページで確認</a>
+</section>
 
     <section class="panel">
-      <div class="status-grid">
-        <div class="status-card"><div class="status-label">Worker</div><div id="worker" class="status-value">未確認</div><div id="workerNote" class="status-note">API稼働状況</div></div>
-        <div class="status-card"><div class="status-label">Supabase</div><div id="db" class="status-value">未確認</div><div id="dbNote" class="status-note">データベース接続</div></div>
-        <div class="status-card"><div class="status-label">デモデータ</div><div id="demo" class="status-value">未確認</div><div id="demoNote" class="status-note">顧客4・注文4・品物5</div></div>
-        <div class="status-card"><div class="status-label">主要画面</div><div class="status-value">12画面</div><div class="status-note">用途別に分離済み</div></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="title-row"><h2>5分で見せる順番</h2><span class="status-note">店舗側の業務改善を中心に説明</span></div>
+      <div class="title-row"><h2>公開操作デモのおすすめ順</h2><span class="status-note">上から順に開くと業務全体を理解できます</span></div>
       <div class="flow-grid">
-        <article class="flow-card"><div class="flow-top"><div class="step">1</div><div class="time">45秒</div></div><div class="flow-title">店頭受付</div><div class="flow-note">顧客検索、複数品物、加工、注意事項、合計金額までを1画面で登録します。</div><a class="open" href="reception.html?v=cleaning-18">受付画面を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">2</div><div class="time">35秒</div></div><div class="flow-title">受付票・品物タグ</div><div class="flow-note">お客様控え、店舗控え、数量分の品物タグを同じ注文から印刷できます。</div><a class="open" href="print.html?v=cleaning-18">印刷画面を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">3</div><div class="time">35秒</div></div><div class="flow-title">品物写真・タブレット撮影</div><div class="flow-note">シミ・傷・タグなどを品物単位で撮影し、受付時の状態を残します。</div><a class="open" href="item-photo-ipad.html?v=cleaning-18">タブレット撮影画面を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">4</div><div class="time">55秒</div></div><div class="flow-title">スタッフ作業ボード</div><div class="flow-note">受付、洗浄、仕上げ、受取待ち、再洗いを工程別に並べ、ボタンで進めます。</div><a class="open" href="staff.html?v=cleaning-18">作業画面を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">5</div><div class="time">45秒</div></div><div class="flow-title">会員証・進捗確認</div><div class="flow-note">お客様はLINE会員証で、受付番号・仕上がり・受取可能状態を確認できます。</div><a class="open" href="member.html?token=demo-cleaning-member-003&v=cleaning-18">会員証を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">6</div><div class="time">45秒</div></div><div class="flow-title">受け渡し受付</div><div class="flow-note">品物・支払い・お客様確認を行い、誤渡しを防いで受け渡しを完了します。</div><a class="open" href="owner-ipad.html?v=cleaning-18">受け渡しを開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">7</div><div class="time">40秒</div></div><div class="flow-title">未受取フォロー</div><div class="flow-note">未通知・受取待ち・長期保管・未精算を集約し、案内文をすぐ作れます。</div><a class="open" href="owner-followup.html?v=cleaning-18">フォローを開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">8</div><div class="time">40秒</div></div><div class="flow-title">オーナー管理</div><div class="flow-note">売上、今日やること、工程件数、支払い状況、ランキングを確認します。</div><a class="open" href="owner.html?v=cleaning-18">オーナー画面を開く</a></article>
-        <article class="flow-card"><div class="flow-top"><div class="step">9</div><div class="time">20秒</div></div><div class="flow-title">店舗設定</div><div class="flow-note">営業時間、仕上がり日数、通知、料金メニューを店舗側で変更できます。</div><a class="open" href="owner-settings.html?v=cleaning-18">店舗設定を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">1</div><div class="time">操作</div></div><div class="flow-title">店頭受付</div><div class="flow-note">顧客検索、複数品物、加工、注意事項、合計金額までを1画面で登録します。</div><a class="open" href="reception.html?v=cleaning-18">受付画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">2</div><div class="time">操作</div></div><div class="flow-title">受付票・品物タグ</div><div class="flow-note">お客様控え、店舗控え、数量分の品物タグを同じ注文から印刷できます。</div><a class="open" href="print.html?v=cleaning-18">印刷画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">3</div><div class="time">操作</div></div><div class="flow-title">品物写真・タブレット撮影</div><div class="flow-note">シミ・傷・タグなどを品物単位で撮影し、受付時の状態を残します。</div><a class="open" href="item-photo-ipad.html?v=cleaning-18">タブレット撮影画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">4</div><div class="time">操作</div></div><div class="flow-title">スタッフ作業ボード</div><div class="flow-note">受付、洗浄、仕上げ、受取待ち、再洗いを工程別に並べ、ボタンで進めます。</div><a class="open" href="staff.html?v=cleaning-18">作業画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">5</div><div class="time">操作</div></div><div class="flow-title">会員証・進捗確認</div><div class="flow-note">お客様はLINE会員証で、受付番号・仕上がり・受取可能状態を確認できます。</div><a class="open" href="member.html?token=demo-cleaning-member-003&v=cleaning-18">会員証を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">6</div><div class="time">操作</div></div><div class="flow-title">受け渡し受付</div><div class="flow-note">品物・支払い・お客様確認を行い、誤渡しを防いで受け渡しを完了します。</div><a class="open" href="owner-ipad.html?v=cleaning-18">受け渡しを開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">7</div><div class="time">操作</div></div><div class="flow-title">未受取フォロー</div><div class="flow-note">未通知・受取待ち・長期保管・未精算を集約し、案内文をすぐ作れます。</div><a class="open" href="owner-followup.html?v=cleaning-18">フォローを開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">8</div><div class="time">操作</div></div><div class="flow-title">オーナー管理</div><div class="flow-note">売上、今日やること、工程件数、支払い状況、ランキングを確認します。</div><a class="open" href="owner.html?v=cleaning-18">オーナー画面を開く</a></article>
+        <article class="flow-card"><div class="flow-top"><div class="step">9</div><div class="time">操作</div></div><div class="flow-title">店舗設定</div><div class="flow-note">営業時間、仕上がり日数、通知、料金メニューを店舗側で変更できます。</div><a class="open" href="owner-settings.html?v=cleaning-18">店舗設定を開く</a></article>
       </div>
     </section>
 
@@ -313,118 +437,10 @@
         <article class="screen"><div>⚙️</div><div class="screen-title">店舗設定</div><div class="screen-note">基本設定・料金・履歴</div><a href="owner-settings.html?v=cleaning-18">開く</a></article>
         <article class="screen"><div>📊</div><div class="screen-title">オーナー</div><div class="screen-note">売上・業務・支払い</div><a href="owner.html?v=cleaning-18">開く</a></article>
         <article class="screen"><div>💳</div><div class="screen-title">会員証デモ</div><div class="screen-note">山田一郎様のデモ</div><a href="member.html?token=demo-cleaning-member-003&v=cleaning-18">開く</a></article>
-        <article class="screen"><div>✅</div><div class="screen-title">システム確認</div><div class="screen-note">API・DB・画面確認</div><a href="system-check.html?v=cleaning-18">開く</a></article>
-        <article class="screen"><div>🧭</div><div class="screen-title">デモガイド</div><div class="screen-note">営業前確認と進行</div><a href="demo-guide.html?v=cleaning-18">再読込</a></article>
+        <article class="screen"><div>📘</div><div class="screen-title">公式の機能説明</div><div class="screen-note">機能・料金・導入前後を確認</div><a href="https://dpro-shop.com/systems/cleaning">開く</a></article>
+        <article class="screen"><div>🧭</div><div class="screen-title">画面一覧</div><div class="screen-note">公開操作デモの入口</div><a href="demo-guide.html?v=cleaning-18">再読込</a></article>
       </div>
-    </section>
-
-    <section class="panel">
-      <div class="title-row"><h2>そのまま使える営業トーク</h2><span class="status-note">機能ではなく経営効果を伝える</span></div>
-      <div class="talk-grid">
-        <article class="talk"><strong>30秒版</strong><div id="talk30" class="talk-text">このシステムは、受付だけをデジタル化するものではありません。
-お預かりした後の工程管理、仕上がり案内、未受取フォロー、受け渡しまでをLINEと店舗画面でつなぎます。
-紙や記憶に頼る作業を減らしながら、お客様にも今の状況が分かる仕組みです。</div><button class="copy" data-copy="talk30" type="button">トークをコピー</button></article>
-        <article class="talk"><strong>オーナー向け</strong><div id="talkOwner" class="talk-text">オーナー画面では売上だけでなく、今日仕上がる注文、未通知、受取待ち、長期保管、再洗いまで確認できます。
-現場画面と同じデータを使うため、店内の状況を聞き回らなくても把握でき、対応漏れを見つけやすくなります。</div><button class="copy" data-copy="talkOwner" type="button">トークをコピー</button></article>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="title-row"><h2>最終確認として残す2項目</h2><span class="status-note">自動確認できない実機操作だけ</span></div>
-      <label class="manual"><input type="checkbox"><div><strong>タブレット実機で背面カメラが開く</strong><br><span>タブレットを用意できた最終段階で1枚撮影して確認します。</span></div></label>
-      <label class="manual"><input type="checkbox"><div><strong>本番LINE公式アカウントから実際に1通送信</strong><br><span>文面生成・コピー・送信履歴保存までは確認済みです。</span></div></label>
     </section>
   </main>
-
-  <div id="toast" class="toast"></div>
-  <script>
-    "use strict";
-    const API_BASE = "https://dpro-cleaning-line-api.dpromstk2000.workers.dev";
-    const EXPECTED = "CLEANING-15-SYSTEM-CHECK-DEMO-PREPARE-20260713";
-    const el = {
-      adminKey:document.getElementById("adminKey"),
-      shopCode:document.getElementById("shopCode"),
-      clearAdmin:document.getElementById("clearAdmin"),
-      checkButton:document.getElementById("checkButton"),
-      message:document.getElementById("message"),
-      worker:document.getElementById("worker"),
-      workerNote:document.getElementById("workerNote"),
-      db:document.getElementById("db"),
-      dbNote:document.getElementById("dbNote"),
-      demo:document.getElementById("demo"),
-      demoNote:document.getElementById("demoNote"),
-      toast:document.getElementById("toast")
-    };
-    function adminUrl(path) {
-      const url = new URL(`${API_BASE}${path}`);
-      url.searchParams.set("admin_key",el.adminKey.value.trim());
-      url.searchParams.set("shop_code",el.shopCode.value.trim() || "cleaning_demo");
-      return url;
-    }
-    async function json(url) {
-      const res = await fetch(url,{cache:"no-store"});
-      const data = await res.json();
-      if (!res.ok || data.ok === false) throw Object.assign(new Error(data.message || `HTTP ${res.status}`),{data});
-      return data;
-    }
-    function message(text,type="") {
-      el.message.textContent = text;
-      el.message.className = `message ${type}`.trim();
-    }
-    async function check() {
-      if (!el.adminKey.value.trim()) return message("管理コードを入力してください。","error");
-      el.checkButton.disabled = true;
-      message("営業前チェックを実行しています。");
-      el.worker.textContent = el.db.textContent = el.demo.textContent = "確認中";
-      try {
-        const [health,system] = await Promise.all([
-          json(`${API_BASE}/api/health`),
-          json(adminUrl("/api/admin/system-check"))
-        ]);
-        const workerOk = health.version === EXPECTED;
-        el.worker.textContent = workerOk ? "OK" : "要確認";
-        el.workerNote.textContent = health.version || "不明";
-        el.db.textContent = health.supabase === "ok" ? "OK" : "要確認";
-        el.dbNote.textContent = `Supabase：${health.supabase || "不明"}`;
-        const c = system.counts || {};
-        const demoOk = system.checks?.demo_customers && system.checks?.demo_orders && system.checks?.demo_items && system.checks?.member_tokens;
-        el.demo.textContent = demoOk ? "準備OK" : "要準備";
-        el.demoNote.textContent = `顧客${c.demo_customers || 0}・注文${c.demo_orders || 0}・品物${c.demo_items || 0}`;
-        message(workerOk && health.supabase === "ok" && system.ok
-          ? "営業前チェックOKです。上から順番にデモを開始できます。"
-          : "未完了項目があります。詳細チェックを開いてください。",
-          workerOk && health.supabase === "ok" && system.ok ? "success" : "error");
-      } catch(error) {
-        console.error(error);
-        el.worker.textContent = el.db.textContent = el.demo.textContent = "要確認";
-        message(error.data?.message || error.message,"error");
-      } finally {
-        el.checkButton.disabled = false;
-      }
-    }
-    let timer;
-    function toast(text) {
-      el.toast.textContent = text;
-      el.toast.className = "toast visible";
-      clearTimeout(timer);
-      timer = setTimeout(() => el.toast.className = "toast",2500);
-    }
-    async function copy(text) {
-      try { await navigator.clipboard.writeText(text); toast("コピーしました。"); }
-      catch { toast("コピーできませんでした。"); }
-    }
-    el.clearAdmin.addEventListener("click",() => {
-      el.adminKey.value = "";
-      el.adminKey.focus();
-      message("管理コードを消去しました。再入力してください。");
-    });
-    el.checkButton.addEventListener("click",check);
-    document.addEventListener("click",event => {
-      const button = event.target.closest("[data-copy]");
-      if (!button) return;
-      const target = document.getElementById(button.dataset.copy);
-      if (target) copy(target.textContent.trim());
-    });
-  </script>
 </body>
 </html>
