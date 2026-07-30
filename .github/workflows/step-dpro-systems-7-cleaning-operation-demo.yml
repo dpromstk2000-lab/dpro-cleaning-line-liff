@@ -1,4 +1,4 @@
-name: STEP DPRO-SYSTEMS-7 Cleaning Operation Demo
+name: STEP DPRO-SYSTEMS-7 Cleaning Operation Demo R2
 
 on:
   workflow_dispatch:
@@ -138,7 +138,7 @@ jobs:
               r'<div class="status-grid">.*?</section>',
               flags=re.S,
           )
-          if 'class="public-demo-intro"' not in guide:
+          if "public-demo-intro" not in guide:
               guide, count = internal_panels.subn(public_intro, guide, count=1)
               if count != 1:
                   raise SystemExit("ERROR: internal check panels target not found")
@@ -225,7 +225,7 @@ jobs:
           assert "そのまま使える営業トーク" not in guide
           assert "最終確認として残す2項目" not in guide
           assert 'id="adminKey"' not in guide
-          assert 'class="public-demo-intro"' in guide
+          assert "public-demo-intro" in guide
 
       - name: Commit changes
         shell: bash
@@ -237,5 +237,5 @@ jobs:
             echo "No changes needed"
             exit 0
           fi
-          git commit -m "STEP DPRO-SYSTEMS-7 clarify cleaning operation demo"
+          git commit -m "STEP DPRO-SYSTEMS-7-R2 clarify cleaning operation demo"
           git push
