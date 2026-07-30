@@ -1,0 +1,241 @@
+name: STEP DPRO-SYSTEMS-7 Cleaning Operation Demo
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/step-dpro-systems-7-cleaning-operation-demo.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clarify cleaning public operation demo
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64
+          import re
+
+          official_url = "https://dpro-shop.com/systems/cleaning"
+          banner = base64.b64decode("PHNlY3Rpb24gY2xhc3M9Im9wZXJhdGlvbi1kZW1vLWJhbm5lciIgYXJpYS1sYWJlbD0i5YWs6ZaL5pON5L2c44OH44Oi44Gu5qGI5YaFIj4KICA8ZGl2PgogICAgPHNtYWxsPlBVQkxJQyBPUEVSQVRJT04gREVNTzwvc21hbGw+CiAgICA8c3Ryb25nPuOBk+OCjOOBr0RQUk8g44Kv44Oq44O844OL44Oz44KwIExJTkXjga7lhazplovmk43kvZzjg4fjg6LjgafjgZk8L3N0cm9uZz4KICAgIDxzcGFuPuaetuepuuODh+ODvOOCv+OBp+Wun+mam+OBrualreWLmeeUu+mdouOCkuS9k+mok+OBp+OBjeOBvuOBmeOAguWun+WcqOOBmeOCi+awj+WQjeODu+mbu+ipseeVquWPt+ODu+S8muWToeaDheWgseOBr+WFpeWKm+OBl+OBquOBhOOBp+OBj+OBoOOBleOBhOOAgjwvc3Bhbj4KICA8L2Rpdj4KICA8YSBocmVmPSJodHRwczovL2Rwcm8tc2hvcC5jb20vc3lzdGVtcy9jbGVhbmluZyI+5YWs5byP44Gu5qmf6IO96Kqs5piO44KS6KaL44KLPC9hPgo8L3NlY3Rpb24+").decode("utf-8")
+          public_intro = base64.b64decode("PHNlY3Rpb24gY2xhc3M9InBhbmVsIHB1YmxpYy1kZW1vLWludHJvIj4KICA8ZGl2IGNsYXNzPSJwdWJsaWMtZGVtby1pbnRyby1jb3B5Ij4KICAgIDxzbWFsbD5TVEFSVCBIRVJFPC9zbWFsbD4KICAgIDxoMj7jgq/jg6rjg7zjg4vjg7PjgrDmpa3li5njgpLjgIHlrp/pmpvjga7nlLvpnaLjgafkvZPpqJPjgafjgY3jgb7jgZnjgII8L2gyPgogICAgPHA+5bqX6aCt5Y+X5LuY44GL44KJ44CB5Y+X5LuY56Wo44O75ZOB54mp5YaZ55yf44O75bel56iL566h55CG44O7TElOReS8muWToeiovOODu+WPl+OBkea4oeOBl+ODu+acquWPl+WPluODleOCqeODreODvOOBvuOBp+OAgeeiuuiqjeOBl+OBn+OBhOeUu+mdouOCkumBuOOCk+OBp+OBj+OBoOOBleOBhOOAgjwvcD4KICA8L2Rpdj4KICA8ZGl2IGNsYXNzPSJwdWJsaWMtZGVtby1ub3RlcyI+CiAgICA8c3Bhbj48Yj7jg4fjg6LnrqHnkIbjgrPjg7zjg4k8L2I+MTIzNDwvc3Bhbj4KICAgIDxzcGFuPjxiPuS9v+eUqOODh+ODvOOCvzwvYj7jgZnjgbnjgabmnrbnqbrmg4XloLE8L3NwYW4+CiAgICA8c3Bhbj48Yj7jgZTms6jmhI88L2I+5a6f5Zyo44GZ44KL5YCL5Lq65oOF5aCx44Gv5YWl5Yqb44GX44Gq44GE44Gn44GP44Gg44GV44GEPC9zcGFuPgogIDwvZGl2PgogIDxhIGNsYXNzPSJwdWJsaWMtZGVtby1vZmZpY2lhbCIgaHJlZj0iaHR0cHM6Ly9kcHJvLXNob3AuY29tL3N5c3RlbXMvY2xlYW5pbmciPuapn+iDveODu+aWmemHkeODu+WwjuWFpeWKueaenOOCkuWFrOW8j+ODmuODvOOCuOOBp+eiuuiqjTwvYT4KPC9zZWN0aW9uPg==").decode("utf-8")
+          css_block = base64.b64decode("Ci8qIERQUk8tU1lTVEVNUy03IENMRUFOSU5HIE9QRVJBVElPTiBERU1PICovCmJvZHkub3BlcmF0aW9uLWRlbW8tcGFnZXsKICBwYWRkaW5nLWJvdHRvbTowOwp9Ci5vcGVyYXRpb24tZGVtby1iYW5uZXJ7CiAgd2lkdGg6bWluKDE0NTBweCxjYWxjKDEwMCUgLSAyNHB4KSk7CiAgbWFyZ2luOjE1cHggYXV0byAwOwogIHBhZGRpbmc6MTVweCAxN3B4OwogIGRpc3BsYXk6ZmxleDsKICBhbGlnbi1pdGVtczpjZW50ZXI7CiAganVzdGlmeS1jb250ZW50OnNwYWNlLWJldHdlZW47CiAgZ2FwOjE4cHg7CiAgYm9yZGVyOjFweCBzb2xpZCAjYjlkZGUwOwogIGJvcmRlci1yYWRpdXM6MTdweDsKICBiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxMzVkZWcsI2Y3ZmNmYywjZTdmNmY3KTsKICBib3gtc2hhZG93OjAgMTFweCAyOHB4IHJnYmEoMTgsNzYsODMsLjA4KTsKfQoub3BlcmF0aW9uLWRlbW8tYmFubmVyPmRpdnsKICBkaXNwbGF5OmZsZXg7CiAgZmxleC1kaXJlY3Rpb246Y29sdW1uOwp9Ci5vcGVyYXRpb24tZGVtby1iYW5uZXIgc21hbGx7CiAgY29sb3I6IzA4N2Y4YzsKICBmb250LXNpemU6MTBweDsKICBmb250LXdlaWdodDoxMDAwOwogIGxldHRlci1zcGFjaW5nOi4xNGVtOwp9Ci5vcGVyYXRpb24tZGVtby1iYW5uZXIgc3Ryb25newogIG1hcmdpbi10b3A6M3B4OwogIGZvbnQtc2l6ZToxNnB4OwogIGxpbmUtaGVpZ2h0OjEuNDU7Cn0KLm9wZXJhdGlvbi1kZW1vLWJhbm5lciBzcGFuewogIG1hcmdpbi10b3A6NHB4OwogIGNvbG9yOiM2MTc3N2Y7CiAgZm9udC1zaXplOjExcHg7CiAgZm9udC13ZWlnaHQ6NzUwOwogIGxpbmUtaGVpZ2h0OjEuNjU7Cn0KLm9wZXJhdGlvbi1kZW1vLWJhbm5lciBhLAouZmluYWwtbmF2IGEub2ZmaWNpYWwtZGVtby1saW5rLAoucHVibGljLWRlbW8tb2ZmaWNpYWx7CiAgZmxleDowIDAgYXV0bzsKICBtaW4taGVpZ2h0OjQwcHg7CiAgZGlzcGxheTppbmxpbmUtZmxleDsKICBhbGlnbi1pdGVtczpjZW50ZXI7CiAganVzdGlmeS1jb250ZW50OmNlbnRlcjsKICBwYWRkaW5nOjhweCAxM3B4OwogIGJvcmRlci1yYWRpdXM6OTk5cHg7CiAgY29sb3I6I2ZmZiFpbXBvcnRhbnQ7CiAgYmFja2dyb3VuZDojMDg3ZjhjIWltcG9ydGFudDsKICBib3JkZXItY29sb3I6IzA4N2Y4YyFpbXBvcnRhbnQ7CiAgdGV4dC1kZWNvcmF0aW9uOm5vbmUhaW1wb3J0YW50OwogIGZvbnQtc2l6ZToxMHB4OwogIGZvbnQtd2VpZ2h0Ojk1MDsKICBib3gtc2hhZG93OjAgOHB4IDE5cHggcmdiYSg4LDEyNywxNDAsLjE4KTsKfQoucHVibGljLWRlbW8taW50cm97CiAgcGFkZGluZzoyMnB4IWltcG9ydGFudDsKICBib3JkZXI6MXB4IHNvbGlkICNiOWRkZTAhaW1wb3J0YW50OwogIGJhY2tncm91bmQ6CiAgICByYWRpYWwtZ3JhZGllbnQoY2lyY2xlIGF0IDkwJSAxMiUscmdiYSg4LDEyNywxNDAsLjEyKSx0cmFuc3BhcmVudCAzMCUpLAogICAgbGluZWFyLWdyYWRpZW50KDEzNWRlZywjZmZmLCNmMmZiZmIpIWltcG9ydGFudDsKfQoucHVibGljLWRlbW8taW50cm8tY29weSBzbWFsbHsKICBjb2xvcjojMDg3ZjhjOwogIGZvbnQtc2l6ZToxMHB4OwogIGZvbnQtd2VpZ2h0OjEwMDA7CiAgbGV0dGVyLXNwYWNpbmc6LjE0ZW07Cn0KLnB1YmxpYy1kZW1vLWludHJvLWNvcHkgaDJ7CiAgbWFyZ2luOjdweCAwIDA7CiAgZm9udC1zaXplOmNsYW1wKDIxcHgsM3Z3LDMxcHgpOwogIGxpbmUtaGVpZ2h0OjEuNDsKfQoucHVibGljLWRlbW8taW50cm8tY29weSBwewogIG1heC13aWR0aDo4ODBweDsKICBtYXJnaW46OXB4IDAgMDsKICBjb2xvcjojNWU3NDdkOwogIGZvbnQtc2l6ZToxM3B4OwogIGZvbnQtd2VpZ2h0OjcwMDsKICBsaW5lLWhlaWdodDoxLjg1Owp9Ci5wdWJsaWMtZGVtby1ub3Rlc3sKICBtYXJnaW46MTdweCAwOwogIGRpc3BsYXk6Z3JpZDsKICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6cmVwZWF0KDMsbWlubWF4KDAsMWZyKSk7CiAgZ2FwOjlweDsKfQoucHVibGljLWRlbW8tbm90ZXMgc3BhbnsKICBwYWRkaW5nOjEycHg7CiAgYm9yZGVyOjFweCBzb2xpZCAjZDJlNWU4OwogIGJvcmRlci1yYWRpdXM6MTJweDsKICBiYWNrZ3JvdW5kOiNmZmY7CiAgY29sb3I6IzYwNzU3ZDsKICBmb250LXNpemU6MTFweDsKICBsaW5lLWhlaWdodDoxLjY1Owp9Ci5wdWJsaWMtZGVtby1ub3RlcyBiewogIGRpc3BsYXk6YmxvY2s7CiAgY29sb3I6IzA3NWY2OTsKICBmb250LXNpemU6OXB4OwogIGxldHRlci1zcGFjaW5nOi4wN2VtOwp9Ci5wdWJsaWMtZGVtby1vZmZpY2lhbHsKICBib3JkZXItcmFkaXVzOjExcHg7Cn0KYm9keS5vcGVyYXRpb24tZGVtby1wYWdlIC52ZXJzaW9uewogIGxldHRlci1zcGFjaW5nOi4wNmVtOwp9CkBtZWRpYShtYXgtd2lkdGg6NzAwcHgpewogIC5vcGVyYXRpb24tZGVtby1iYW5uZXJ7CiAgICBhbGlnbi1pdGVtczpmbGV4LXN0YXJ0OwogICAgZmxleC1kaXJlY3Rpb246Y29sdW1uOwogIH0KICAub3BlcmF0aW9uLWRlbW8tYmFubmVyIGF7CiAgICB3aWR0aDoxMDAlOwogIH0KICAucHVibGljLWRlbW8tbm90ZXN7CiAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6MWZyOwogIH0KICAucHVibGljLWRlbW8tb2ZmaWNpYWx7CiAgICB3aWR0aDoxMDAlOwogIH0KfQpAbWVkaWEgcHJpbnR7CiAgLm9wZXJhdGlvbi1kZW1vLWJhbm5lcnsKICAgIGRpc3BsYXk6bm9uZSFpbXBvcnRhbnQ7CiAgfQp9Cg==").decode("utf-8")
+          css_marker = "/* DPRO-SYSTEMS-7 CLEANING OPERATION DEMO */"
+
+          public_files = [
+              "demo-guide.html",
+              "reception.html",
+              "staff.html",
+              "owner-ipad.html",
+              "owner-followup.html",
+              "print.html",
+              "item-photo.html",
+              "item-photo-ipad.html",
+              "owner-settings.html",
+              "owner.html",
+              "member.html",
+          ]
+          nav_files = [name for name in public_files if name != "member.html"]
+
+          def read(path):
+              return Path(path).read_text(encoding="utf-8")
+
+          def write(path, text):
+              Path(path).write_text(text, encoding="utf-8")
+
+          def add_body_class(text, filename):
+              match = re.search(r"<body([^>]*)>", text, flags=re.I)
+              if not match:
+                  raise SystemExit(f"ERROR: body tag not found: {filename}")
+              attrs = match.group(1)
+              if "operation-demo-page" in attrs:
+                  return text
+              class_match = re.search(r'class="([^"]*)"', attrs)
+              if class_match:
+                  updated_attrs = attrs[:class_match.start()] + f'class="{class_match.group(1)} operation-demo-page"' + attrs[class_match.end():]
+              else:
+                  updated_attrs = attrs + ' class="operation-demo-page"'
+              return text[:match.start()] + "<body" + updated_attrs + ">" + text[match.end():]
+
+          def update_title(text, filename):
+              match = re.search(r"<title>(.*?)</title>", text, flags=re.I | re.S)
+              if not match:
+                  raise SystemExit(f"ERROR: title not found: {filename}")
+              title = match.group(1).strip()
+              if "公開操作デモ" in title:
+                  return text
+              updated = f"<title>{title}｜公開操作デモ</title>"
+              return text[:match.start()] + updated + text[match.end():]
+
+          def add_banner(text, filename):
+              if 'class="operation-demo-banner"' in text:
+                  return text
+              updated, count = re.subn(
+                  r"</header>",
+                  "</header>\n" + banner,
+                  text,
+                  count=1,
+                  flags=re.I,
+              )
+              if count != 1:
+                  raise SystemExit(f"ERROR: header closing tag not found: {filename}")
+              return updated
+
+          def add_css(text, filename):
+              if css_marker in text:
+                  return text
+              if "</style>" not in text:
+                  raise SystemExit(f"ERROR: style closing tag not found: {filename}")
+              return text.replace("</style>", "\n" + css_block.strip() + "\n</style>", 1)
+
+          def clean_public_navigation(text):
+              text = text.replace(
+                  'aria-label="DPROクリーニング内部画面"',
+                  'aria-label="DPROクリーニング公開操作デモ画面"',
+              )
+              text = text.replace(">デモガイド</a>", ">画面一覧</a>")
+              system_check_pattern = r'<a[^>]*href="system-check\.html[^"]*"[^>]*>\s*システム確認\s*</a>'
+              official_link = f'<a class="official-demo-link" href="{official_url}">公式の機能説明</a>'
+              if re.search(system_check_pattern, text, flags=re.I):
+                  text = re.sub(system_check_pattern, official_link, text, count=1, flags=re.I)
+              return text
+
+          for filename in public_files:
+              path = Path(filename)
+              if not path.exists():
+                  raise SystemExit(f"ERROR: required file not found: {filename}")
+
+              text = read(filename)
+              text = update_title(text, filename)
+              text = add_body_class(text, filename)
+              text = add_banner(text, filename)
+              text = add_css(text, filename)
+              text = clean_public_navigation(text)
+              text = re.sub(
+                  r'<div class="version">\s*STEP CLEANING-18\s*</div>',
+                  '<div class="version">PUBLIC OPERATION DEMO</div>',
+                  text,
+              )
+              write(filename, text)
+
+          guide = read("demo-guide.html")
+
+          guide = guide.replace(
+              '<div class="subtitle">営業担当用・5分デモガイド</div>',
+              '<div class="subtitle">公開操作デモ・画面選択</div>',
+          )
+
+          internal_panels = re.compile(
+              r'<section class="panel">\s*'
+              r'<div class="internal">.*?</section>\s*'
+              r'<section class="panel">\s*'
+              r'<div class="status-grid">.*?</section>',
+              flags=re.S,
+          )
+          if 'class="public-demo-intro"' not in guide:
+              guide, count = internal_panels.subn(public_intro, guide, count=1)
+              if count != 1:
+                  raise SystemExit("ERROR: internal check panels target not found")
+
+          guide = guide.replace(
+              '<div class="title-row"><h2>5分で見せる順番</h2><span class="status-note">店舗側の業務改善を中心に説明</span></div>',
+              '<div class="title-row"><h2>公開操作デモのおすすめ順</h2><span class="status-note">上から順に開くと業務全体を理解できます</span></div>',
+          )
+          guide = re.sub(
+              r'<div class="time">\d+秒</div>',
+              '<div class="time">操作</div>',
+              guide,
+          )
+
+          check_card_pattern = re.compile(
+              r'<article class="screen"><div>✅</div>'
+              r'<div class="screen-title">システム確認</div>'
+              r'<div class="screen-note">.*?</div>'
+              r'<a href="system-check\.html[^"]*">.*?</a></article>',
+              flags=re.S,
+          )
+          official_card = (
+              '<article class="screen"><div>📘</div>'
+              '<div class="screen-title">公式の機能説明</div>'
+              '<div class="screen-note">機能・料金・導入前後を確認</div>'
+              f'<a href="{official_url}">開く</a></article>'
+          )
+          if re.search(check_card_pattern, guide):
+              guide = check_card_pattern.sub(official_card, guide, count=1)
+
+          guide = guide.replace(
+              '<div class="screen-title">デモガイド</div><div class="screen-note">営業前確認と進行</div>',
+              '<div class="screen-title">画面一覧</div><div class="screen-note">公開操作デモの入口</div>',
+          )
+
+          sales_panel_pattern = re.compile(
+              r'\s*<section class="panel">\s*'
+              r'<div class="title-row"><h2>そのまま使える営業トーク</h2>.*?</section>',
+              flags=re.S,
+          )
+          guide = sales_panel_pattern.sub("", guide, count=1)
+
+          manual_panel_pattern = re.compile(
+              r'\s*<section class="panel">\s*'
+              r'<div class="title-row"><h2>最終確認として残す2項目</h2>.*?</section>',
+              flags=re.S,
+          )
+          guide = manual_panel_pattern.sub("", guide, count=1)
+
+          internal_script_pattern = re.compile(
+              r'\s*<div id="toast" class="toast"></div>\s*'
+              r'<script>.*?</script>',
+              flags=re.S,
+          )
+          guide = internal_script_pattern.sub("", guide, count=1)
+
+          write("demo-guide.html", guide)
+
+          for filename in public_files:
+              content = read(filename)
+              assert "operation-demo-page" in content, filename
+              assert 'class="operation-demo-banner"' in content, filename
+              assert official_url in content, filename
+              assert css_marker in content, filename
+              assert "公開操作デモ" in re.search(r"<title>(.*?)</title>", content, flags=re.S).group(1), filename
+              assert '<div class="version">STEP CLEANING-18</div>' not in content, filename
+
+          for filename in nav_files:
+              content = read(filename)
+              assert not re.search(
+                  r'<a[^>]*href="system-check\.html[^"]*"[^>]*>\s*システム確認\s*</a>',
+                  content,
+                  flags=re.I,
+              ), filename
+              assert "公式の機能説明" in content, filename
+
+          guide = read("demo-guide.html")
+          assert "公開操作デモのおすすめ順" in guide
+          assert "デモ管理コード" in guide
+          assert "1234" in guide
+          assert "営業担当・店舗責任者向けの内部画面" not in guide
+          assert "営業前チェック" not in guide
+          assert "詳細チェック" not in guide
+          assert "そのまま使える営業トーク" not in guide
+          assert "最終確認として残す2項目" not in guide
+          assert 'id="adminKey"' not in guide
+          assert 'class="public-demo-intro"' in guide
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "dpro-systems-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add demo-guide.html reception.html staff.html owner-ipad.html owner-followup.html print.html item-photo.html item-photo-ipad.html owner-settings.html owner.html member.html
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "STEP DPRO-SYSTEMS-7 clarify cleaning operation demo"
+          git push
